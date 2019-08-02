@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 
@@ -11,13 +12,21 @@ const Navigation = (props) => {
           <Nav.Link href='#' as='span'>
             <Link to='/' >Home</Link>
           </Nav.Link>
-          <Nav.Link href='#' as='span'>
-            <Link to='/login' >Home</Link>
-          </Nav.Link>
+          {!props.user &&
+            <Nav.Link href='#' as='span'>
+              <Link to='/login' >Login</Link>
+            </Nav.Link>
+          }
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   )
 }
 
-export default Navigation
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Navigation)

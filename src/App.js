@@ -1,19 +1,32 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { setUser } from './reducers/userReducer'
+import { BrowserRouter , Route } from 'react-router-dom'
 import Login from './components/Login'
 import Home from './components/Home'
+import Navigation from './components/Navigation'
+import Register from './components/Register'
 
-function App() {
+const App = (props) => {
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedBottlestashUser')
+    props.setUser(JSON.parse(loggedUser))
+  }, [props])
+
   return (
     <div className='container-fluid'>
-      <Router>
+      <BrowserRouter>
         <div>
+          <Navigation />
           <Route exact path='/' render={() => <Home />} />
           <Route exact path='/login' render={() => <Login />} />
+          <Route exact path='/register' render={() => <Register />} />
         </div>
-      </Router>
+      </BrowserRouter>
     </div>
   )
 }
 
-export default App;
+const mapDispatchToProps = { setUser }
+
+export default connect(null, mapDispatchToProps)(App)

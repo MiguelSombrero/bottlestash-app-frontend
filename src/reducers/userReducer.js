@@ -13,25 +13,25 @@ const userReducer = (state = initialState, action) => {
   }
 }
 
-export const login = (event) => {
+export const loginUser = (username, password) => {
   return async dispatch => {
-    event.preventDefault()
-    
-    const username = event.target.username.value
-    const password = event.target.password.value
-
     try {
       const user = await loginService.login({
         username, password
       })
+
+      window.localStorage.setItem(
+        'loggedBottlestashUser', JSON.stringify(user)
+      )
+  
+      // aseta tässä käyttäjän token sitä tarvitseviin
+      // serviceihin
 
       dispatch({
         type: 'SET_USER',
         user
       })
 
-      console.log(user)
-      
     } catch (exception) {
       console.log('error message on Login dispatcher')
     }

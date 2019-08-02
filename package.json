@@ -18,7 +18,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "node_modules/.bin/eslint . --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,6 +38,9 @@
     ]
   },
   "devDependencies": {
-    "deep-freeze": "0.0.1"
+    "@testing-library/jest-dom": "^4.0.0",
+    "@testing-library/react": "^8.0.7",
+    "deep-freeze": "0.0.1",
+    "eslint-plugin-jest": "^22.14.1"
   }
 }

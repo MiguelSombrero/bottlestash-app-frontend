@@ -1,12 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import Login from './Login'
 
 const Home = (props) => {
-  console.log(props.user)
   return (
     <div>
-      {props.user.name}
+      Tämä on etusivu
+
+      {!props.user &&
+        <Login />
+      }
+
+      {props.user &&
+        <p>olet kirjautunut sisään {props.user.name}</p>
+      }
     </div>
   )
 }
