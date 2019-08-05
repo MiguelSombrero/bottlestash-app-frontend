@@ -2,30 +2,32 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
-import { loginUser } from '../reducers/userReducer'
+import { loginUser } from '../reducers/loginReducer'
 import { Link } from 'react-router-dom'
 
 const Login = (props) => {
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     const username = event.target.username.value
     const password = event.target.password.value
-    props.loginUser(username, password)
-    props.history.push('/')
-  }
 
-  const style = {
-    
+    try {
+      await props.loginUser(username, password)
+      props.history.push('/')
+    } catch (exception) {
+      console.log('error message on Login dispatcher')
+    }
   }
 
   return (
-    <div id='loginForm' style={style} >
+    <div id='loginForm' >
       <h2>Login to Bottlestash</h2>
       <Form onSubmit={handleLogin} >
         <Form.Group >
           <Form.Label>Username</Form.Label>
           <Form.Control
+            id='username'
             type='text'
             name='username'
             placeholder='username'
@@ -34,6 +36,7 @@ const Login = (props) => {
         <Form.Group>
           <Form.Label>Password</Form.Label>
           <Form.Control
+            id='password'
             type='password'
             name='password'
             placeholder='password'
@@ -42,8 +45,8 @@ const Login = (props) => {
         <Button id='login' variant='success' type='submit' block>Login</Button>
       </Form>
       <small>
-        <strong>Not yet a member? Have no fear! You can register here: </strong>
-        <Link to='/register' >Register</Link>
+        Not yet a member? 
+        <Link to='/register'> Register here:</Link>
       </small>
     </div>
   )

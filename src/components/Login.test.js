@@ -5,36 +5,45 @@ import Login from './Login'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from '../store'
+  
+const onSubmit = jest.fn()
 
-const mockHandler = jest.fn()
+const Wrapper = (props) => {
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <Login onSubmit={props.onSubmit} />
+      </BrowserRouter>
+    </Provider>
+  )
+}
   
 describe('<Login />', () => {
   let component
     
   beforeEach(() => {
     component = render(
-      <Provider store={store}>
-        <BrowserRouter>
-          <Login onSubmit={mockHandler} />
-        </BrowserRouter>
-      </Provider>
+      <Wrapper onSubmit={onSubmit} />
     )
   })
 
   test('renders content', () => {
     expect(component.container).toHaveTextContent('Login to Bottlestash')
-    expect(component.container).toHaveTextContent('Not yet a member? Have no fear! You can register here:')
+    expect(component.container).toHaveTextContent('Not yet a member? Register here:')
     expect(component.container).toHaveTextContent('Username')
     expect(component.container).toHaveTextContent('Password')
     expect(component.container).toHaveTextContent('Register')
   })
       
   test('clicking login button calls eventhandler once', async () => {
-    /**
-    const button = component.container.querySelector('#login')
-    fireEvent.click(button)
-    expect(mockHandler.mock.calls.length).ToBe(1)
-     */
+    const username = component.container.querySelector('#username')
+    const password = component.container.querySelector('#password')
+    const form = component.container.querySelector('form')
 
+    fireEvent.change(username, { target: { value: 'Somero' }})
+    fireEvent.change(password, { target: { value: 'salainen' }})
+    fireEvent.submit(form)
+
+    expect(onSubmit.mock.calls.length).toBe(1)
   })
 })
