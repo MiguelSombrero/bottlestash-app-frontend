@@ -11,8 +11,10 @@ const Navigation = (props) => {
     props.setUserToState(null)
   }
 
-  const loggedUser = async () => {
-    
+  const loggedUser = (username) => {
+    const logged = props.users.find(user => user.username === username)
+    console.log(logged)
+    return `/users/${logged.id}/stash`
   }
 
   return (
@@ -41,7 +43,7 @@ const Navigation = (props) => {
               <Link to={`/profile`} >{props.user.name}</Link>
               </Nav.Item>
               <Nav.Link href='#' as='span'>
-                <Link to={`/stash/${loggedUser()}`} >Manage stash</Link>
+                <Link to={`/users/${props.user.username}/stash`} >Manage stash</Link>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
                 <div onClick={handleLogout} >Logout</div>

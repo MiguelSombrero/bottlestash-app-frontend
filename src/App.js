@@ -24,6 +24,9 @@ const App = (props) => {
   const userById = (id) => 
     props.users.find(user => user.id === id)
 
+  const userByUsername = (username) => 
+    props.users.find(user => user.username === username)
+
   return (
     <>
       <BrowserRouter>
@@ -32,8 +35,8 @@ const App = (props) => {
           <Route exact path='/' render={() => <Home />} />
           <Route exact path='/login' render={() => <Login />} />
           <Route exact path='/register' render={() => <Register />} />
-          <Route exact path='/stash/:id' render={({ match }) =>
-            <Stash userToView={userById(match.params.id)} />
+          <Route exact path='/users/:id/stash' render={({ match }) =>
+            <Stash userToView={userByUsername(match.params.id)} />
           } />
         </div>
       </BrowserRouter>
