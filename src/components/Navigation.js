@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Button } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import { setUserToState } from '../reducers/loginReducer'
 
 const Navigation = (props) => {
@@ -9,6 +9,10 @@ const Navigation = (props) => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBottlestashUser')
     props.setUserToState(null)
+  }
+
+  const loggedUser = async () => {
+    
   }
 
   return (
@@ -31,13 +35,16 @@ const Navigation = (props) => {
             </div>
           }
 
-          {props.user &&
+          {props.user && props.users &&
             <div>
+              <Nav.Item href='#' as='span'>
+              <Link to={`/profile`} >{props.user.name}</Link>
+              </Nav.Item>
               <Nav.Link href='#' as='span'>
-                <Link to='/stash' >Manage stash</Link>
+                <Link to={`/stash/${loggedUser()}`} >Manage stash</Link>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
-                <Button className='btn nav-link' onClick={handleLogout} >Logout</Button>
+                <div onClick={handleLogout} >Logout</div>
               </Nav.Link>
             </div>
           }
@@ -49,7 +56,8 @@ const Navigation = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    user: state.user,
+    users: state.users
   }
 }
 

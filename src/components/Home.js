@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Login from './Login'
 import { Jumbotron } from 'react-bootstrap'
 
 const Home = (props) => {
@@ -18,10 +17,6 @@ const Home = (props) => {
           <li>Review beers you have tasted</li>
         </ul>
       </Jumbotron>
-
-      {props.user &&
-        <p>olet kirjautunut sisään {props.user.name}</p>
-      }
     </div>
   )
 }

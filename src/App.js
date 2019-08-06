@@ -21,6 +21,9 @@ const App = (props) => {
     props.getAll()
   }, [])
 
+  const userById = (id) => 
+    props.users.find(user => user.id === id)
+
   return (
     <>
       <BrowserRouter>
@@ -29,13 +32,21 @@ const App = (props) => {
           <Route exact path='/' render={() => <Home />} />
           <Route exact path='/login' render={() => <Login />} />
           <Route exact path='/register' render={() => <Register />} />
-          <Route exact path='/stash' render={() => <Stash />} />
+          <Route exact path='/stash/:id' render={({ match }) =>
+            <Stash userToView={userById(match.params.id)} />
+          } />
         </div>
       </BrowserRouter>
     </>
   )
 }
 
+const mapStateToProps = (state) => {
+  return {
+    users: state.users
+  }
+}
+
 const mapDispatchToProps = { setUserToState, getAll }
 
-export default connect(null, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
