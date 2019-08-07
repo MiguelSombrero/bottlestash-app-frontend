@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Col, Row } from 'react-bootstrap'
 import { setUserToState } from '../reducers/loginReducer'
 
 const Navigation = (props) => {
@@ -9,16 +10,18 @@ const Navigation = (props) => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBottlestashUser')
     props.setUserToState(null)
+    props.history.push('/')
   }
 
   const loggedUser = (username) => {
     const logged = props.users.find(user => user.username === username)
-    console.log(logged)
-    return `/users/${logged.id}/stash`
+    return logged === undefined
+      ? 1
+      : logged.id
   }
 
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar as={Row} collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='mr-auto'>
@@ -27,28 +30,28 @@ const Navigation = (props) => {
           </Nav.Link>
 
           {!props.user &&
-            <div>
+            <>
               <Nav.Link href='#' as='span'>
                 <Link to='/login' >Login</Link>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
                 <Link to='/register' >Create account</Link>
               </Nav.Link>
-            </div>
+            </>
           }
 
-          {props.user && props.users &&
-            <div>
-              <Nav.Item href='#' as='span'>
-              <Link to={`/profile`} >{props.user.name}</Link>
-              </Nav.Item>
+          {props.user &&
+            <>
               <Nav.Link href='#' as='span'>
-                <Link to={`/users/${props.user.username}/stash`} >Manage stash</Link>
+                <Link to={`/profile`} >{props.user.name}</Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <Link to={`/users/${loggedUser(props.user.username)}/stash`} >Manage stash</Link>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
                 <div onClick={handleLogout} >Logout</div>
               </Nav.Link>
-            </div>
+            </>
           }
         </Nav>
       </Navbar.Collapse>
@@ -65,4 +68,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = { setUserToState }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

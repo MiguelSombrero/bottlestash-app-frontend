@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
 import { Link } from 'react-router-dom'
 
@@ -21,34 +21,46 @@ const Login = (props) => {
   }
 
   return (
-    <div id='loginForm' >
-      <h2>Login to Bottlestash</h2>
-      <Form onSubmit={handleLogin} >
-        <Form.Group >
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            id='username'
-            type='text'
-            name='username'
-            placeholder='username'
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            id='password'
-            type='password'
-            name='password'
-            placeholder='password'
-          />
-        </Form.Group>
-        <Button id='login' variant='success' type='submit' block>Login</Button>
-      </Form>
-      <small>
-        Not yet a member? 
-        <Link to='/register'> Register here:</Link>
-      </small>
-    </div>
+    <>
+      <Row>
+        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+          <h2>Login to Bottlestash</h2>
+        </Jumbotron>
+      </Row>
+      <Row id='loginForm' >
+        <Col className='d-flex justify-content-center mb-2'>
+          <Form onSubmit={handleLogin} style={{ width: '20rem' }} >
+            <Form.Group  >
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                id='username'
+                type='text'
+                name='username'
+                placeholder='username'
+              />
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                id='password'
+                type='password'
+                name='password'
+                placeholder='password'
+              />
+            </Form.Group>
+            <Button id='login' variant='success' type='submit' block >Login</Button>
+          </Form>
+        </Col>
+      </Row>
+      <Row>
+        <Col className='d-flex justify-content-center mb-2'>
+          <small>
+            Not yet a member? 
+            <Link to='/register'> Register here:</Link>
+          </small>
+        </Col>
+      </Row>
+    </>
   )
 }
 

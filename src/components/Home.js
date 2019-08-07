@@ -1,23 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Jumbotron } from 'react-bootstrap'
+import { Jumbotron, Row, Col } from 'react-bootstrap'
 
 const Home = (props) => {
   return (
-    <div>
-      <Jumbotron>
-        <h1>Welcome to Bottlestash</h1>
-        <p>
+    <>
+      <Row>
+        <Jumbotron as={Col}>
+          <h1>Welcome to Bottlestash</h1>
+        
           Bottlestash in an app that let's you manage you beercellar.
           Keep track of what you have in your cellar and ...
-        </p>
-        <h3>With Bottlestash you can:</h3>
-        <ul>
-          <li>Save bottles to your stash</li>
-          <li>Review beers you have tasted</li>
-        </ul>
-      </Jumbotron>
-    </div>
+        
+        </Jumbotron>
+      </Row>
+      <Row>
+        <Col>
+          <h3>With Bottlestash you can:</h3>
+          <ul>
+            <li>Save bottles to your stash</li>
+            <li>Review beers you have tasted</li>
+          </ul>
+        </Col>
+      </Row>
+    </>
+    
   )
 }
 

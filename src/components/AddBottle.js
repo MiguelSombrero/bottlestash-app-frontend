@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Accordion, Form, Button } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 
 const AddBottle = (props) => {
 
@@ -8,15 +8,17 @@ const AddBottle = (props) => {
   }
 
   return (
-    <Accordion >
-      <Card>
-        <Accordion.Toggle as={Card.Header} eventKey='0'>
-          <h3>Add bottle to your stash</h3>
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey='0'>
-          <Form onSubmit={handleAddBottle} >
+    <>
+      <Row>
+        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+          <h2>Add new bottle to your stash</h2>
+        </Jumbotron>
+      </Row>
+      <Row>
+        <Col className='d-flex justify-content-center mb-2'>
+          <Form onSubmit={handleAddBottle} id='addBottleForm' >
             <Form.Group >
-              <Form.Label>Brewery</Form.Label>
+            <Form.Label>Brewery</Form.Label>
               <Form.Control
                 type='text'
                 name='brewery'
@@ -31,11 +33,55 @@ const AddBottle = (props) => {
                 placeholder='name of your beer'
               />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>Count</Form.Label>
+              <Form.Control
+                type='number'
+                name='count'
+                placeholder='number of bottles to save'
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Volume</Form.Label>
+              <Form.Control
+                type='number'
+                step='0.01'
+                name='volume'
+                placeholder='volume of the bottle in litres'
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Price</Form.Label>
+              <Form.Control
+                type='number'
+                step='0.01'
+                name='price'
+                placeholder='price of an one bottle'
+              />
+            </Form.Group>
+            <Form.Row>
+              <Form.Group className='p-2'>
+                <Form.Label>Bottled</Form.Label>
+                <Form.Control
+                  type='date'
+                  name='bottled'
+                  placeholder='day beer was bottled'
+                />
+              </Form.Group>
+              <Form.Group className='p-2'>
+                <Form.Label>Expiration</Form.Label>
+                <Form.Control
+                  type='date'
+                  name='expiration'
+                  placeholder='expiration day of bottles'
+                />
+              </Form.Group>
+            </Form.Row>
             <Button variant='success' type='submit' block>Add beer</Button>
           </Form>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
+        </Col>
+      </Row>
+    </>
   )
 }
 
