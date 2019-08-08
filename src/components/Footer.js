@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Jumbotron, Row, Col } from 'react-bootstrap'
+import { Jumbotron, Row, Col } from 'react-bootstrap'
 
 const Footer = (props) => {
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
-import { getAll } from './reducers/usersReducer'
-import { BrowserRouter , Route } from 'react-router-dom'
+import { getAllUsers } from './reducers/usersReducer'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import Login from './components/Login'
 import Home from './components/Home'
@@ -19,11 +19,11 @@ const App = (props) => {
     if (loggedUser) {
       props.setUserToState(JSON.parse(loggedUser))
     }
-  }, [props])
+  }, [])
 
   useEffect(() => {
-    props.getAll()
-  }, [props])
+    props.getAllUsers()
+  }, [])
 
   const userById = (id) => 
     props.users.find(user => user.id === id)
@@ -35,12 +35,13 @@ const App = (props) => {
         <Route exact path='/' render={() => <Home />} />
         <Route exact path='/login' render={() => <Login />} />
         <Route exact path='/register' render={() => <Register />} />
+
+        <Route exact path='/bottles' render={() => 
+          props.user ? <AddBottle /> : <Redirect to='/login' /> } />
+
         <Route exact path='/users/:id/stash' render={({ match }) =>
-          <Stash userToView={userById(match.params.id)} />
-        } />
-        <Route exact path='/users/:id/bottles' render={({ match }) =>
-          <AddBottle userToView={userById(match.params.id)} />
-        } />
+          props.user ? <Stash userToView={userById(match.params.id)} /> : <Redirect to='/login' /> } />
+
         <Footer />
       </BrowserRouter>
     </Container>
@@ -49,10 +50,11 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.user,
     users: state.users
   }
 }
 
-const mapDispatchToProps = { setUserToState, getAll }
+const mapDispatchToProps = { setUserToState, getAllUsers }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

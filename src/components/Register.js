@@ -1,7 +1,8 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
-import userService from '../services/users'
+import { registerUser } from '../reducers/usersReducer'
 
 const Register = (props) => {
 
@@ -16,7 +17,7 @@ const Register = (props) => {
     const hidden = event.target.hidden.checked
 
     try {
-      await userService.create({
+      await props.registerUser({
         username, password, name, email, city, country, hidden
       })
 
@@ -29,10 +30,6 @@ const Register = (props) => {
     }
   }
 
-  const style = {
-    
-  }
-
   return (
     <>
       <Row>
@@ -42,7 +39,7 @@ const Register = (props) => {
       </Row>
       <Row>
         <Col className='d-flex justify-content-center mb-2'>
-          <Form onSubmit={handleRegister} id='registerForm' style={style} >
+          <Form onSubmit={handleRegister} id='registerForm' >
             <Form.Group >
               <Form.Label >Username</Form.Label>
               <Form.Control
@@ -104,4 +101,8 @@ const Register = (props) => {
   )
 }
 
-export default withRouter(Register)
+const mapDispatchToProps = {
+  registerUser
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(Register))

@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { Navbar, Nav, Col, Row } from 'react-bootstrap'
-import { setUserToState } from '../reducers/loginReducer'
+import { Navbar, Nav, Row, Dropdown } from 'react-bootstrap'
+import { logoutUser } from '../reducers/loginReducer'
 
 const Navigation = (props) => {
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBottlestashUser')
-    props.setUserToState(null)
+    props.logoutUser()
     props.history.push('/')
   }
 
@@ -43,14 +42,19 @@ const Navigation = (props) => {
           {props.user &&
             <>
               <Nav.Link href='#' as='span'>
-                <Link to={`/profile`} >{props.user.name}</Link>
-              </Nav.Link>
-              <Nav.Link href='#' as='span'>
                 <Link to={`/users/${loggedUser(props.user.username)}/stash`} >Manage stash</Link>
               </Nav.Link>
-              <Nav.Link href='#' as='span'>
-                <div onClick={handleLogout} >Logout</div>
-              </Nav.Link>
+              <Dropdown as={Nav.Item}>
+                <Dropdown.Toggle as={Nav.Link}>
+                  Settings
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Header>
+                    <Link to={`/profile`} >Profile</Link>
+                  </Dropdown.Header>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </>
           }
         </Nav>
@@ -66,6 +70,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = { setUserToState }
+const mapDispatchToProps = { logoutUser }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))

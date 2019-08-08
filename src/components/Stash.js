@@ -1,5 +1,4 @@
 import React from 'react'
-import AddBottle from './AddBottle'
 import Bottles from './Bottles'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -18,7 +17,7 @@ const Stash = (props) => {
       </Row>
       <Row>
         <Col>
-          <Link to={`/users/${props.userToView.id}/bottles`}>Add new bottle to your stash</Link>
+          <Link to={`/bottles`}>Add new bottle to your stash</Link>
         </Col>
       </Row>
       <Row>
