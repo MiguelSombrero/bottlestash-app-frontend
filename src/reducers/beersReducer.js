@@ -22,11 +22,17 @@ const beersReducer = (state = [], action) => {
     }
   }
   
-  export const addBeer = beer => {
-    return {
-      type: 'ADD_BEER',
-      beer
+  export const addBeer = ({ breweryId, name, abv }) => {
+    return async dispatch => {
+      const beer = await beersService.create({ breweryId, name, abv })
+  
+      dispatch({
+        type: 'ADD_BEER',
+        beer
+      })
+
+      return beer
     }
   }
-  
+
   export default beersReducer

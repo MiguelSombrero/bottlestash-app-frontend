@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
-import { addBottle } from '../reducers/bottlesReducer'
 import { withRouter } from 'react-router-dom'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
@@ -27,15 +26,13 @@ const AddBottle = (props) => {
       let brewery = await breweriesService.getOne(breweryName)
       
       if (!brewery) {
-        brewery = await breweriesService.create({ name: breweryName })
-        props.addBrewery(brewery)
+        brewery = await props.addBrewery(breweryName)
       }
 
       let beer = await beersService.getOne({ breweryId: brewery.id, name, abv })
 
       if (!beer) {
-        beer = await beersService.create({ breweryId: brewery.id, name, abv })
-        props.addBeer(beer)
+        beer = await props.addBeer({ breweryId: brewery.id, name, abv })
       }
 
       await bottlesService.create({
@@ -158,7 +155,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addBeer, addBottle, addBrewery
+  addBeer, addBrewery
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddBottle))

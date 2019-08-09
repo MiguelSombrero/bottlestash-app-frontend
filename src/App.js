@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
 import { getAllUsers } from './reducers/usersReducer'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import Login from './components/Login'
 import Home from './components/Home'
@@ -11,6 +11,7 @@ import Register from './components/Register'
 import Stash from './components/Stash'
 import Footer from './components/Footer'
 import AddBottle from './components/AddBottle'
+import Bottle from './components/Bottle'
 
 const App = (props) => {
   
@@ -36,12 +37,23 @@ const App = (props) => {
         <Route exact path='/login' render={() => <Login />} />
         <Route exact path='/register' render={() => <Register />} />
 
-        <Route exact path='/bottles' render={() => 
-          props.user ? <AddBottle /> : <Redirect to='/login' /> } />
-
-        <Route exact path='/users/:id/stash' render={({ match }) =>
-          props.user ? <Stash userToView={userById(match.params.id)} /> : <Redirect to='/login' /> } />
-
+        {props.user &&
+        <>  
+          <Route
+            exact path='/bottles'
+            render={() => <AddBottle /> }
+          />
+          <Route
+            exact path='/bottles/:id/'
+            render={(props) => <Bottle {...props} /> }
+          />
+          <Route
+            exact path='/users/:id/stash'
+            render={({ match }) => <Stash userToView={userById(match.params.id)} /> }
+          />
+        </>
+        }
+        
         <Footer />
       </BrowserRouter>
     </Container>
