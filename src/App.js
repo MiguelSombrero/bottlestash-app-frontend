@@ -45,7 +45,7 @@ const App = (props) => {
           />
           <Route
             exact path='/bottles/:id/'
-            render={(props) => <Bottle {...props} /> }
+            render={() => <Bottle /> }
           />
           <Route
             exact path='/users/:id/stash'

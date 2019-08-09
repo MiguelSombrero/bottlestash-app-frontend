@@ -4,6 +4,8 @@ const usersReducer = (state = [], action) => {
   switch (action.type) {
     case 'GET_USERS':
       return action.users
+    case 'UPDATE_USERS':
+      return state.map(u => u.id !== action.user.id ? u : action.user)
     case 'REGISTER_USER':
       return [...state, action.newUser ]
     default:
@@ -19,6 +21,19 @@ export const getAllUsers = () => {
       type: 'GET_USERS',
       users
     })
+  }
+}
+
+export const updateUserToState = username => {
+  return async dispatch => {
+    const user = await usersService.getOne(username)
+
+    dispatch({
+      type: 'UPDATE_USERS',
+      user
+    })
+
+    return user
   }
 }
 

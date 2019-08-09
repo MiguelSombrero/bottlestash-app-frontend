@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
+import { updateUserToState } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
@@ -39,14 +40,8 @@ const AddBottle = (props) => {
         price, count, volume, bottled, expiration, beerId: beer.id
       })
 
-
-      // nyt pullo on lisätty tietokantaan sekä pullo skeemaan että kirjautuneelle käyttäjälle
-      // kirjautuneen käyttäjän tiedot ei kuitenkaan ole päivittyneet tilassa
-      // mieti miten tämä kannattaisi ratkaista: haetaanko tässä kirjautuneen käyttäjän
-      // tiedot kannasta ja viedään tilaan tjs?
-
-      // props.history.push(`/users/${props.user.id}/stash`)
-      // mieti myös tässä ohjausta: ei ole olemassa props.user.id
+      const user = await props.updateUserToState(props.user.username)
+      props.history.push(`/users/${user.id}/stash`)
 
     } catch (exception) {
       console.log('error hehee')
@@ -155,7 +150,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addBeer, addBrewery
+  addBeer, addBrewery, updateUserToState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddBottle))

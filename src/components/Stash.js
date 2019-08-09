@@ -1,7 +1,7 @@
 import React from 'react'
-import Bottles from './Bottles'
-import { Row, Col, Jumbotron, Accordion, Card } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Accordion, Card, CardColumns } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import Bottle from './Bottle'
 
 const Stash = (props) => {
   if (!props.userToView) {
@@ -9,7 +9,7 @@ const Stash = (props) => {
   }
 
   const stash = props.userToView.stash
-
+  
   return (
     <>
       <Row>
@@ -31,7 +31,11 @@ const Stash = (props) => {
         </Accordion>
       </Row>
       <Row>
-        <Bottles bottles={stash} />
+        <CardColumns >
+          {stash.map(bottle =>
+            <Bottle key={bottle.id} bottle={bottle} />
+          )}
+        </CardColumns>
       </Row>
     </>
   )

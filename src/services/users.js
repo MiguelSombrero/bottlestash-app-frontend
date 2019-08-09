@@ -12,6 +12,11 @@ const getAll = async () => {
   return res.data
 }
 
+const getOne = async username => {
+  const res = await axios.get(`${baseUrl}/${username}`)
+  return res.data
+}
+
 const create = async user => {
   const res = await axios.post(baseUrl, user)
   return res.data
@@ -25,4 +30,4 @@ const update = async user => {
   return res.data
 }
 
-export default { getAll, create, update, setToken }
+export default { getAll, create, update, setToken, getOne }
