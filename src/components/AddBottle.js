@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
 import { updateUserToState } from '../reducers/usersReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { withRouter } from 'react-router-dom'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
@@ -10,8 +11,10 @@ import bottlesService from '../services/bottles'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 
 const AddBottle = (props) => {
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const handleAddBottle = async (event) => {
+    setIsLoading(true)
     event.preventDefault()
 
     const breweryName = event.target.brewery.value
@@ -41,10 +44,13 @@ const AddBottle = (props) => {
       })
 
       const user = await props.updateUserToState(props.user.username)
+      setIsLoading(false)
+      props.setNotification('Added bottle succesfully')
+      
       props.history.push(`/users/${user.id}/stash`)
-
+      
     } catch (exception) {
-      console.log('error hehee')
+      props.setNotification('Adding bottle failed - sorry!', 'error')
     }
   }
 
@@ -135,7 +141,14 @@ const AddBottle = (props) => {
                 />
               </Form.Group>
             </Form.Row>
-            <Button variant='success' type='submit' block>Add beer</Button>
+            <Button
+              variant='success'
+              type='submit'
+              block
+              disabled={isLoading}
+              
+              > {isLoading ? 'Loading ...' : 'Add beer'}
+            </Button>
           </Form>
         </Col>
       </Row>
@@ -150,7 +163,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addBeer, addBrewery, updateUserToState
+  addBeer, addBrewery, updateUserToState, setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddBottle))

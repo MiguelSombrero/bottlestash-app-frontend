@@ -1,10 +1,9 @@
 import React from 'react'
-import { Card, ListGroup, Badge, Button, ButtonGroup, Accordion } from 'react-bootstrap'
+import { Card, ListGroup, Badge, Button, ButtonGroup } from 'react-bootstrap'
 
 const Bottle = ({ bottle }) => {
 
   return (
-    
     <Card className='p-2 m-2'>
       <Card.Header>
         <Card.Title>{bottle.beer.brewery.name} </Card.Title>
@@ -23,7 +22,6 @@ const Bottle = ({ bottle }) => {
       </ButtonGroup>
       <Card.Footer><Badge variant='info' >{bottle.count}</Badge> bottles left</Card.Footer>
     </Card>
-   
   )
 }
 

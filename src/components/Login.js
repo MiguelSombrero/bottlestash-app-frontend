@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
 
 const Login = (props) => {
@@ -16,7 +17,7 @@ const Login = (props) => {
       await props.loginUser(username, password)
       props.history.push('/')
     } catch (exception) {
-      console.log('error message on Login dispatcher')
+      props.setNotification('Login failed', 'error')
     }
   }
 
@@ -64,6 +65,9 @@ const Login = (props) => {
   )
 }
 
-const mapDispatchToProps = { loginUser }
+const mapDispatchToProps = {
+  loginUser,
+  setNotification
+}
 
 export default connect(null, mapDispatchToProps)(withRouter(Login))

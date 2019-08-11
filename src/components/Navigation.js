@@ -1,22 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, Row, Dropdown } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Navigation = (props) => {
 
   const handleLogout = () => {
     props.logoutUser()
+    props.setNotification('Logout was successfull')
     props.history.push('/')
-  }
-
-  const loggedUser = (username) => {
-    const logged = props.users.find(user => user.username === username)
-    return logged === undefined
-      ? 1
-      : logged.id
   }
 
   return (
@@ -25,16 +20,16 @@ const Navigation = (props) => {
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='mr-auto'>
           <Nav.Link href='#' as='span'>
-            <Link to='/' >Home</Link>
+            <NavLink to='/' >Home</NavLink>
           </Nav.Link>
 
           {!props.user &&
             <>
               <Nav.Link href='#' as='span'>
-                <Link to='/login' >Login</Link>
+                <NavLink to='/login' >Login</NavLink>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
-                <Link to='/register' >Create account</Link>
+                <NavLink to='/register' >Create account</NavLink>
               </Nav.Link>
             </>
           }
@@ -42,7 +37,10 @@ const Navigation = (props) => {
           {props.user &&
             <>
               <Nav.Link href='#' as='span'>
-                <Link to={`/users/${loggedUser(props.user.username)}/stash`} >Manage stash</Link>
+                <NavLink to={`/users/${props.user.id}/stash`} >Manage stash</NavLink>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <NavLink to='/rate' >Rate</NavLink>
               </Nav.Link>
               <Dropdown as={Nav.Item}>
                 <Dropdown.Toggle as={Nav.Link}>
@@ -50,7 +48,7 @@ const Navigation = (props) => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Header>
-                    <Link to={`/profile`} >Profile</Link>
+                    <NavLink to={{ pathname: '/profile', state: { user: props.user } }}>Profile</NavLink>
                   </Dropdown.Header>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
@@ -63,13 +61,9 @@ const Navigation = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    users: state.users
-  }
+const mapDispatchToProps = {
+  logoutUser,
+  setNotification
 }
 
-const mapDispatchToProps = { logoutUser }
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navigation))
+export default connect(null, mapDispatchToProps)(withRouter(Navigation))
