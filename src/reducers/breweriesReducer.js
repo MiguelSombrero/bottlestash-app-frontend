@@ -1,4 +1,7 @@
 import breweriesService from '../services/breweries'
+import { useResource } from '../hooks/'
+
+const service = useResource('/api/breweries')
 
 const breweriesReducer = (state = [], action) => {
     switch (action.type) {
@@ -13,7 +16,8 @@ const breweriesReducer = (state = [], action) => {
   
   export const getAllBreweries = () => {
     return async dispatch => {
-      const breweries = await breweriesService.getAll()
+      const breweries = await service.getAll()
+      //const breweries = await breweriesService.getAll()
   
       dispatch({
         type: 'GET_BREWERIES',
@@ -24,7 +28,8 @@ const breweriesReducer = (state = [], action) => {
   
   export const addBrewery = name => {
     return async dispatch => {
-      const brewery = await breweriesService.create({ name })
+      const brewery = await service.create({ name })
+      //const brewery = await breweriesService.create({ name })
   
       dispatch({
         type: 'ADD_BREWERY',

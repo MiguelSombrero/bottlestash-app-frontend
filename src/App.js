@@ -32,14 +32,13 @@ const App = (props) => {
   const userById = (id) => 
     props.users.find(user => user.id === id)
 
-  const loggedUser = (username) => {
-    return props.users.find(user => user.username === username)
-  }
+  const loggedUser = (username) =>
+    props.users.find(user => user.username === username)
 
   return (
     <Container fluid>
       <BrowserRouter as={Row} >
-        <Navigation notification={props.notification} user={!props.user ? null : loggedUser(props.user.username)} />
+        <Navigation user={!props.user ? null : loggedUser(props.user.username)} />
         <Notification />
         <Route exact path='/' render={() => <Home />} />
         <Route exact path='/login' render={() => <Login />} />
@@ -49,7 +48,7 @@ const App = (props) => {
         <>  
           <Route
             exact path='/bottles'
-            render={() => <AddBottle /> }
+            render={() => <AddBottle user={!props.user ? null : loggedUser(props.user.username)} /> }
           />
           <Route
             exact path='/bottles/:id/'
@@ -61,11 +60,13 @@ const App = (props) => {
           />
           <Route
             exact path='/profile'
-            render={(props) => <Profile {...props} /> }
+            render={(props) =>  <Profile {...props} /> }
           />
           <Route
             exact path='/users/:id/stash'
-            render={({ match }) => <Stash userToView={userById(match.params.id)} /> }
+            render={({ match }) => 
+              <Stash userToView={userById(match.params.id)} />
+            }
           />
         </>
         }
@@ -79,11 +80,13 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    users: state.users,
-    notification: state.notification
+    users: state.users
   }
 }
 
-const mapDispatchToProps = { setUserToState, getAllUsers }
+const mapDispatchToProps = {
+  setUserToState,
+  getAllUsers
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

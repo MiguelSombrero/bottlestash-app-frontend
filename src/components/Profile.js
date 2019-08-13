@@ -1,13 +1,19 @@
 import React from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
+import { useTextField } from '../hooks'
 
 const Profile = (props) => {
-  if (!props.location.state.user) {
+  const name = useTextField('text', 1, 20, true)
+  const email = useTextField('text', 1, 50, true)
+  const city = useTextField('text', 1, 50, false)
+  const country = useTextField('text', 1, 20, false)
+
+  if (!props.location.state) {
     return null
   }
 
   const user = props.location.state.user
-  
+
   const handleProfileUpdate = () => {
 
   }
@@ -26,36 +32,20 @@ const Profile = (props) => {
             </Form.Group>
             <Form.Group >
               <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='text'
-                name='name'
-                defaultValue={user.name}
-              />
+              <Form.Control {...name} />
             </Form.Group>
             <Form.Group >
               <Form.Label>Email</Form.Label>
-              <Form.Control
-                type='text'
-                name='email'
-                defaultValue={user.email}
-              />
+              <Form.Control {...email} />
             </Form.Group>
             <Form.Row>
               <Form.Group className='p-2'>
                 <Form.Label>City</Form.Label>
-                <Form.Control
-                  type='text'
-                  name='city'
-                  defaultValue={user.city}
-                />
+                <Form.Control {...city} />
               </Form.Group>
               <Form.Group className='p-2'>
                 <Form.Label>Country</Form.Label>
-                <Form.Control
-                  type='text'
-                  name='name'
-                  defaultValue={user.country}
-                />
+                <Form.Control {...country} />
               </Form.Group>
             </Form.Row>
             <Form.Group>

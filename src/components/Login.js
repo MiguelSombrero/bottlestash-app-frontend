@@ -5,16 +5,17 @@ import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
 import { setNotification } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
+import { useTextField } from '../hooks'
 
 const Login = (props) => {
+  const username = useTextField('text', 5, 20, true)
+  const password = useTextField('password', 5, 20, true)
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    const username = event.target.username.value
-    const password = event.target.password.value
-
+    
     try {
-      await props.loginUser(username, password)
+      await props.loginUser(username.value, password.value)
       props.history.push('/')
     } catch (exception) {
       props.setNotification('Login failed', 'error')
@@ -33,21 +34,11 @@ const Login = (props) => {
           <Form onSubmit={handleLogin} style={{ width: '20rem' }} >
             <Form.Group  >
               <Form.Label>Username</Form.Label>
-              <Form.Control
-                id='username'
-                type='text'
-                name='username'
-                placeholder='username'
-              />
+              <Form.Control {...username} placeholder='username' />
             </Form.Group>
             <Form.Group >
               <Form.Label>Password</Form.Label>
-              <Form.Control
-                id='password'
-                type='password'
-                name='password'
-                placeholder='password'
-              />
+              <Form.Control {...password} placeholder='password' />
             </Form.Group>
             <Button id='login' variant='success' type='submit' block >Login</Button>
           </Form>

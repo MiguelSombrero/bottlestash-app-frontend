@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Jumbotron, Row, Col } from 'react-bootstrap'
 
 const Home = (props) => {
@@ -28,10 +27,4 @@ const Home = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  }
-}
-
-export default connect(mapStateToProps)(Home)
+export default Home

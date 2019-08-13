@@ -2,7 +2,6 @@ import React from 'react'
 import { Card, ListGroup, Badge, Button, ButtonGroup } from 'react-bootstrap'
 
 const Bottle = ({ bottle }) => {
-
   return (
     <Card className='p-2 m-2'>
       <Card.Header>

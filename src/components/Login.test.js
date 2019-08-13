@@ -4,13 +4,15 @@ import { render, fireEvent } from '@testing-library/react'
 import Login from './Login'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import store from '../store'
-  
+import thunk from 'redux-thunk'
+import configureMockStore from 'redux-mock-store'
+
+const mockStore = configureMockStore([thunk])
 const onSubmit = jest.fn()
 
 const Wrapper = (props) => {
   return (
-    <Provider store={store}>
+    <Provider store={mockStore}>
       <BrowserRouter>
         <Login onSubmit={props.onSubmit} />
       </BrowserRouter>
@@ -34,8 +36,8 @@ describe('<Login />', () => {
     expect(component.container).toHaveTextContent('Password')
     expect(component.container).toHaveTextContent('Register')
   })
-      
-  test('clicking login button calls eventhandler once', async () => {
+
+  test('clicking something', async () => {
     const username = component.container.querySelector('#username')
     const password = component.container.querySelector('#password')
     const form = component.container.querySelector('form')
