@@ -1,16 +1,65 @@
 import React from 'react'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
-import { useNumberField } from '../hooks'
+import { useNumberField, useTextField } from '../hooks'
+import breweriesService from '../services/breweries'
+import beersService from '../services/beers'
+import { setNotification } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { addBeer } from '../reducers/beersReducer'
+import { addBrewery } from '../reducers/breweriesReducer'
+import { addRating } from '../reducers/ratingsReducer'
 
 const Rate = (props) => {
+  const beerName = useTextField('text', 1, 50, true)
+  const breweryName = useTextField('text', 1, 50, true)
+  const description = useTextField('text', 0, 1000, false)
+  const alcohol = useNumberField('number', 0, 100, 0.1, true)
+  const ageofbeer = useNumberField('number', 0, 360, 1, false)
   const aroma = useNumberField('range', 0, 10, 1, true)
   const taste = useNumberField('range', 0, 10, 1, true)
   const appearance = useNumberField('range', 0, 5, 1, true)
   const mouthfeel = useNumberField('range', 0, 5, 1, true)
   const overall = useNumberField('range', 0, 20, 1, true)
 
-  const handleRate = () => {
+  const handleRate = async (event) => {
+    event.preventDefault()
 
+    try {
+      let beer = null
+
+      if (!props.beer) {
+        let brewery = await breweriesService.getOne(breweryName.value)
+        
+        if (!brewery) {
+          brewery = await props.addBrewery(breweryName.value)
+        }
+  
+        beer = await beersService.getOne({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
+  
+        if (!beer) {
+          beer = await props.addBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
+        }
+      }
+      
+      const newRating = {
+        beerId: props.beer === undefined ? beer.id : props.beer.id,
+        description: description.value,
+        ageofbeer: ageofbeer.value,
+        aroma: aroma.value,
+        taste: taste.value,
+        appearance: appearance.value,
+        mouthfeel: mouthfeel.value,
+        overall: overall.value
+      }
+  
+      props.addRating(newRating)
+      props.setNotification('New rating added!')
+      props.history.push('/')
+
+    } catch (exception) {
+      props.setNotification('Adding a new rating failed!', 'error')
+    }
   }
 
   return (
@@ -22,7 +71,23 @@ const Rate = (props) => {
       </Row>
       <Row>
         <Col className='d-flex justify-content-center mb-2'>
-          <Form onSubmit={handleRate} id='rateForm' >
+          <Form onSubmit={handleRate} id='rateForm' style={{ width: '20rem' }}>
+            <Form.Group >
+              <Form.Label>Brewery</Form.Label>
+              <Form.Control {...breweryName} />
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Beer</Form.Label>
+              <Form.Control {...beerName} />
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Abv</Form.Label>
+              <Form.Control {...alcohol} />
+            </Form.Group>
+            <Form.Group >
+              <Form.Label>Beers age when drinked</Form.Label>
+              <Form.Control {...ageofbeer} />
+            </Form.Group>
             <Form.Group >
               <Form.Label>Aroma</Form.Label>
               <Form.Text>{aroma.value || 0}</Form.Text>
@@ -48,7 +113,11 @@ const Rate = (props) => {
               <Form.Text>{overall.value || 0}</Form.Text>
               <Form.Control {...overall} />
             </Form.Group>
-            <Button type='submit' variant='success'>Add rating</Button>
+            <Form.Group >
+              <Form.Label>Description</Form.Label>
+              <Form.Control as='textarea' rows='4' {...description} />
+            </Form.Group>
+            <Button type='submit' variant='success' block>Add rating</Button>
           </Form>
         </Col>
       </Row>    
@@ -56,4 +125,11 @@ const Rate = (props) => {
   )
 }
 
-export default Rate
+const mapDispatchToProps = {
+  addBeer,
+  addBrewery,
+  addRating,
+  setNotification
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(Rate))

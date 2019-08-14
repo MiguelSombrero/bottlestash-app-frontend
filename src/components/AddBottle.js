@@ -10,6 +10,7 @@ import beersService from '../services/beers'
 import bottlesService from '../services/bottles'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 import { useNumberField, useTextField } from '../hooks'
+import ListSuggestion from './ListSuggestion'
 
 const AddBottle = (props) => {
   const [ isLoading, setIsLoading ] = useState(false)
@@ -70,7 +71,11 @@ const AddBottle = (props) => {
           <Form onSubmit={handleAddBottle} id='addBottleForm' >
             <Form.Group >
             <Form.Label>Brewery</Form.Label>
-              <Form.Control {...breweryName} placeholder='name of the brewery' />
+              <Form.Control {...breweryName} list='breweriesAsList' placeholder='name of the brewery' />
+              <ListSuggestion
+                suggestions={props.breweries}
+                id='breweriesAsList'
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Name</Form.Label>

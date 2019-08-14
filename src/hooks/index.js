@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 
+// tätä ei käytetä vielä missään
 export const useResource = (baseUrl) => {
   const [ token, setToken ] = useState(null)
 

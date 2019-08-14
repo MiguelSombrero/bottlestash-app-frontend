@@ -1,7 +1,22 @@
 import React from 'react'
 import { Card, ListGroup, Badge, Button, ButtonGroup } from 'react-bootstrap'
+import bottlesService from '../services/bottles'
 
 const Bottle = ({ bottle }) => {
+
+  const handleDrink = async () => {
+    try {
+      if (bottle.count < 2) {
+        await bottlesService.remove(bottle.id)
+      } else {
+        await bottlesService.update(bottle.id, { ...bottle, count: bottle.count - 1 })
+      }
+  
+    } catch (exception) {
+
+    }
+  }
+
   return (
     <Card className='p-2 m-2'>
       <Card.Header>
@@ -17,7 +32,7 @@ const Bottle = ({ bottle }) => {
       </ListGroup>
       <ButtonGroup className='p-2'>
         <Button variant='light'>Drink and rate!</Button>
-        <Button variant='light'>Just drink!</Button>
+        <Button onClick={handleDrink} variant='light'>Just drink!</Button>
       </ButtonGroup>
       <Card.Footer><Badge variant='info' >{bottle.count}</Badge> bottles left</Card.Footer>
     </Card>

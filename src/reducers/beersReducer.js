@@ -5,7 +5,7 @@ const beersReducer = (state = [], action) => {
       case 'GET_BEERS':
         return action.beers
       case 'ADD_BEER':
-        return [...state, state.beer ]
+        return [...state, action.beer ]
       default:
         return state
     }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
 import { getAllUsers } from './reducers/usersReducer'
+import { getAllBreweries } from './reducers/breweriesReducer'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import Login from './components/Login'
@@ -29,6 +30,10 @@ const App = (props) => {
     props.getAllUsers()
   }, [])
 
+  useEffect(() => {
+    props.getAllBreweries()
+  }, [])
+
   const userById = (id) => 
     props.users.find(user => user.id === id)
 
@@ -48,7 +53,12 @@ const App = (props) => {
         <>  
           <Route
             exact path='/bottles'
-            render={() => <AddBottle user={!props.user ? null : loggedUser(props.user.username)} /> }
+            render={() =>
+              <AddBottle
+                breweries={!props.breweries ? null : props.breweries.map(brewery => brewery.name)}
+                user={!props.user ? null : loggedUser(props.user.username)}
+              />
+            }
           />
           <Route
             exact path='/bottles/:id/'
@@ -80,13 +90,15 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    users: state.users
+    users: state.users,
+    breweries: state.breweries
   }
 }
 
 const mapDispatchToProps = {
   setUserToState,
-  getAllUsers
+  getAllUsers,
+  getAllBreweries
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -3,6 +3,7 @@ import usersService from '../services/users'
 import beersService from '../services/beers'
 import bottlesService from '../services/bottles'
 import breweriesService from '../services/breweries'
+import ratingsService from '../services/ratings'
 
 const initialState = null
 
@@ -29,6 +30,7 @@ export const loginUser = (username, password) => {
     beersService.setToken(user.token)
     bottlesService.setToken(user.token)
     breweriesService.setToken(user.token)
+    ratingsService.setToken(user.token)
 
     dispatch({
       type: 'LOGIN',
@@ -45,6 +47,7 @@ export const logoutUser = () => {
     beersService.setToken(null)
     bottlesService.setToken(null)
     breweriesService.setToken(null)
+    ratingsService.setToken(null)
 
     dispatch({
       type: 'LOGOUT'
@@ -58,6 +61,7 @@ export const setUserToState = user => {
     beersService.setToken(user.token)
     bottlesService.setToken(user.token)
     breweriesService.setToken(user.token)
+    ratingsService.setToken(user.token)
 
     dispatch({
       type: 'LOGIN',
