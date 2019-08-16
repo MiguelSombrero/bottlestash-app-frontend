@@ -1,9 +1,8 @@
 import React from 'react'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
-import { useNumberField, useTextField } from '../hooks'
+import { useField } from '../hooks'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
-import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { addBeer } from '../reducers/beersReducer'
@@ -11,16 +10,16 @@ import { addBrewery } from '../reducers/breweriesReducer'
 import { addRating } from '../reducers/ratingsReducer'
 
 const Rate = (props) => {
-  const beerName = useTextField('text', 1, 50, true)
-  const breweryName = useTextField('text', 1, 50, true)
-  const description = useTextField('text', 0, 1000, false)
-  const alcohol = useNumberField('number', 0, 100, 0.1, true)
-  const ageofbeer = useNumberField('number', 0, 360, 1, false)
-  const aroma = useNumberField('range', 0, 10, 1, true)
-  const taste = useNumberField('range', 0, 10, 1, true)
-  const appearance = useNumberField('range', 0, 5, 1, true)
-  const mouthfeel = useNumberField('range', 0, 5, 1, true)
-  const overall = useNumberField('range', 0, 20, 1, true)
+  const [beerName, setBeerName] = useField('text', 1, 50, true)
+  const [breweryName, setBreweryName] = useField('text', 1, 50, true)
+  const [description, setDescription] = useField('text', 0, 1000, false)
+  const [alcohol, setAlcohol] = useField('number', 0, 100, 0.1, true)
+  const [ageofbeer, setAgeofbeer] = useField('number', 0, 360, 1, false)
+  const [aroma, setAroma] = useField('range', 0, 10, 1, true)
+  const [taste, setTaste] = useField('range', 0, 10, 1, true)
+  const [appearance, setAppearance] = useField('range', 0, 5, 1, true)
+  const [mouthfeel, setMouthfeel] = useField('range', 0, 5, 1, true)
+  const [overall, setOverall] = useField('range', 0, 20, 1, true)
 
   const handleRate = async (event) => {
     event.preventDefault()
@@ -128,8 +127,7 @@ const Rate = (props) => {
 const mapDispatchToProps = {
   addBeer,
   addBrewery,
-  addRating,
-  setNotification
+  addRating
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Rate))

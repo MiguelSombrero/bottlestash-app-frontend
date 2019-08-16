@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
-import { useTextField } from '../hooks'
+import { useField } from '../hooks'
 
 const Profile = (props) => {
-  const name = useTextField('text', 1, 20, true)
-  const email = useTextField('text', 1, 50, true)
-  const city = useTextField('text', 1, 50, false)
-  const country = useTextField('text', 1, 20, false)
+  const [name, setName] = useField('text', 1, 20, true)
+  const [email, setEmail] = useField('text', 1, 50, true)
+  const [city, setCity] = useField('text', 1, 50, false)
+  const [country, setCountry] = useField('text', 1, 20, false)
 
-  if (!props.location.state) {
+  useEffect(() => {
+    setName(props.user.name || '')
+    setEmail(props.user.email || '')
+    setCity(props.user.city || '')
+    setCountry(props.user.country || '')
+  }, [])
+
+  if (!props.user) {
     return null
   }
-
-  const user = props.location.state.user
-
+  
   const handleProfileUpdate = () => {
 
   }
@@ -28,7 +33,7 @@ const Profile = (props) => {
         <Col className='d-flex justify-content-center mb-2'>
           <Form onSubmit={handleProfileUpdate} id='profileUpdateForm' >
             <Form.Group>
-              <Form.Text>Username: {user.username}</Form.Text>  
+              <Form.Text>Username: {props.user.username}</Form.Text>  
             </Form.Group>
             <Form.Group >
               <Form.Label>Name</Form.Label>
@@ -52,7 +57,7 @@ const Profile = (props) => {
               <Form.Check
                 type='checkbox'
                 name='hidden'
-                defaultValue={user.hidden}
+                defaultValue={props.user.hidden}
                 label='I want my stash to be private' />
             </Form.Group>
             <Button type='submit' variant='success'>Save profile</Button>

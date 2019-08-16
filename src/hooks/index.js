@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import axios from 'axios'
 
+let token = null
+
+export const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 // tätä ei käytetä vielä missään
 export const useResource = (baseUrl) => {
-  const [ token, setToken ] = useState(null)
-
-  const setTokenToState = newToken => {
-    setToken(`bearer ${newToken}`)
-  }
 
   const getAll = async () => {
     const res = await axios.get(baseUrl)
@@ -36,41 +37,43 @@ export const useResource = (baseUrl) => {
   }
 
   return  {
-    setTokenToState, create, getAll, getOne, update
+    create, getAll, getOne, update
   }
 }
 
-export const useNumberField = (type, min, max, step, required = false) => {
+export const useField = (type, min, max, step = 1, required = false) => {
   const [value, setValue] = useState('')
 
   const onChange = (event) => {
     setValue(event.target.value)
   }
 
-  return {
+  const setDefaultValue = (value) => {
+    setValue(value)
+  }
+
+  if (type === 'number' || type === 'date' || type === 'range') {
+    return [{
+      type,
+      min,
+      max,
+      step,
+      required,
+      value,
+      onChange
+      },
+      setDefaultValue
+    ]
+  }
+
+  return [{
     type,
-    min,
-    max,
-    step,
+    minLength: min,
+    maxLength: max,
     required,
     value,
     onChange
-  }
-}
-
-export const useTextField = (type, minLength, maxLength, required = false) => {
-  const [value, setValue] = useState('')
-
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  return {
-    type,
-    minLength,
-    maxLength,
-    required,
-    value,
-    onChange
-  }
+    },
+    setDefaultValue
+  ]
 }

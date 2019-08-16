@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, Row } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
-import { setNotification } from '../reducers/notificationReducer'
 
 const Navigation = (props) => {
 
@@ -43,7 +42,7 @@ const Navigation = (props) => {
                 <NavLink to='/rate' >Rate</NavLink>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
-                <NavLink to={{ pathname: '/profile', state: { user: props.user } }}>Profile</NavLink>
+                <NavLink to='/profile'>Profile</NavLink>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
                 <Nav.Item onClick={handleLogout}>Logout</Nav.Item>
@@ -57,8 +56,7 @@ const Navigation = (props) => {
 }
 
 const mapDispatchToProps = {
-  logoutUser,
-  setNotification
+  logoutUser
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Navigation))

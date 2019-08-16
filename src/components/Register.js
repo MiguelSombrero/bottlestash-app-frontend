@@ -3,16 +3,15 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { registerUser } from '../reducers/usersReducer'
-import { setNotification } from '../reducers/notificationReducer'
-import { useTextField } from '../hooks'
+import { useField } from '../hooks'
 
 const Register = (props) => {
-  const username = useTextField('text', 5, 20, true)
-  const password = useTextField('password', 5, 20, true)
-  const name = useTextField('text', 1, 20, true)
-  const email = useTextField('text', 1, 50, true)
-  const city = useTextField('text', 1, 50, false)
-  const country = useTextField('text', 1, 20, false)
+  const [username, setUsername] = useField('text', 5, 20, true)
+  const [password, setPassword] = useField('password', 5, 20, true)
+  const [name, setName] = useField('text', 1, 20, true)
+  const [email, setEmail] = useField('text', 1, 50, true)
+  const [city, setCity] = useField('text', 1, 50, false)
+  const [country, setCountry] = useField('text', 1, 20, false)
 
   const handleRegister = async (event) => {
     event.preventDefault()
@@ -85,7 +84,7 @@ const Register = (props) => {
 }
 
 const mapDispatchToProps = {
-  registerUser, setNotification
+  registerUser
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Register))

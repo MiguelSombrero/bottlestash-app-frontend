@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
 import { getAllUsers } from './reducers/usersReducer'
 import { getAllBreweries } from './reducers/breweriesReducer'
+import { setNotification } from './reducers/notificationReducer'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Container, Row } from 'react-bootstrap'
 import Login from './components/Login'
@@ -18,7 +19,7 @@ import Rate from './components/Rate'
 import Profile from './components/Profile'
 
 const App = (props) => {
-  
+
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedBottlestashUser')
     if (loggedUser) {
@@ -37,17 +38,33 @@ const App = (props) => {
   const userById = (id) => 
     props.users.find(user => user.id === id)
 
-  const loggedUser = (username) =>
-    props.users.find(user => user.username === username)
+  const loggedUser = () =>
+    !props.user ? null : props.users.find(user => user.username === props.user.username)
+
+  const breweriesAsList = () => 
+    !props.breweries ? null : props.breweries.map(brewery => brewery.name)
 
   return (
     <Container fluid>
       <BrowserRouter as={Row} >
-        <Navigation user={!props.user ? null : loggedUser(props.user.username)} />
+        <Navigation
+          user={loggedUser()}
+          setNotification={props.setNotification}
+        />
         <Notification />
-        <Route exact path='/' render={() => <Home />} />
-        <Route exact path='/login' render={() => <Login />} />
-        <Route exact path='/register' render={() => <Register />} />
+
+        <Route
+          exact path='/'
+          render={() => <Home /> }
+        />
+        <Route
+          exact path='/login'
+          render={() => <Login setNotification={props.setNotification} />}
+        />
+        <Route
+          exact path='/register'
+          render={() => <Register setNotification={props.setNotification} />}
+        />
 
         {props.user &&
         <>  
@@ -55,27 +72,38 @@ const App = (props) => {
             exact path='/bottles'
             render={() =>
               <AddBottle
-                breweries={!props.breweries ? null : props.breweries.map(brewery => brewery.name)}
-                user={!props.user ? null : loggedUser(props.user.username)}
+                breweries={breweriesAsList()}
+                user={loggedUser()}
+                setNotification={props.setNotification}
               />
             }
           />
           <Route
             exact path='/bottles/:id/'
-            render={() => <Bottle /> }
+            render={() => <Bottle setNotification={props.setNotification} /> }
           />
           <Route
             exact path='/rate'
-            render={() => <Rate /> }
+            render={() => <Rate setNotification={props.setNotification} /> }
           />
+          {loggedUser() &&
           <Route
             exact path='/profile'
-            render={(props) =>  <Profile {...props} /> }
+            render={() =>
+              <Profile
+                setNotification={props.setNotification}
+                user={loggedUser()}
+              />
+            }
           />
+          }
           <Route
             exact path='/users/:id/stash'
             render={({ match }) => 
-              <Stash userToView={userById(match.params.id)} />
+              <Stash
+                userToView={userById(match.params.id)}
+                user={loggedUser()}
+              />
             }
           />
         </>
@@ -98,7 +126,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setUserToState,
   getAllUsers,
-  getAllBreweries
+  getAllBreweries,
+  setNotification
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

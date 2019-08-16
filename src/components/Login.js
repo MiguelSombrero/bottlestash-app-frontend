@@ -3,13 +3,12 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
-import { setNotification } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
-import { useTextField } from '../hooks'
+import { useField } from '../hooks'
 
 const Login = (props) => {
-  const username = useTextField('text', 5, 20, true)
-  const password = useTextField('password', 5, 20, true)
+  const [username, setUsername] = useField('text', 5, 20, true)
+  const [password, setPassword] = useField('password', 5, 20, true)
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -57,8 +56,7 @@ const Login = (props) => {
 }
 
 const mapDispatchToProps = {
-  loginUser,
-  setNotification
+  loginUser
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Login))

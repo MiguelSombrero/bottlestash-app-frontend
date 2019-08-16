@@ -1,19 +1,31 @@
 import React from 'react'
 import { Card, ListGroup, Badge, Button, ButtonGroup } from 'react-bootstrap'
 import bottlesService from '../services/bottles'
+import { updateUser } from '../reducers/usersReducer'
+import { connect } from 'react-redux'
 
-const Bottle = ({ bottle }) => {
+const Bottle = (props) => {
+  const bottle = props.bottle
 
   const handleDrink = async () => {
     try {
+      const updateableBottle = { ...bottle,
+        beer: bottle.beer.id,
+        count: bottle.count - 1
+      }
+      
       if (bottle.count < 2) {
         await bottlesService.remove(bottle.id)
+        props.setNotification(`This was your last bottle of ${bottle.brewery}, ${bottle.name}`)
       } else {
-        await bottlesService.update(bottle.id, { ...bottle, count: bottle.count - 1 })
+        await bottlesService.update(bottle.id, updateableBottle)
+        props.setNotification(`You drinked one bottle of ${bottle.brewery}, ${bottle.name}`)
       }
-  
+      
+      await props.updateUser(props.user.username)
+      
     } catch (exception) {
-
+      props.setNotification('Bottle update failed!', 'error')
     }
   }
 
@@ -39,4 +51,8 @@ const Bottle = ({ bottle }) => {
   )
 }
 
-export default Bottle
+const mapDispatchToProps = {
+  updateUser
+}
+
+export default connect(null, mapDispatchToProps)(Bottle)

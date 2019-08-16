@@ -24,7 +24,7 @@ export const getAllUsers = () => {
   }
 }
 
-export const updateUserToState = username => {
+export const updateUser = username => {
   return async dispatch => {
     const user = await usersService.getOne(username)
 

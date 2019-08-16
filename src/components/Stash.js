@@ -9,7 +9,7 @@ const Stash = (props) => {
   }
 
   const stash = props.userToView.stash
-  
+
   return (
     <>
       <Row>
@@ -33,7 +33,7 @@ const Stash = (props) => {
       <Row>
         <CardColumns >
           {stash.map(bottle =>
-            <Bottle key={bottle.id} bottle={bottle} />
+            <Bottle key={bottle.id} bottle={bottle} user={props.user} />
           )}
         </CardColumns>
       </Row>

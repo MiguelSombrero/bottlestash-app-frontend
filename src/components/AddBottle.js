@@ -2,26 +2,25 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
-import { updateUserToState } from '../reducers/usersReducer'
-import { setNotification } from '../reducers/notificationReducer'
+import { updateUser } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
 import bottlesService from '../services/bottles'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
-import { useNumberField, useTextField } from '../hooks'
+import { useField } from '../hooks'
 import ListSuggestion from './ListSuggestion'
 
 const AddBottle = (props) => {
-  const [ isLoading, setIsLoading ] = useState(false)
-  const breweryName = useTextField('text', 1, 50, true)
-  const name = useTextField('text', 1, 50, true)
-  const abv = useNumberField('number', 0, 100, 0.1, true)
-  const price = useNumberField('number', 0, 1000, 0.01)
-  const count = useNumberField('number', 0, 50, 1, true)
-  const volume = useNumberField('number', 0, 10, 0.01)
-  const bottled = useNumberField('date', '1900-01-01', '2100-01-01', 1)
-  const expiration = useNumberField('date', '1900-01-01', '2100-01-01', 1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [breweryName, setBreweryName] = useField('text', 1, 50, true)
+  const [name, setName] = useField('text', 1, 50, true)
+  const [abv, setAbv] = useField('number', 0, 100, 0.1, true)
+  const [price, setPrice] = useField('number', 0, 1000, 0.01)
+  const [count, setCount] = useField('number', 0, 50, 1, true)
+  const [volume, setVolume] = useField('number', 0, 10, 0.01)
+  const [bottled, setBottled] = useField('date', '1900-01-01', '2100-01-01', 1)
+  const [expiration, setExpiration] = useField('date', '1900-01-01', '2100-01-01', 1)
 
   const handleAddBottle = async (event) => {
     setIsLoading(true)
@@ -49,7 +48,7 @@ const AddBottle = (props) => {
         beerId: beer.id
       })
 
-      const user = await props.updateUserToState(props.user.username)
+      const user = await props.updateUser(props.user.username)
       setIsLoading(false)
       props.setNotification('Added bottle succesfully')
       props.history.push(`/users/${user.id}/stash`)
@@ -125,8 +124,7 @@ const AddBottle = (props) => {
 const mapDispatchToProps = {
   addBeer,
   addBrewery,
-  updateUserToState,
-  setNotification
+  updateUser
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(AddBottle))
