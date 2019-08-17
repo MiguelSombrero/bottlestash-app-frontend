@@ -31,7 +31,7 @@ const Rate = (props) => {
       setAlcohol(bottle.beer.abv)
       //setAgeofbeer()
     }
-  }, [])
+  }, [props.location.state, setAlcohol, setBeerName, setBreweryName])
 
   const handleRate = async (event) => {
     event.preventDefault()

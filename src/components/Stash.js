@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col, Jumbotron, Accordion, Card, CardColumns } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Bottle from './Bottle'
 
 const Stash = (props) => {
@@ -17,26 +17,56 @@ const Stash = (props) => {
           <h2>{props.userToView.name} 's Stash</h2>
         </Jumbotron>
       </Row>
+
+      {props.userToView.username === props.user.username && props.userToView.hidden &&
       <Row>
-        <Accordion as={Col} >
+        Your stash is hidden and won't show to other users.
+        If you wan't to make it visible to other users, please
+        update visibility settings in your <NavLink to='/profile'>Profile</NavLink>
+      </Row>
+      }
+
+      {props.userToView.username !== props.user.username && props.userToView.hidden &&
+      <Row>
+        This stash is private and cannot be peeked - sorry! 
+      </Row>
+      }
+
+      {props.userToView.username === props.user.username &&
+      <>
+      <Row>
+        <Accordion as={Col} className='text-center'>
           <Accordion.Toggle as={Card.Header} eventKey='0'>
-            Peek
+            <Card.Text>Click here to see details of your stash</Card.Text>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey='0'>
             <Card.Body >
-              <p>You have {stash.length} different beers in your stash</p>
-              <Link to={`/bottles`}>Add new bottle to your stash</Link>
+              <NavLink to='/bottles'>Add new bottle</NavLink>
+              <Card.Text>You have {stash.length} different beers in your stash</Card.Text>
+              <Card.Text>You have {stash.reduce((sum, bottle) => sum + bottle.count, 0)} bottles in your stash</Card.Text>
+              <Card.Text>Your stash costs {stash.reduce((sum, bottle) => sum + bottle.price, 0)}</Card.Text>
+              <Card.Text>Your stash has {stash.reduce((sum, bottle) => sum + bottle.volume, 0)} beer</Card.Text>
             </Card.Body>
           </Accordion.Collapse>
         </Accordion>
       </Row>
+      </>
+      }
+
+      {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
       <Row>
-        <CardColumns >
+        <Col className='d-flex justify-content-center mb-2'>
           {stash.map(bottle =>
-            <Bottle key={bottle.id} bottle={bottle} user={props.user} />
+            <Bottle
+              key={bottle.id}
+              bottle={bottle}
+              user={props.user}
+            >
+            </Bottle>
           )}
-        </CardColumns>
+        </Col>
       </Row>
+      }
     </>
   )
 }

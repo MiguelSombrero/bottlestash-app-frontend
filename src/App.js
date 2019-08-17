@@ -72,7 +72,7 @@ const App = (props) => {
             render={() =>
               <AddBottle
                 breweries={breweriesAsList()}
-                user={loggedUser()}
+                user={props.user}
                 setNotification={props.setNotification}
               />
             }
@@ -98,7 +98,7 @@ const App = (props) => {
             render={({ match }) => 
               <Stash
                 userToView={userById(match.params.id)}
-                user={loggedUser()}
+                user={props.user}
               />
             }
           />
