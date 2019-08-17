@@ -13,7 +13,6 @@ import Register from './components/Register'
 import Stash from './components/Stash'
 import Footer from './components/Footer'
 import AddBottle from './components/AddBottle'
-import Bottle from './components/Bottle'
 import Notification from './components/Notification'
 import Rate from './components/Rate'
 import Profile from './components/Profile'
@@ -79,13 +78,10 @@ const App = (props) => {
             }
           />
           <Route
-            exact path='/bottles/:id/'
-            render={() => <Bottle setNotification={props.setNotification} /> }
-          />
-          <Route
             exact path='/rate'
-            render={() => <Rate setNotification={props.setNotification} /> }
+            render={(props) => <Rate {...props} /> }
           />
+
           {loggedUser() &&
           <Route
             exact path='/profile'

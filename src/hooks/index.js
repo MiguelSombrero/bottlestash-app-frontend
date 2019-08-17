@@ -7,7 +7,6 @@ export const setToken = newToken => {
   token = `bearer ${newToken}`
 }
 
-// tätä ei käytetä vielä missään
 export const useResource = (baseUrl) => {
 
   const getAll = async () => {
@@ -28,16 +27,24 @@ export const useResource = (baseUrl) => {
     return res.data
   }
 
-  const update = async resource => {
+  const update = async (id, resource) => {
     const config = {
       headers: { Authorization: token }
     }
-    const res = await axios.put(baseUrl, resource, config)
+    const res = await axios.put(`${baseUrl}/${id}`, resource, config)
+    return res.data
+  }
+
+  const remove = async id => {
+    const config = {
+      headers: { Authorization: token }
+    }
+    const res = await axios.delete(`${baseUrl}/${id}`, config)
     return res.data
   }
 
   return  {
-    create, getAll, getOne, update
+    create, getAll, getOne, update, remove
   }
 }
 

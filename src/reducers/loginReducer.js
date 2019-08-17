@@ -1,9 +1,5 @@
 import loginService from '../services/login'
-import usersService from '../services/users'
-import beersService from '../services/beers'
-import bottlesService from '../services/bottles'
-import breweriesService from '../services/breweries'
-import ratingsService from '../services/ratings'
+import { setToken } from '../hooks/'
 
 const initialState = null
 
@@ -25,12 +21,7 @@ export const loginUser = (username, password) => {
     })
 
     window.localStorage.setItem('loggedBottlestashUser', JSON.stringify(user))
-
-    usersService.setToken(user.token)
-    beersService.setToken(user.token)
-    bottlesService.setToken(user.token)
-    breweriesService.setToken(user.token)
-    ratingsService.setToken(user.token)
+    setToken(user.token)
 
     dispatch({
       type: 'LOGIN',
@@ -42,12 +33,7 @@ export const loginUser = (username, password) => {
 export const logoutUser = () => {
   return async dispatch => {
     window.localStorage.removeItem('loggedBottlestashUser')
-    
-    usersService.setToken(null)
-    beersService.setToken(null)
-    bottlesService.setToken(null)
-    breweriesService.setToken(null)
-    ratingsService.setToken(null)
+    setToken(null)
 
     dispatch({
       type: 'LOGOUT'
@@ -57,11 +43,7 @@ export const logoutUser = () => {
 
 export const setUserToState = user => {
   return async dispatch => {
-    usersService.setToken(user.token)
-    beersService.setToken(user.token)
-    bottlesService.setToken(user.token)
-    breweriesService.setToken(user.token)
-    ratingsService.setToken(user.token)
+    setToken(user.token)
 
     dispatch({
       type: 'LOGIN',

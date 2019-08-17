@@ -6,12 +6,12 @@ import { registerUser } from '../reducers/usersReducer'
 import { useField } from '../hooks'
 
 const Register = (props) => {
-  const [username, setUsername] = useField('text', 5, 20, true)
-  const [password, setPassword] = useField('password', 5, 20, true)
-  const [name, setName] = useField('text', 1, 20, true)
-  const [email, setEmail] = useField('text', 1, 50, true)
-  const [city, setCity] = useField('text', 1, 50, false)
-  const [country, setCountry] = useField('text', 1, 20, false)
+  const [username] = useField('text', 5, 20, true)
+  const [password] = useField('password', 5, 20, true)
+  const [name] = useField('text', 1, 20, true)
+  const [email] = useField('text', 1, 50, true)
+  const [city] = useField('text', 1, 50, false)
+  const [country] = useField('text', 1, 20, false)
 
   const handleRegister = async (event) => {
     event.preventDefault()

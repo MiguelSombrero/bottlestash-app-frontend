@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 import { useField } from '../hooks'
 
 const Login = (props) => {
-  const [username, setUsername] = useField('text', 5, 20, true)
-  const [password, setPassword] = useField('password', 5, 20, true)
+  const [username] = useField('text', 5, 20, true)
+  const [password] = useField('password', 5, 20, true)
 
   const handleLogin = async (event) => {
     event.preventDefault()

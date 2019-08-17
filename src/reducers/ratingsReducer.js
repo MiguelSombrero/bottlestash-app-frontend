@@ -1,4 +1,6 @@
-import ratingsService from '../services/ratings'
+import { useResource } from '../hooks'
+
+const ratingsService = useResource('http://localhost:3001/api/ratings')
 
 const ratingsReducer = (state = [], action) => {
     switch (action.type) {
@@ -14,7 +16,7 @@ const ratingsReducer = (state = [], action) => {
   export const getAllRatings = () => {
     return async dispatch => {
       const ratings = await ratingsService.getAll()
-  
+
       dispatch({
         type: 'GET_RATINGS',
         ratings

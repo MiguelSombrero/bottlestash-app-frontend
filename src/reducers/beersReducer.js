@@ -1,4 +1,6 @@
-import beersService from '../services/beers'
+import { useResource } from '../hooks'
+
+const beersService = useResource('http://localhost:3001/api/beers')
 
 const beersReducer = (state = [], action) => {
     switch (action.type) {
@@ -21,10 +23,17 @@ const beersReducer = (state = [], action) => {
       })
     }
   }
-  
-  export const addBeer = ({ breweryId, name, abv }) => {
+
+  export const getOneBeer = (brewery, name, abv) => {
     return async dispatch => {
-      const beer = await beersService.create({ breweryId, name, abv })
+      const beer = await beersService.getOne(`${brewery}/${name}/${abv}`)
+      return beer
+    }
+  }
+  
+  export const addBeer = newBeer => {
+    return async dispatch => {
+      const beer = await beersService.create(newBeer)
   
       dispatch({
         type: 'ADD_BEER',

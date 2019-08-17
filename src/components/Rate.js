@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import breweriesService from '../services/breweries'
@@ -8,18 +8,30 @@ import { withRouter } from 'react-router-dom'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
 import { addRating } from '../reducers/ratingsReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Rate = (props) => {
   const [beerName, setBeerName] = useField('text', 1, 50, true)
   const [breweryName, setBreweryName] = useField('text', 1, 50, true)
-  const [description, setDescription] = useField('text', 0, 1000, false)
+  const [description] = useField('text', 0, 1000, false)
   const [alcohol, setAlcohol] = useField('number', 0, 100, 0.1, true)
   const [ageofbeer, setAgeofbeer] = useField('number', 0, 360, 1, false)
-  const [aroma, setAroma] = useField('range', 0, 10, 1, true)
-  const [taste, setTaste] = useField('range', 0, 10, 1, true)
-  const [appearance, setAppearance] = useField('range', 0, 5, 1, true)
-  const [mouthfeel, setMouthfeel] = useField('range', 0, 5, 1, true)
-  const [overall, setOverall] = useField('range', 0, 20, 1, true)
+  const [aroma] = useField('range', 0, 10, 1, true)
+  const [taste] = useField('range', 0, 10, 1, true)
+  const [appearance] = useField('range', 0, 5, 1, true)
+  const [mouthfeel] = useField('range', 0, 5, 1, true)
+  const [overall] = useField('range', 0, 20, 1, true)
+
+  useEffect(() => {
+    if (props.location.state) {
+      const bottle = props.location.state.bottle
+
+      setBeerName(bottle.beer.name)
+      setBreweryName(bottle.beer.brewery.name)
+      setAlcohol(bottle.beer.abv)
+      //setAgeofbeer()
+    }
+  }, [])
 
   const handleRate = async (event) => {
     event.preventDefault()
@@ -31,7 +43,7 @@ const Rate = (props) => {
         let brewery = await breweriesService.getOne(breweryName.value)
         
         if (!brewery) {
-          brewery = await props.addBrewery(breweryName.value)
+          brewery = await props.addBrewery({ name: breweryName.value })
         }
   
         beer = await beersService.getOne({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
@@ -127,7 +139,8 @@ const Rate = (props) => {
 const mapDispatchToProps = {
   addBeer,
   addBrewery,
-  addRating
+  addRating,
+  setNotification
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Rate))

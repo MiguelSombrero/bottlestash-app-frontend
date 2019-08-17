@@ -1,4 +1,7 @@
-import usersService from '../services/users'
+//import usersService from '../services/users'
+import { useResource } from '../hooks'
+
+const usersService = useResource('http://localhost:3001/api/users')
 
 const usersReducer = (state = [], action) => {
   switch (action.type) {

@@ -1,45 +1,43 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { addBeer } from '../reducers/beersReducer'
-import { addBrewery } from '../reducers/breweriesReducer'
+import { addBeer, getOneBeer } from '../reducers/beersReducer'
+import { addBrewery, getOneBrewery } from '../reducers/breweriesReducer'
+import { addBottle } from '../reducers/bottlesReducer'
 import { updateUser } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
-import breweriesService from '../services/breweries'
-import beersService from '../services/beers'
-import bottlesService from '../services/bottles'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import ListSuggestion from './ListSuggestion'
 
 const AddBottle = (props) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [breweryName, setBreweryName] = useField('text', 1, 50, true)
-  const [name, setName] = useField('text', 1, 50, true)
-  const [abv, setAbv] = useField('number', 0, 100, 0.1, true)
-  const [price, setPrice] = useField('number', 0, 1000, 0.01)
-  const [count, setCount] = useField('number', 0, 50, 1, true)
-  const [volume, setVolume] = useField('number', 0, 10, 0.01)
-  const [bottled, setBottled] = useField('date', '1900-01-01', '2100-01-01', 1)
-  const [expiration, setExpiration] = useField('date', '1900-01-01', '2100-01-01', 1)
+  const [breweryName] = useField('text', 1, 50, true)
+  const [name] = useField('text', 1, 50, true)
+  const [abv] = useField('number', 0, 100, 0.1, true)
+  const [price] = useField('number', 0, 1000, 0.01)
+  const [count] = useField('number', 0, 50, 1, true)
+  const [volume] = useField('number', 0, 10, 0.01)
+  const [bottled] = useField('date', '1900-01-01', '2100-01-01', 1)
+  const [expiration] = useField('date', '1900-01-01', '2100-01-01', 1)
 
   const handleAddBottle = async (event) => {
     setIsLoading(true)
     event.preventDefault()
 
     try {
-      let brewery = await breweriesService.getOne(breweryName.value)
+      let brewery = await props.getOneBrewery(breweryName.value)
       
       if (!brewery) {
-        brewery = await props.addBrewery(breweryName.value)
+        brewery = await props.addBrewery({ name: breweryName.value })
       }
 
-      let beer = await beersService.getOne({ breweryId: brewery.id, name: name.value, abv: abv.value })
+      let beer = await props.getOneBeer(brewery.id, name.value, abv.value)
 
       if (!beer) {
         beer = await props.addBeer({ breweryId: brewery.id, name: name.value, abv: abv.value })
       }
 
-      await bottlesService.create({
+      await props.addBottle({
         price: price.value,
         count: count.value,
         volume: volume.value,
@@ -124,6 +122,9 @@ const AddBottle = (props) => {
 const mapDispatchToProps = {
   addBeer,
   addBrewery,
+  addBottle,
+  getOneBeer,
+  getOneBrewery,
   updateUser
 }
 
