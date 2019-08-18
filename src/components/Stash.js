@@ -1,7 +1,7 @@
 import React from 'react'
-import { Row, Col, Jumbotron, Accordion, Card, CardColumns } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Accordion, Card, Table } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import Bottle from './Bottle'
+import Bottles from './Bottles'
 
 const Stash = (props) => {
   if (!props.userToView) {
@@ -33,7 +33,6 @@ const Stash = (props) => {
       }
 
       {props.userToView.username === props.user.username &&
-      <>
       <Row>
         <Accordion as={Col} className='text-center'>
           <Accordion.Toggle as={Card.Header} eventKey='0'>
@@ -50,21 +49,11 @@ const Stash = (props) => {
           </Accordion.Collapse>
         </Accordion>
       </Row>
-      </>
       }
 
       {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
       <Row>
-        <Col className='d-flex justify-content-center mb-2'>
-          {stash.map(bottle =>
-            <Bottle
-              key={bottle.id}
-              bottle={bottle}
-              user={props.user}
-            >
-            </Bottle>
-          )}
-        </Col>
+        <Bottles stash={stash} ></Bottles>
       </Row>
       }
     </>

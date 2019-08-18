@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button, ButtonGroup } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { updateUser } from '../reducers/usersReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -7,6 +7,9 @@ import { removeBottle, updateBottle } from '../reducers/bottlesReducer'
 import { connect } from 'react-redux'
 
 const BottleDetails = (props) => {
+  if (!props.bottle) {
+    return null
+  }
   const bottle = props.bottle
 
   const handleDrink = async () => {

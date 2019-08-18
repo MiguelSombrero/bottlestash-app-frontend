@@ -6,6 +6,7 @@ import beersReducer from './reducers/beersReducer'
 import breweriesReducer from './reducers/breweriesReducer'
 import notificationReducer from './reducers/notificationReducer'
 import ratingsReducer from './reducers/ratingsReducer'
+import bottlesReducer from './reducers/bottlesReducer'
 
 const reducer = combineReducers({
   user: loginReducer,
@@ -13,7 +14,8 @@ const reducer = combineReducers({
   beers: beersReducer,
   breweries: breweriesReducer,
   notification: notificationReducer,
-  ratings: ratingsReducer
+  ratings: ratingsReducer,
+  bottles: bottlesReducer
 })
 
 const store = createStore(reducer, applyMiddleware(thunk))

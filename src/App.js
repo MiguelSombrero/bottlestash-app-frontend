@@ -54,7 +54,7 @@ const App = (props) => {
 
         <Route
           exact path='/'
-          render={() => <Home /> }
+          render={() => <Home user={props.user} /> }
         />
         <Route
           exact path='/login'
