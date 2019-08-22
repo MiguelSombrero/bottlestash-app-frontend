@@ -8,6 +8,8 @@ import notificationReducer from './reducers/notificationReducer'
 import ratingsReducer from './reducers/ratingsReducer'
 import bottlesReducer from './reducers/bottlesReducer'
 
+// toistaiseksi emme käytä beers mihinkään tilassa
+
 const reducer = combineReducers({
   user: loginReducer,
   users: usersReducer,

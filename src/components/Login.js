@@ -24,13 +24,13 @@ const Login = (props) => {
   return (
     <>
       <Row>
-        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+        <Jumbotron as={Col} className='text-center'>
           <h2>Login to Bottlestash</h2>
         </Jumbotron>
       </Row>
       <Row id='loginForm' >
-        <Col className='d-flex justify-content-center mb-2'>
-          <Form onSubmit={handleLogin} style={{ width: '20rem' }} >
+        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+          <Form onSubmit={handleLogin} >
             <Form.Group  >
               <Form.Label>Username</Form.Label>
               <Form.Control {...username} placeholder='username' />
@@ -43,8 +43,8 @@ const Login = (props) => {
           </Form>
         </Col>
       </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-2'>
+      <Row className='m-2 p-2'>
+        <Col style={{ maxWidth: '20rem', margin: 'auto' }}>
           <small>
             Not yet a member? 
             <Link to='/register'> Register here:</Link>

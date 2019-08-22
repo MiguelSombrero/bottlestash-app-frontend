@@ -24,7 +24,7 @@ const Register = (props) => {
         name: name.value,
         email: email.value,
         city: city.value,
-        county: country.value,
+        country: country.value,
         hidden
       })
 
@@ -39,13 +39,13 @@ const Register = (props) => {
   return (
     <>
       <Row>
-        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+        <Jumbotron as={Col} className='text-center'>
           <h2>Register to Bottlestash</h2>
         </Jumbotron>
       </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-2'>
-          <Form onSubmit={handleRegister} style={{ width: '20rem' }} id='registerForm' >
+      <Row className='mb-3'>
+        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+          <Form onSubmit={handleRegister} id='registerForm' >
             <Form.Group >
               <Form.Label >Username</Form.Label>
               <Form.Control {...username} placeholder='username' />

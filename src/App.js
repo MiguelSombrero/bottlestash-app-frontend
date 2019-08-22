@@ -16,6 +16,7 @@ import AddBottle from './components/AddBottle'
 import Notification from './components/Notification'
 import Rate from './components/Rate'
 import Profile from './components/Profile'
+import './App.css'
 
 const App = (props) => {
 

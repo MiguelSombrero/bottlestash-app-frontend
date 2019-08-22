@@ -38,7 +38,7 @@ const Bottles = (props) => {
           )}
         </tbody>
       </Table>
-      <BottleDetails show={showDetails} setShow={setShowDetails} bottle={bottle} ></BottleDetails>
+      <BottleDetails show={showDetails} setShow={setShowDetails} bottle={bottle} user={props.user} ></BottleDetails>
     </Col>
   )
 }

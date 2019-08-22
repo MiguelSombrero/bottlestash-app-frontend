@@ -31,7 +31,7 @@ const Rate = (props) => {
       setAlcohol(bottle.beer.abv)
       //setAgeofbeer()
     }
-  }, [props.location.state, setAlcohol, setBeerName, setBreweryName])
+  }, [])
 
   const handleRate = async (event) => {
     event.preventDefault()
@@ -76,13 +76,13 @@ const Rate = (props) => {
   return (
     <>
       <Row>
-        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+        <Jumbotron as={Col} className='text-center mb-2'>
             <h2>Give rating to this beer</h2>
         </Jumbotron>
       </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-2'>
-          <Form onSubmit={handleRate} id='rateForm' style={{ width: '20rem' }}>
+      <Row className='mb-3'>
+        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+          <Form onSubmit={handleRate} id='rateForm'>
             <Form.Group >
               <Form.Label>Brewery</Form.Label>
               <Form.Control {...breweryName} />

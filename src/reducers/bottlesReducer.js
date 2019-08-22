@@ -51,14 +51,14 @@ export const removeBottle = id => {
 }
 
 export const updateBottle = (id, bottle) => {
-    return async dispatch => {
-      const updatedBottle = await bottlesService.update(id, bottle)
+  return async dispatch => {
+    const updatedBottle = await bottlesService.update(id, bottle)
 
-      dispatch({
-        type: 'UPDATE_BOTTLE',
-        updatedBottle
-      })
-    }
+    dispatch({
+      type: 'UPDATE_BOTTLE',
+      updatedBottle
+    })
   }
+}
 
 export default bottlesReducer

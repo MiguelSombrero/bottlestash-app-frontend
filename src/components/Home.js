@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Jumbotron, Row, Col, Button, CardColumns } from 'react-bootstrap'
+import { Jumbotron, Row, Col, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { getAllRatings } from '../reducers/ratingsReducer'
 import { getAllBottles } from '../reducers/bottlesReducer'
 import Rating from './Rating'
 import Bottle from './Bottle'
+import '../App.css'
 
 const Home = (props) => {
   const [visibleRatings, setVisibleRatings] = useState(6)
@@ -26,6 +27,20 @@ const Home = (props) => {
     setVisibleBottles(visibleBottles + 6)
   }
 
+  const byAdded = (a, b) => b.added > a.added ? 1 : -1
+  
+  console.log(props.ratings)
+  
+  const bottlesToShow = props.bottles
+    .filter(b => !b.user.hidden)
+    .sort(byAdded)
+    .slice(0, visibleBottles)
+    
+    
+  const ratingsToShow = props.ratings
+    .sort(byAdded)
+    .slice(0, visibleRatings)
+    
   return (
     <>
       <Row>
@@ -64,46 +79,39 @@ const Home = (props) => {
       <>
       <Row>
         <Col className='text-center' >
-          <h3>Welcome back, {props.user.name}</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Jumbotron as={Col} className='text-center'>
           <h2>Recently added bottles:</h2>
-        </Jumbotron>
+        </Col>
       </Row>
       <Row>
-        <CardColumns>
-          {props.bottles.slice(0, visibleBottles).map(b =>
+        <Col style={{ maxWidth: '35rem', margin: 'auto' }} >
+          {bottlesToShow.map(b =>
             <Bottle key={b.id} bottle={b} ></Bottle>
-            )
-          }
-        </CardColumns>
+          )}
+        </Col>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center mb-2'>
+        <Col className='d-flex justify-content-center mb-5'>
           {props.bottles.length > visibleBottles &&
-            <Button onClick={handleSetVisibleBottles}>Load more</Button>
+            <Button onClick={handleSetVisibleBottles}>Load more ...</Button>
           }
         </Col>
       </Row>
       <Row>
-        <Jumbotron as={Col} className='text-center'>
+        <Col className='text-center'>
           <h2>Recently added ratings:</h2>
-        </Jumbotron>
+        </Col>
       </Row>
       <Row>
-        <CardColumns as={Col}>
-          {props.ratings.slice(0, visibleRatings).map(rating =>
+        <Col style={{ maxWidth: '35rem', margin: 'auto' }}>
+          {ratingsToShow.map(rating =>
             <Rating key={rating.id} rating={rating} ></Rating>
-            )
-          }
-        </CardColumns>
+          )}
+        </Col>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center mb-2'>
+        <Col className='d-flex justify-content-center mb-5'>
           {props.ratings.length > visibleRatings &&
-            <Button onClick={handleSetVisibleRatings}>Load more</Button>
+            <Button onClick={handleSetVisibleRatings}>Load more ...</Button>
           }
         </Col>
       </Row>

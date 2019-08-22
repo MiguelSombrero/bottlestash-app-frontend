@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { addBeer, getOneBeer } from '../reducers/beersReducer'
 import { addBrewery, getOneBrewery } from '../reducers/breweriesReducer'
 import { addBottle } from '../reducers/bottlesReducer'
-import { updateUser } from '../reducers/usersReducer'
+import { updateUserToState } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
@@ -46,7 +46,11 @@ const AddBottle = (props) => {
         beerId: beer.id
       })
 
-      const user = await props.updateUser(props.user.username)
+      // tämän voisi muuttaa niin, että yllä oleva pullo lisätään käyttäjän
+      // stashiin ja käyttäjä viedään tilaan, ilman että haetaan tietokannasta
+      const user = await props.updateUserToState(props.user.username)
+
+
       setIsLoading(false)
       props.setNotification('Added bottle succesfully')
       props.history.push(`/users/${user.id}/stash`)
@@ -59,12 +63,12 @@ const AddBottle = (props) => {
   return (
     <>
       <Row>
-        <Jumbotron as={Col} className='d-flex justify-content-center mb-2'>
+        <Jumbotron as={Col} className='text-center'>
           <h2>Add new bottle to your stash</h2>
         </Jumbotron>
       </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-2'>
+      <Row className='mb-3'>
+        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
           <Form onSubmit={handleAddBottle} id='addBottleForm' >
             <Form.Group >
             <Form.Label>Brewery</Form.Label>
@@ -95,11 +99,11 @@ const AddBottle = (props) => {
               <Form.Control {...price} placeholder='price of an one bottle' />
             </Form.Group>
             <Form.Row>
-              <Form.Group className='p-2'>
+              <Form.Group style={{ maxWidth: '50%' }} className=' p-2'>
                 <Form.Label>Bottled</Form.Label>
                 <Form.Control {...bottled} placeholder='day beer was bottled' />
               </Form.Group>
-              <Form.Group className='p-2'>
+              <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
                 <Form.Label>Expiration</Form.Label>
                 <Form.Control {...expiration} placeholder='expiration day of bottles' />
               </Form.Group>
@@ -125,7 +129,7 @@ const mapDispatchToProps = {
   addBottle,
   getOneBeer,
   getOneBrewery,
-  updateUser
+  updateUserToState
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(AddBottle))
