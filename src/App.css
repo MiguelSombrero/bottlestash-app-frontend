@@ -1,12 +1,11 @@
+body {
+    font-size: 100%
+}
 p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.5rem
-}
-h1 {
-    font-size: 3.5rem
+h1, h2, h3, h4, h5 {
+    font-family: 'Courier New', Courier, monospace
 }
 .jumbotron {
     background-color: white
@@ -17,7 +16,7 @@ h1 {
 .card {
     border-color: rgb(255, 172, 65);
 }
-button {
+.btn {
     color: white;
     background-color: rgb(255, 172, 65);
 }

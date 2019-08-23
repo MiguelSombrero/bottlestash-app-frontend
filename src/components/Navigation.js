@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, Row } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
-import '../App.css'
+import { setFilter } from '../reducers/filterReducer'
+import SearchForm from './SearchForm'
 
 const Navigation = (props) => {
 
@@ -14,8 +15,15 @@ const Navigation = (props) => {
     props.history.push('/')
   }
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+    props.setFilter(e.target.filter.value)
+    e.target.filter.value = ''
+    props.history.push('/search')
+  }
+
   return (
-    <Navbar sticky='top' as={Row} collapseOnSelect expand='lg' bg='dark' variant='dark'>
+    <Navbar as={Row} collapseOnSelect expand='lg' bg='dark' variant='dark'>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='mr-auto'>
@@ -51,13 +59,21 @@ const Navigation = (props) => {
             </>
           }
         </Nav>
+
+        {props.user &&
+          <SearchForm
+            handleSearch={handleSearch}
+            suggestions={props.suggestions}
+            id='search'
+          />
+        }
       </Navbar.Collapse>
     </Navbar>
   )
 }
 
 const mapDispatchToProps = {
-  logoutUser
+  logoutUser, setFilter
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Navigation))

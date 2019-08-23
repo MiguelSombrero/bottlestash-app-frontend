@@ -41,7 +41,7 @@ const BottleDetails = (props) => {
         <Modal.Title>{bottle.beer.brewery.name}, {bottle.beer.name}, {bottle.beer.abv} %</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Price {bottle.price} ¢</p>
+        <p>Price {bottle.price} &euro;</p>
         <p>Volume {bottle.volume} litres</p>
         <p>Bottled {bottle.bottled}</p>
         <p>Expires {bottle.expiration}</p>

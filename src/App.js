@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
 import { getAllUsers } from './reducers/usersReducer'
 import { getAllBreweries } from './reducers/breweriesReducer'
+import { getAllRatings } from './reducers/ratingsReducer'
+import { getAllBottles } from './reducers/bottlesReducer'
 import { setNotification } from './reducers/notificationReducer'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { Container, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import Login from './components/Login'
 import Home from './components/Home'
 import Navigation from './components/Navigation'
@@ -16,6 +18,8 @@ import AddBottle from './components/AddBottle'
 import Notification from './components/Notification'
 import Rate from './components/Rate'
 import Profile from './components/Profile'
+import SearchResults from './components/SearchResults'
+
 import './App.css'
 
 const App = (props) => {
@@ -35,6 +39,14 @@ const App = (props) => {
     props.getAllBreweries()
   }, [])
 
+  useEffect(() => {
+    props.getAllRatings()
+  }, [])
+
+  useEffect(() => {
+    props.getAllBottles()
+  }, [])
+
   const userById = (id) => 
     props.users.find(user => user.id === id)
 
@@ -46,16 +58,24 @@ const App = (props) => {
 
   return (
     <Container fluid>
-      <BrowserRouter as={Row} >
+      <BrowserRouter >
+
         <Navigation
           user={loggedUser()}
           setNotification={props.setNotification}
+          suggestions={props.bottles.map(b => b.beer.name)}
         />
         <Notification />
 
         <Route
           exact path='/'
-          render={() => <Home user={props.user} /> }
+          render={() => 
+            <Home
+              user={props.user}
+              bottles={props.bottles}
+              ratings={props.ratings}
+            />
+          }
         />
         <Route
           exact path='/login'
@@ -64,6 +84,16 @@ const App = (props) => {
         <Route
           exact path='/register'
           render={() => <Register setNotification={props.setNotification} />}
+        />
+        <Route
+          exact path='/search'
+          render={() =>
+            <SearchResults
+              user={props.user}
+              bottles={props.bottles}
+              suggestions={props.bottles.map(b => b.beer.name)}
+            />
+          }
         />
 
         {props.user &&
@@ -116,7 +146,9 @@ const mapStateToProps = (state) => {
   return {
     user: state.user,
     users: state.users,
-    breweries: state.breweries
+    breweries: state.breweries,
+    bottles: state.bottles,
+    ratings: state.ratings
   }
 }
 
@@ -124,6 +156,8 @@ const mapDispatchToProps = {
   setUserToState,
   getAllUsers,
   getAllBreweries,
+  getAllRatings,
+  getAllBottles,
   setNotification
 }
 

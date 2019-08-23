@@ -1,13 +1,26 @@
 import React from 'react'
-import { Jumbotron, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 const Footer = (props) => {
   return (
-    <Row>
-      <Jumbotron as={Col}>
-        Miika Somero 2019
-      </Jumbotron>
-    </Row>
+    <>
+      <Row className='mt-5' style={{ textAlign: 'center', backgroundColor: 'rgba(255, 172, 65, 0.8)' }}>
+        <Col className='col-2' style={{ margin: 'auto'}}>
+          <p>Tähän tietoja</p>
+        </Col>
+        <Col className='col-2' style={{ margin: 'auto'}}>
+          <p>Tähän tietoja</p>
+        </Col>
+        <Col className='col-2' style={{ margin: 'auto'}}>
+          <p>Tähän tietoja</p>
+        </Col>
+      </Row>
+      <Row style={{ textAlign: 'center', backgroundColor: 'rgba(255, 172, 65, 0.8)' }}>
+        <Col>
+          <p>&copy; Miika Somero 2019</p>
+        </Col>
+      </Row>
+    </>
   )
 }
 

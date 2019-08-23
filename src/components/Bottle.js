@@ -2,7 +2,6 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
 import moment from 'moment'
-import '../App.css'
 
 const Bottle = ({ bottle }) => {
   if (!bottle) {

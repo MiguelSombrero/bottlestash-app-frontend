@@ -1,23 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Jumbotron, Row, Col, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { getAllRatings } from '../reducers/ratingsReducer'
-import { getAllBottles } from '../reducers/bottlesReducer'
 import Rating from './Rating'
 import Bottle from './Bottle'
-import '../App.css'
 
 const Home = (props) => {
   const [visibleRatings, setVisibleRatings] = useState(6)
   const [visibleBottles, setVisibleBottles] = useState(6)
-
-  useEffect(() => {
-    props.getAllRatings()
-  }, [])
-
-  useEffect(() => {
-    props.getAllBottles()
-  }, [])
 
   const handleSetVisibleRatings = () => {
     setVisibleRatings(visibleRatings + 6)
@@ -28,9 +16,7 @@ const Home = (props) => {
   }
 
   const byAdded = (a, b) => b.added > a.added ? 1 : -1
-  
-  console.log(props.ratings)
-  
+
   const bottlesToShow = props.bottles
     .filter(b => !b.user.hidden)
     .sort(byAdded)
@@ -44,17 +30,20 @@ const Home = (props) => {
   return (
     <>
       <Row>
-        <Jumbotron as={Col} className='text-center'>
+        <Col>
+        <Jumbotron className='text-center'>
           <h1>Bottlestash</h1>
-          <p>Cooler than wine cellar - wetter than Finnish summer</p>
+          <h5>Cooler than wine cellar - wetter than Finnish summer</h5>
         </Jumbotron>
+        </Col>
+        
       </Row>
 
       {!props.user &&
       <>
       <Row>
         <Col className='d-flex justify-content-center mb-2' >
-          <h3>Bottlestash, eh?</h3>
+          <h2>Bottlestash, eh?</h2>
           <p>
             That's right! Bottlestash let's you keep track of your
             beer cellar; what you have, how many bottles and when to drink them!
@@ -63,7 +52,7 @@ const Home = (props) => {
       </Row>
       <Row>
         <Col className='d-flex justify-content-center mb-2' >
-          <h4>Main features:</h4>
+          <h3>Main features:</h3>
           <ul>
             <li>Save bottles to your stash</li>
             <li>Keep track of your beers expiration</li>
@@ -79,7 +68,7 @@ const Home = (props) => {
       <>
       <Row>
         <Col className='text-center' >
-          <h2>Recently added bottles:</h2>
+          <h5>Recently added bottles:</h5>
         </Col>
       </Row>
       <Row>
@@ -98,7 +87,7 @@ const Home = (props) => {
       </Row>
       <Row>
         <Col className='text-center'>
-          <h2>Recently added ratings:</h2>
+          <h4>Recently added ratings:</h4>
         </Col>
       </Row>
       <Row>
@@ -122,15 +111,4 @@ const Home = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    ratings: state.ratings,
-    bottles: state.bottles
-  }
-}
-
-const mapDispatchToProps = {
-  getAllRatings, getAllBottles
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home
