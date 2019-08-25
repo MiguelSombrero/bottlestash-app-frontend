@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Form, Button, Jumbotron, Nav } from 'react-bootstrap'
 import { NavLink, withRouter } from 'react-router-dom'
-import { useField } from '../hooks'
+import { useTextField } from '../hooks'
 import { connect } from 'react-redux'
 import { removeUser, updateUser } from '../reducers/usersReducer'
 import { logoutUser } from '../reducers/loginReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const Profile = (props) => {
-  const [name, setName] = useField('text', 1, 20, true)
-  const [email, setEmail] = useField('text', 1, 50, true)
-  const [city, setCity] = useField('text', 1, 50, false)
-  const [country, setCountry] = useField('text', 1, 20, false)
+  const [validated, setValidated] = useState(false)
+  const [name, nameErrors, setName] = useTextField('text', 1, 20, true)
+  const [email, emailErrors, setEmail] = useTextField('text', 1, 50, true)
+  const [city, cityErrors, setCity] = useTextField('text', 1, 50, false)
+  const [country, countryErrors, setCountry] = useTextField('text', 1, 20, false)
   const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
@@ -28,6 +29,11 @@ const Profile = (props) => {
   
   const handleProfileUpdate = async (event) => {
     event.preventDefault()
+    setValidated(true)
+
+    if (!event.target.checkValidity()) {
+      return
+    }
 
     try {
       const updateableUser = {
@@ -82,29 +88,32 @@ const Profile = (props) => {
           </Nav>
         </Col>
         <Col md={9} >
-          <Form style={{ maxWidth: '25rem', margin: 'auto' }} onSubmit={handleProfileUpdate} id='profileUpdateForm' >
+          <Form noValidate validated={validated} style={{ maxWidth: '25rem', margin: 'auto' }} onSubmit={handleProfileUpdate} id='profileUpdateForm' >
             <Form.Group >
               <Form.Label>Name</Form.Label>
               <Form.Control {...name} />
+              <Form.Control.Feedback type='invalid' >{nameErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Email</Form.Label>
               <Form.Control {...email} />
+              <Form.Control.Feedback type='invalid' >{emailErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Row>
               <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
                 <Form.Label>City</Form.Label>
                 <Form.Control {...city} />
+                <Form.Control.Feedback type='invalid' >{cityErrors}</Form.Control.Feedback>
               </Form.Group>
               <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
                 <Form.Label>Country</Form.Label>
                 <Form.Control {...country} />
+                <Form.Control.Feedback type='invalid' >{countryErrors}</Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
             <Form.Group>
               <Form.Check
                 type='checkbox'
-                name='hidden'
                 checked={hidden}
                 onChange={({ target }) => setHidden(target.checked)}
                 label='I want my stash to be private' />

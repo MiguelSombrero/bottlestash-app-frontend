@@ -21,7 +21,20 @@ export const useResource = (baseUrl) => {
 
   const create = async (resource) => {
     const config = {
-      headers: { Authorization: token }
+      headers: {
+        Authorization: token
+      }
+    }
+    const res = await axios.post(baseUrl, resource, config)
+    return res.data
+  }
+
+  const createImage = async (resource) => {
+    const config = {
+      headers: {
+        Authorization: token,
+        'content-type': 'multipart/form-data'
+      }
     }
     const res = await axios.post(baseUrl, resource, config)
     return res.data
@@ -44,43 +57,56 @@ export const useResource = (baseUrl) => {
   }
 
   return  {
-    create, getAll, getOne, update, remove
+    create, createImage, getAll, getOne, update, remove
   }
 }
 
-export const useField = (type, min, max, step = 1, required = false) => {
+export const useTextField = (type, minLength, maxLength, required = false) => {
   const [value, setValue] = useState('')
+  const [validationMessage, setValidationMessage] = useState('')
 
   const onChange = (event) => {
     setValue(event.target.value)
+  }
+
+  const onInvalid = (event) => {
+    setValidationMessage(event.target.validationMessage)
   }
 
   const setDefaultValue = (value) => {
     setValue(value)
   }
 
-  if (type === 'number' || type === 'date' || type === 'range') {
-    return [{
-      type,
-      min,
-      max,
-      step,
-      required,
-      value,
-      onChange
-      },
-      setDefaultValue
-    ]
+  return [
+    {
+      type, minLength, maxLength, required, value, onChange, onInvalid
+    },
+    validationMessage,
+    setDefaultValue
+  ]
+}
+
+export const useNumberField = (type, min, max, step = 1, required = false) => {
+  const [value, setValue] = useState('')
+  const [validationMessage, setValidationMessage] = useState('')
+
+  const onChange = (event) => {
+    setValue(event.target.value)
   }
 
-  return [{
-    type,
-    minLength: min,
-    maxLength: max,
-    required,
-    value,
-    onChange
+  const onInvalid = (event) => {
+    setValidationMessage(event.target.validationMessage)
+  }
+
+  const setDefaultValue = (value) => {
+    setValue(value)
+  }
+
+  return [
+    {
+      type, min, max, step, required, value, onChange, onInvalid
     },
+    validationMessage,
     setDefaultValue
   ]
 }

@@ -21,44 +21,39 @@ const Home = (props) => {
     .filter(b => !b.user.hidden)
     .sort(byAdded)
     .slice(0, visibleBottles)
-    
-    
+
   const ratingsToShow = props.ratings
     .sort(byAdded)
     .slice(0, visibleRatings)
-    
+  
   return (
     <>
       <Row>
-        <Col>
-        <Jumbotron className='text-center'>
+        <Jumbotron as={Col} className='text-center'>
           <h1>Bottlestash</h1>
           <h5>Cooler than wine cellar - wetter than Finnish summer</h5>
         </Jumbotron>
-        </Col>
-        
       </Row>
 
       {!props.user &&
       <>
       <Row>
-        <Col className='d-flex justify-content-center mb-2' >
-          <h2>Bottlestash, eh?</h2>
+        <Col className='maindiv' >
+          <h2 className='mb-5'>Bottlestash, you say?</h2>
+          <h4>That's right!</h4>
           <p>
-            That's right! Bottlestash let's you keep track of your
-            beer cellar; what you have, how many bottles and when to drink them!
+            With Bottlestash you can keep track of your beer cellar - 
+            what beer do you have, how many and when to drink them!
           </p>
         </Col>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center mb-2' >
-          <h3>Main features:</h3>
-          <ul>
-            <li>Save bottles to your stash</li>
-            <li>Keep track of your beers expiration</li>
-            <li>Rate beers you drink</li>
-            <li>Peek other user's cellars</li>
-          </ul>
+        <Col className='maindiv' >
+          <h3 className='mb-2'>Main features:</h3>
+            <p>Save bottles to your stash</p>
+            <p>Keep track of your beers expiration</p>
+            <p>Rate beers you drink</p>
+            <p>Peek other user's cellars</p>
         </Col>
       </Row>
       </>

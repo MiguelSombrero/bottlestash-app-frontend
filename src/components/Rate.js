@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
-import { useField } from '../hooks'
+import { useTextField, useNumberField } from '../hooks'
 import breweriesService from '../services/breweries'
 import beersService from '../services/beers'
 import { connect } from 'react-redux'
@@ -11,16 +11,17 @@ import { addRating } from '../reducers/ratingsReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const Rate = (props) => {
-  const [beerName, setBeerName] = useField('text', 1, 50, true)
-  const [breweryName, setBreweryName] = useField('text', 1, 50, true)
-  const [description] = useField('text', 0, 1000, false)
-  const [alcohol, setAlcohol] = useField('number', 0, 100, 0.1, true)
-  const [ageofbeer, setAgeofbeer] = useField('number', 0, 360, 1, false)
-  const [aroma] = useField('range', 0, 10, 1, true)
-  const [taste] = useField('range', 0, 10, 1, true)
-  const [appearance] = useField('range', 0, 5, 1, true)
-  const [mouthfeel] = useField('range', 0, 5, 1, true)
-  const [overall] = useField('range', 0, 20, 1, true)
+  const [validated, setValidated] = useState(false)
+  const [beerName, beerErrors, setBeerName] = useTextField('text', 1, 50, true)
+  const [breweryName, breweryErrors, setBreweryName] = useTextField('text', 1, 50, true)
+  const [description, descriptionErrors] = useTextField('text', 0, 1000, false)
+  const [alcohol, alcoholErrors, setAlcohol] = useNumberField('number', 0, 100, 0.1, true)
+  const [ageofbeer, ageofbeerErrors, setAgeofbeer] = useNumberField('number', 0, 360, 1, false)
+  const [aroma] = useNumberField('range', 0, 10, 1, true)
+  const [taste] = useNumberField('range', 0, 10, 1, true)
+  const [appearance] = useNumberField('range', 0, 5, 1, true)
+  const [mouthfeel] = useNumberField('range', 0, 5, 1, true)
+  const [overall] = useNumberField('range', 0, 20, 1, true)
 
   useEffect(() => {
     if (props.location.state) {
@@ -35,7 +36,12 @@ const Rate = (props) => {
 
   const handleRate = async (event) => {
     event.preventDefault()
+    setValidated(true)
 
+    if (!event.target.checkValidity()) {
+      return
+    }
+    
     try {
       let beer = null
 
@@ -82,22 +88,26 @@ const Rate = (props) => {
       </Row>
       <Row className='mb-3'>
         <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
-          <Form onSubmit={handleRate} id='rateForm'>
+          <Form noValidate validated={validated} onSubmit={handleRate} id='rateForm'>
             <Form.Group >
               <Form.Label>Brewery</Form.Label>
               <Form.Control {...breweryName} />
+              <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Beer</Form.Label>
               <Form.Control {...beerName} />
+              <Form.Control.Feedback type='invalid' >{beerErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Abv</Form.Label>
               <Form.Control {...alcohol} />
+              <Form.Control.Feedback type='invalid' >{alcoholErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Beers age when drinked</Form.Label>
               <Form.Control {...ageofbeer} />
+              <Form.Control.Feedback type='invalid' >{ageofbeerErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Aroma</Form.Label>
@@ -127,6 +137,7 @@ const Rate = (props) => {
             <Form.Group >
               <Form.Label>Description</Form.Label>
               <Form.Control as='textarea' rows='4' {...description} />
+              <Form.Control.Feedback type='invalid' >{descriptionErrors}</Form.Control.Feedback>
             </Form.Group>
             <Button type='submit' variant='success' block>Add rating</Button>
           </Form>

@@ -4,11 +4,11 @@ import { withRouter } from 'react-router-dom'
 import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
 import { Link } from 'react-router-dom'
-import { useField } from '../hooks'
+import { useTextField } from '../hooks'
 
 const Login = (props) => {
-  const [username] = useField('text', 5, 20, true)
-  const [password] = useField('password', 5, 20, true)
+  const [username] = useTextField('text', 5, 20, true)
+  const [password] = useTextField('password', 5, 20, true)
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -47,7 +47,7 @@ const Login = (props) => {
         <Col style={{ maxWidth: '20rem', margin: 'auto' }}>
           <small>
             Not yet a member? 
-            <Link to='/register'> Register here:</Link>
+            <Link to='/register'> Register here</Link>
           </small>
         </Col>
       </Row>

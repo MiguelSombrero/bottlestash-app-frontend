@@ -25,11 +25,9 @@ const SearchResults = (props) => {
   return (
     <>
       <Row>
-        <Col>
-          <Jumbotron className='text-center'>
-            <h2>Search from Bottlestash</h2>
-          </Jumbotron>
-        </Col>
+        <Jumbotron as={Col} className='text-center'>
+          <h2>Search from Bottlestash</h2>
+        </Jumbotron>
       </Row>
       <Row>
         <Col className='d-flex justify-content-center block'>

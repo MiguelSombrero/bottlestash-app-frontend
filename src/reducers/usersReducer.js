@@ -1,6 +1,6 @@
 import { useResource } from '../hooks'
 
-const usersService = useResource('http://localhost:3001/api/users')
+const usersService = useResource('/api/users')
 
 const usersReducer = (state = [], action) => {
   switch (action.type) {
