@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setUserToState } from './reducers/loginReducer'
 import { getAllUsers } from './reducers/usersReducer'
 import { getAllBreweries } from './reducers/breweriesReducer'
+import { getAllBeers } from './reducers/beersReducer'
 import { getAllRatings } from './reducers/ratingsReducer'
 import { getAllBottles } from './reducers/bottlesReducer'
 import { setNotification } from './reducers/notificationReducer'
@@ -19,6 +20,8 @@ import Notification from './components/Notification'
 import Rate from './components/Rate'
 import Profile from './components/Profile'
 import SearchResults from './components/SearchResults'
+import Brewery from './components/Brewery'
+import Beer from './components/Beer'
 
 import './App.css'
 
@@ -40,6 +43,10 @@ const App = (props) => {
   }, [])
 
   useEffect(() => {
+    props.getAllBeers()
+  }, [])
+
+  useEffect(() => {
     props.getAllRatings()
   }, [])
 
@@ -48,18 +55,20 @@ const App = (props) => {
   }, [])
 
   const userById = (id) => 
-    props.users.find(user => user.id === id)
+    props.users.find(u => u.id === id)
+
+  const breweryById = (id) =>
+    props.breweries.find(b => b.id === id)
+
+  const beerById = (id) =>
+    props.beers.find(b => b.id === id)
 
   const loggedUser = () =>
     !props.user ? null : props.users.find(user => user.username === props.user.username)
 
-  const breweriesAsList = () => 
-    !props.breweries ? null : props.breweries.map(brewery => brewery.name)
-
   return (
     <Container fluid>
       <BrowserRouter >
-
         <Navigation
           user={loggedUser()}
           setNotification={props.setNotification}
@@ -95,6 +104,23 @@ const App = (props) => {
             />
           }
         />
+        <Route
+            exact path='/breweries/:id/'
+            render={({ match }) => 
+              <Brewery
+                brewery={breweryById(match.params.id)}
+              />
+            }
+          />
+        <Route
+          exact path='/beers/:id/'
+          render={({ match }) => 
+            <Beer
+              beer={beerById(match.params.id)}
+              ratings={props.ratings}
+            />
+          }
+        />
 
         {props.user &&
         <>  
@@ -102,7 +128,8 @@ const App = (props) => {
             exact path='/bottles'
             render={() =>
               <AddBottle
-                breweries={breweriesAsList()}
+                breweries={props.breweries}
+                beers={props.beers}
                 user={props.user}
                 setNotification={props.setNotification}
               />
@@ -147,6 +174,7 @@ const mapStateToProps = (state) => {
     user: state.user,
     users: state.users,
     breweries: state.breweries,
+    beers: state.beers,
     bottles: state.bottles,
     ratings: state.ratings
   }
@@ -156,6 +184,7 @@ const mapDispatchToProps = {
   setUserToState,
   getAllUsers,
   getAllBreweries,
+  getAllBeers,
   getAllRatings,
   getAllBottles,
   setNotification

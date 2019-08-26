@@ -1,19 +1,23 @@
 import React from 'react'
-import { Col, Card } from 'react-bootstrap'
+import { Col, Card, ListGroup } from 'react-bootstrap'
 
 const StashDetails = ({ stash }) => {
+
+  const bottlesCount = stash.reduce((sum, bottle) => sum + bottle.count, 0)
+  const stashCost = stash.reduce((sum, bottle) => sum + bottle.price, 0)
+  const stashVolume = stash.reduce((sum, bottle) => sum + bottle.volume, 0)
+
   return (
-    <Col>
+    <Col style={{ maxWidth: '50em', margin: 'auto', textAlign: 'center' }}>
       <Card>
         <Card.Header>
-          <Card.Title>Click here to see details of your stash</Card.Title>
+          <Card.Title>Details of your stash</Card.Title>
         </Card.Header>
-        <Card.Body >
-          <Card.Text>You have {stash.length} different beers in your stash</Card.Text>
-          <Card.Text>You have {stash.reduce((sum, bottle) => sum + bottle.count, 0)} bottles in your stash</Card.Text>
-          <Card.Text>Your stash costs {stash.reduce((sum, bottle) => sum + bottle.price, 0)}</Card.Text>
-          <Card.Text>Your stash has {stash.reduce((sum, bottle) => sum + bottle.volume, 0)} beer</Card.Text>
-        </Card.Body>
+        <ListGroup variant='flush'>
+          <ListGroup.Item>{stash.length} different beers and {bottlesCount} different bottles</ListGroup.Item>
+          <ListGroup.Item>Your stash costs {stashCost} &euro;</ListGroup.Item>
+          <ListGroup.Item>Your stash has {stashVolume} litres of beer</ListGroup.Item>
+        </ListGroup>
       </Card>
     </Col>
   )

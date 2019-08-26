@@ -10,6 +10,7 @@ const BottleDetails = (props) => {
   if (!props.bottle) {
     return null
   }
+  
   const bottle = props.bottle
 
   const handleDrink = async () => {
@@ -28,7 +29,6 @@ const BottleDetails = (props) => {
       }
     
       props.updateUserToState(props.user.username)
-      props.setShow(false)
           
     } catch (exception) {
       props.setNotification('Bottle update failed!', 'error')
@@ -36,7 +36,7 @@ const BottleDetails = (props) => {
   }
     
   return (
-    <Modal centered show={props.show} onHide={() => props.setShow(false)}>
+    <Modal centered show={props.visible} onHide={props.toggleVisibility}>
       <Modal.Header closeButton>
         <Modal.Title>{bottle.beer.brewery.name}, {bottle.beer.name}, {bottle.beer.abv} %</Modal.Title>
       </Modal.Header>

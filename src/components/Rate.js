@@ -17,11 +17,11 @@ const Rate = (props) => {
   const [description, descriptionErrors] = useTextField('text', 0, 1000, false)
   const [alcohol, alcoholErrors, setAlcohol] = useNumberField('number', 0, 100, 0.1, true)
   const [ageofbeer, ageofbeerErrors, setAgeofbeer] = useNumberField('number', 0, 360, 1, false)
-  const [aroma] = useNumberField('range', 0, 10, 1, true)
-  const [taste] = useNumberField('range', 0, 10, 1, true)
-  const [appearance] = useNumberField('range', 0, 5, 1, true)
-  const [mouthfeel] = useNumberField('range', 0, 5, 1, true)
-  const [overall] = useNumberField('range', 0, 20, 1, true)
+  const [aroma] = useNumberField('range', 1, 10, 1, true)
+  const [taste] = useNumberField('range', 1, 10, 1, true)
+  const [appearance] = useNumberField('range', 1, 5, 1, true)
+  const [mouthfeel] = useNumberField('range', 1, 5, 1, true)
+  const [overall] = useNumberField('range', 1, 20, 1, true)
 
   useEffect(() => {
     if (props.location.state) {

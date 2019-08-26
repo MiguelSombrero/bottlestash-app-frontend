@@ -9,8 +9,6 @@ import ratingsReducer from './reducers/ratingsReducer'
 import bottlesReducer from './reducers/bottlesReducer'
 import filterReducer from './reducers/filterReducer'
 
-// toistaiseksi emme käytä beers mihinkään tilassa
-
 const reducer = combineReducers({
   user: loginReducer,
   users: usersReducer,

@@ -77,7 +77,19 @@ const AddBottle = (props) => {
     }
   }
 
-  return (
+  const breweriesAsList = () => !props.breweries
+    ? null
+    : props.breweries.map(b => b.name)
+
+  const beersAsList = () => !props.beers
+    ? null
+    : props.beers.filter(b => b.brewery.name === breweryName.value).map(b => b.name)
+
+  const abvAsList = () => !props.beers
+    ? null
+    : props.beers.filter(b => b.brewery.name === breweryName.value && b.name === name.value).map(b => b.abv)
+
+    return (
     <>
       <Row>
         <Jumbotron as={Col} className='text-center'>
@@ -90,17 +102,19 @@ const AddBottle = (props) => {
             <Form.Group >
             <Form.Label>Brewery</Form.Label>
               <Form.Control {...breweryName} list='breweriesAsList' placeholder='name of the brewery' />
-              <ListSuggestion suggestions={props.breweries} id='breweriesAsList' />
+              <ListSuggestion suggestions={breweriesAsList()} id='breweriesAsList' />
               <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
               <Form.Label>Name</Form.Label>
-              <Form.Control {...name} placeholder='name of your beer' />
+              <Form.Control {...name} list='beersAsList' placeholder='name of your beer' />
+              <ListSuggestion suggestions={beersAsList()} id='beersAsList' />
               <Form.Control.Feedback type='invalid' >{nameErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>
               <Form.Label>Abv</Form.Label>
-              <Form.Control {...abv} placeholder='alcohol %' />
+              <Form.Control {...abv} list='abvAsList' placeholder='alcohol %' />
+              <ListSuggestion suggestions={abvAsList()} id='abvAsList' />
               <Form.Control.Feedback type='invalid' >{abvErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group>

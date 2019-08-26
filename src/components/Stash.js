@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Row, Col, Jumbotron, Nav } from 'react-bootstrap'
+import React, { useState, useEffect } from 'react'
+import { Row, Col, Jumbotron, Nav, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import Bottles from './Bottles'
 import StashDetails from './StashDetails'
 
 const Stash = (props) => {
-  const [stashVisible, setStashVisible ] = useState(false)
+  const [stashVisible, setStashVisible] = useState(false)
 
   if (!props.userToView) {
     return null
@@ -40,10 +40,11 @@ const Stash = (props) => {
       }
 
       {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
+      <>
       <Row>
-        <Col md={3} style={{ maxWidth: '15rem' }} >
-          <Nav justify className='flex-column'>
-            <Nav.Link onClick={() => setStashVisible(!stashVisible)} as='span' className='p-2'>
+        <Col className='d-flex justify-content-center mb-4'>
+          <Nav>
+            <Nav.Link onClick={() => setStashVisible(!stashVisible)} className='p-2'>
               Stash details
             </Nav.Link>
             <Nav.Link as='span' className='p-2'>
@@ -51,13 +52,14 @@ const Stash = (props) => {
             </Nav.Link>
           </Nav>
         </Col>
-        {!stashVisible &&
-          <Bottles stash={stash} user={props.user} ></Bottles>
-        }
-        {stashVisible &&
-          <StashDetails stash={stash}></StashDetails>
+      </Row>
+      <Row className='mb3-'>
+        {!stashVisible
+          ? <Bottles stash={stash} user={props.user} ></Bottles>
+          : <StashDetails stash={stash}></StashDetails>
         }
       </Row>
+      </>
       }
     </>
   )
