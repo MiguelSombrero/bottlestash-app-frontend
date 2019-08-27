@@ -12,6 +12,7 @@ import { setNotification } from '../reducers/notificationReducer'
 
 const Rate = (props) => {
   const [validated, setValidated] = useState(false)
+  const [picture, setPicture] = useState(null)
   const [beerName, beerErrors, setBeerName] = useTextField('text', 1, 50, true)
   const [breweryName, breweryErrors, setBreweryName] = useTextField('text', 1, 50, true)
   const [description, descriptionErrors] = useTextField('text', 0, 1000, false)
@@ -58,6 +59,10 @@ const Rate = (props) => {
           beer = await props.addBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
         }
       }
+
+      const newPicture = picture
+        ? await props.addPicture(picture)
+        : null
       
       const newRating = {
         beerId: props.beer === undefined ? beer.id : props.beer.id,
@@ -67,7 +72,8 @@ const Rate = (props) => {
         taste: taste.value,
         appearance: appearance.value,
         mouthfeel: mouthfeel.value,
-        overall: overall.value
+        overall: overall.value,
+        pictureId: newPicture ? newPicture.id : null
       }
   
       props.addRating(newRating)
@@ -138,6 +144,19 @@ const Rate = (props) => {
               <Form.Label>Description</Form.Label>
               <Form.Control as='textarea' rows='4' {...description} />
               <Form.Control.Feedback type='invalid' >{descriptionErrors}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className='custom-file mb-4 p-2'>
+              <Form.Label className='custom-file-label'>Click to add pic of your beer</Form.Label>
+              <Form.Control
+                name='picture'
+                className='custom-file-input'
+                type='file'
+                accept='image/*'
+                onChange={({ target }) => setPicture(target.files[0])}
+              />
+              {picture &&
+              <Form.Text className='text-center'>{picture.name}</Form.Text>
+              }
             </Form.Group>
             <Button type='submit' variant='success' block>Add rating</Button>
           </Form>

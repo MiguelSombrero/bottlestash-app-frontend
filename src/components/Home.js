@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Jumbotron, Row, Col, Button } from 'react-bootstrap'
+import { Jumbotron, Row, Col, Button, Container } from 'react-bootstrap'
 import Rating from './Rating'
 import Bottle from './Bottle'
 

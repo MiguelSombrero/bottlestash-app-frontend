@@ -1,5 +1,13 @@
+html {
+    min-height: 100%;
+    position: relative;    
+}
 body {
     font-size: 100%;
+}
+body .home {
+    background: url('/background_image_beer.jpg') no-repeat center fixed;
+    background-size: cover
 }
 p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif

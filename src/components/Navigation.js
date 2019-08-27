@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { Navbar, Nav, Row } from 'react-bootstrap'
+import { Navbar, Nav, Row, Card } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
 import { setFilter } from '../reducers/filterReducer'
 import SearchForm from './SearchForm'
 
 const Navigation = (props) => {
+
+  console.log(props.user)
 
   const handleLogout = () => {
     props.logoutUser()
@@ -51,21 +53,28 @@ const Navigation = (props) => {
                 <NavLink to='/rate' >Rate beer</NavLink>
               </Nav.Link>
               <Nav.Link href='#' as='span'>
-                <NavLink to='/profile' >Profile</NavLink>
-              </Nav.Link>
-              <Nav.Link href='#' as='span'>
                 <Nav.Item onClick={handleLogout} >Logout</Nav.Item>
               </Nav.Link>
             </>
           }
         </Nav>
-
+        
         {props.user &&
+          <>
+          <NavLink to='/profile' >
+            <Card.Img
+              src={`api/pictures/${props.user.picture}`}
+              href='/profile'
+              style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+              className='avatar'
+              alt='Profile'
+            />
+          </NavLink>
           <SearchForm
             handleSearch={handleSearch}
-            suggestions={props.suggestions}
             id='search'
           />
+          </>
         }
       </Navbar.Collapse>
     </Navbar>

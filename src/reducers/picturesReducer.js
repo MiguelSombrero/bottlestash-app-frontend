@@ -24,7 +24,9 @@ const picturesReducer = (state = [], action) => {
   
   export const addPicture = newPicture => {
     return async dispatch => {
-      const picture = await picturesService.createImage(newPicture)
+      const data = new FormData()
+      data.append('picture', newPicture)
+      const picture = await picturesService.createImage(data)
       return picture
     }
   }

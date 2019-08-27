@@ -72,7 +72,6 @@ const App = (props) => {
         <Navigation
           user={loggedUser()}
           setNotification={props.setNotification}
-          suggestions={props.bottles.map(b => b.beer.name)}
         />
         <Notification />
 
@@ -97,12 +96,7 @@ const App = (props) => {
         <Route
           exact path='/search'
           render={() =>
-            <SearchResults
-              user={props.user}
-              bottles={props.bottles}
-              suggestions={props.bottles.map(b => b.beer.name)}
-            />
-          }
+            <SearchResults user={props.user} /> }
         />
         <Route
             exact path='/breweries/:id/'

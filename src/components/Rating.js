@@ -6,9 +6,11 @@ import moment from 'moment'
 const Rating = ({ rating }) => {
   return (
     <Card className='text-center p-2 m-2'>
-      <Card.Header style={{ backgroundColor: 'rgb(52, 58, 64)', color: 'rgb(255, 172, 65)' }}>
-        <Card.Title>{rating.beer.brewery.name}</Card.Title>
-        <Card.Subtitle>{rating.beer.name}, {rating.beer.abv} %</Card.Subtitle>
+      <Card.Header style={{ backgroundColor: 'white', color: 'rgb(52, 58, 64)' }}>
+        <Card.Title>{rating.beer.name}, {rating.beer.abv} %</Card.Title>
+        <small>
+          brewed by <NavLink to={`/breweries/${rating.beer.brewery.id}/`} >{rating.beer.brewery.name}</NavLink>
+        </small>
       </Card.Header>
       <Card.Body>
         <blockquote>

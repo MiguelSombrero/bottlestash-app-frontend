@@ -23,7 +23,7 @@ const Bottle = ({ bottle }) => {
       </Card.Body>
       <Card.Footer>
         <small className='text-muted'>
-          by <NavLink to={`/users/${bottle.user.id}/stash`} >{bottle.user.name}</NavLink>, {moment(bottle.added).fromNow()}
+          added by <NavLink to={`/users/${bottle.user.id}/stash`} >{bottle.user.name}</NavLink>, {moment(bottle.added).fromNow()}
         </small>
       </Card.Footer>
     </Card>

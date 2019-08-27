@@ -39,13 +39,12 @@ const Stash = (props) => {
       </Row>
       }
 
-      {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
-      <>
+      {(props.userToView.username === props.user.username) &&
       <Row>
         <Col className='d-flex justify-content-center mb-4'>
           <Nav>
             <Nav.Link onClick={() => setStashVisible(!stashVisible)} className='p-2'>
-              Stash details
+              {stashVisible ? 'Back to stash' : 'Stash details'}
             </Nav.Link>
             <Nav.Link as='span' className='p-2'>
               <NavLink to='/bottles'>Add new bottle</NavLink>
@@ -53,13 +52,14 @@ const Stash = (props) => {
           </Nav>
         </Col>
       </Row>
-      <Row className='mb3-'>
+      }
+      {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
+      <Row className='mb-3'>
         {!stashVisible
-          ? <Bottles stash={stash} user={props.user} ></Bottles>
+          ? <Bottles stash={stash} user={props.user} userToView={props.userToView}></Bottles>
           : <StashDetails stash={stash}></StashDetails>
         }
       </Row>
-      </>
       }
     </>
   )

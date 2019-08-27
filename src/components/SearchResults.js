@@ -1,20 +1,29 @@
 import React from 'react'
-import { Col, Row, Jumbotron } from 'react-bootstrap'
+import { Col, Row, Jumbotron, Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setFilter } from '../reducers/filterReducer'
 import Bottle from './Bottle'
+import Beer from './Beer'
+import Brewery from './Brewery'
 import SearchForm from './SearchForm'
 
 const SearchResults = (props) => {
 
-  const byBeerOrBrewery = (b) => !props.filter
-    ? false
-    : b.beer.name.toLowerCase().includes(props.filter.toLowerCase()) ||
-      b.beer.brewery.name.toLowerCase().includes(props.filter.toLowerCase())
+  const byHidden = (b) => !b.user.hidden
+  const byBeerName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
+  const byBreweryName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
 
   const bottlesToShow = props.bottles
-    .filter(b => !b.user.hidden)
-    .filter(byBeerOrBrewery)
+    ? props.bottles.filter(byHidden).filter(b => byBeerName(b.beer) || byBreweryName(b.beer.brewery))
+    : null
+
+  const beersToShow = props.beers
+    ? props.beers.filter(byBeerName)
+    : null
+
+  const breweriesToShow = props.breweries
+    ? props.breweries.filter(byBreweryName)
+    : null
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -33,32 +42,101 @@ const SearchResults = (props) => {
         <Col className='d-flex justify-content-center block'>
           <SearchForm
             handleSearch={handleSearch}
-            suggestions={props.suggestions}
             id='search'
           />
         </Col>
       </Row>
       {props.filter &&
+      <>
       <Row>
         <Col className='text-center'>
-          <p>We have {bottlesToShow.length} results for search '{props.filter}'</p>
+          <h5>Bottles</h5>
         </Col>
       </Row>
-      }
+      <Row>
+        <Col className='text-center'>
+          <p>
+            {bottlesToShow.length < 1
+              ?  `No bottles for search '${props.filter}'`
+              :  `${bottlesToShow.length} bottles for search '${props.filter}'`
+            }
+          </p>
+        </Col>
+      </Row>
       <Row>
         <Col style={{ maxWidth: '35em', margin: 'auto' }} >
-          {bottlesToShow.map(b =>
-            <Bottle key={b.id} bottle={b} ></Bottle>
+          <Table>
+            <thead>
+              <tr>
+                <th>Beer</th>
+                <th>Brewery</th>
+                <th>Abv</th>
+              </tr>
+            </thead>
+            <tbody >
+              {bottlesToShow.map(b =>
+                <tr key={b.id} >
+                  <td>{b.beer.name}</td>
+                  <td>{b.beer.brewery.name}</td>
+                  <td>{b.beer.abv} %</td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      <Row>
+        <h5>Beers</h5>
+      </Row>
+      <Row>
+        <Col className='text-center'>
+          <p>
+            {beersToShow.length < 1
+              ?  `We have no beers for search '${props.filter}'`
+              :  `${beersToShow.length} beers for search '${props.filter}'`
+            }
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col style={{ maxWidth: '35em', margin: 'auto' }} >
+          {beersToShow.map(b =>
+            <Beer key={b.id} beer={b} ratings={[]} ></Beer>
           )}
         </Col>
       </Row>
+      <Row>
+        <h5>Breweries</h5>
+      </Row>
+      <Row>
+        <Col className='text-center'>
+          <p>
+            {beersToShow.length < 1
+              ?  `We have no breweries for search '${props.filter}'`
+              :  `${breweriesToShow.length} breweries for search '${props.filter}'`
+            }
+          </p>
+        </Col>
+      </Row>
+      <Row>
+        <Col style={{ maxWidth: '35em', margin: 'auto' }} >
+          {breweriesToShow.map(b =>
+            <Brewery key={b.id} brewery={b} ></Brewery>
+          )}
+        </Col>
+      </Row>
+      </>
+      }
     </>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    filter: state.filter
+    filter: state.filter,
+    bottles: state.bottles,
+    beers: state.beers,
+    breweries: state.breweries
   }
 }
 

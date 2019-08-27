@@ -46,13 +46,9 @@ const AddBottle = (props) => {
         beer = await props.addBeer({ breweryId: brewery.id, name: name.value, abv: abv.value })
       }
 
-      let newPicture = null
-
-      if (picture) {
-        let data = new FormData()
-        data.append('picture', picture)
-        newPicture = await props.addPicture(data)
-      }
+      const newPicture = picture
+        ? await props.addPicture(picture)
+        : null
 
       await props.addBottle({
         price: price.value,
@@ -150,6 +146,7 @@ const AddBottle = (props) => {
                 name='picture'
                 className='custom-file-input'
                 type='file'
+                accept='image/*'
                 onChange={({ target }) => setPicture(target.files[0])}
               />
               {picture &&

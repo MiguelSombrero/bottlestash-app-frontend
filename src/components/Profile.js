@@ -4,11 +4,13 @@ import { NavLink, withRouter } from 'react-router-dom'
 import { useTextField } from '../hooks'
 import { connect } from 'react-redux'
 import { removeUser, updateUser } from '../reducers/usersReducer'
+import { addPicture } from '../reducers/picturesReducer'
 import { logoutUser } from '../reducers/loginReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
 const Profile = (props) => {
   const [validated, setValidated] = useState(false)
+  const [picture, setPicture] = useState(null)
   const [name, nameErrors, setName] = useTextField('text', 1, 20, true)
   const [email, emailErrors, setEmail] = useTextField('text', 1, 50, true)
   const [city, cityErrors, setCity] = useTextField('text', 1, 50, false)
@@ -36,11 +38,16 @@ const Profile = (props) => {
     }
 
     try {
+      const newPicture = picture
+        ? await props.addPicture(picture)
+        : null
+
       const updateableUser = {
         name: name.value,
         email: email.value,
         city: city.value,
         country: country.value,
+        pictureId: newPicture ? newPicture.id : null,
         hidden
       }
   
@@ -73,9 +80,9 @@ const Profile = (props) => {
           <h2>{props.user.username} profile</h2>
         </Jumbotron>
       </Row>
-      <Row className='mb-3'>
-        <Col md={3} style={{ maxWidth: '10rem' }} >
-          <Nav justify className='flex-column'>
+      <Row>
+        <Col className='d-flex justify-content-center mb-4'>
+          <Nav>
             <Nav.Link as='span' className='p-2'>
               <NavLink to={`/users/${props.user.id}/stash`} >Your stash</NavLink>
             </Nav.Link>
@@ -87,7 +94,9 @@ const Profile = (props) => {
             </Nav.Link>
           </Nav>
         </Col>
-        <Col md={9} >
+      </Row>
+      <Row className='mb-3'>
+        <Col >
           <Form noValidate validated={validated} style={{ maxWidth: '25rem', margin: 'auto' }} onSubmit={handleProfileUpdate} id='profileUpdateForm' >
             <Form.Group >
               <Form.Label>Name</Form.Label>
@@ -118,6 +127,19 @@ const Profile = (props) => {
                 onChange={({ target }) => setHidden(target.checked)}
                 label='I want my stash to be private' />
             </Form.Group>
+            <Form.Group className='custom-file mb-4 p-2'>
+              <Form.Label className='custom-file-label'>Click to add profile picture</Form.Label>
+              <Form.Control
+                name='picture'
+                className='custom-file-input'
+                type='file'
+                accept='image/*'
+                onChange={({ target }) => setPicture(target.files[0])}
+              />
+              {picture &&
+              <Form.Text className='text-center'>{picture.name}</Form.Text>
+              }
+            </Form.Group>
             <Button type='submit' variant='success' block>Save profile</Button>
           </Form>
         </Col>
@@ -130,6 +152,7 @@ const mapDispatchToProps = {
   removeUser,
   updateUser,
   logoutUser,
+  addPicture,
   setNotification
 }
 
