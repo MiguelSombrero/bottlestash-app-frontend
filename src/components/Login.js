@@ -28,8 +28,8 @@ const Login = (props) => {
           <h2>Login to Bottlestash</h2>
         </Jumbotron>
       </Row>
-      <Row id='loginForm' >
-        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+      <Row id='loginForm'>
+        <Col className='formstyle'>
           <Form onSubmit={handleLogin} >
             <Form.Group  >
               <Form.Label>Username</Form.Label>
@@ -41,14 +41,14 @@ const Login = (props) => {
             </Form.Group>
             <Button id='login' variant='success' type='submit' block >Login</Button>
           </Form>
-        </Col>
-      </Row>
-      <Row className='m-2 p-2'>
-        <Col style={{ maxWidth: '20rem', margin: 'auto' }}>
-          <small>
-            Not yet a member? 
-            <Link to='/register'> Register here</Link>
-          </small>
+          <Row className='mt-2'>
+            <Col className='text-center'>
+              <small>
+                  Not yet a member? 
+                <Link to='/register'> Register here</Link>
+              </small>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </>

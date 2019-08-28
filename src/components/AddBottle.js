@@ -93,7 +93,7 @@ const AddBottle = (props) => {
         </Jumbotron>
       </Row>
       <Row className='mb-3'>
-        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+        <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleAddBottle} id='addBottleForm' >
             <Form.Group >
             <Form.Label>Brewery</Form.Label>

@@ -2,16 +2,13 @@ import React from 'react'
 import { Col, Row, Jumbotron, Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setFilter } from '../reducers/filterReducer'
-import Bottle from './Bottle'
-import Beer from './Beer'
-import Brewery from './Brewery'
 import SearchForm from './SearchForm'
 
 const SearchResults = (props) => {
 
   const byHidden = (b) => !b.user.hidden
-  const byBeerName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
-  const byBreweryName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
+  const byBeerName = (b) => !props.filter ? false : props.filter.toLowerCase().includes(b.name.toLowerCase())
+  const byBreweryName = (b) => !props.filter ? false : props.filter.toLowerCase().includes(b.name.toLowerCase())
 
   const bottlesToShow = props.bottles
     ? props.bottles.filter(byHidden).filter(b => byBeerName(b.beer) || byBreweryName(b.beer.brewery))
@@ -31,6 +28,105 @@ const SearchResults = (props) => {
     e.target.filter.value = ''
   }
 
+  const showBottles = () => 
+    <>
+    <Row>
+      <Col className='maindiv'>
+        <h3>Bottles</h3>
+        <p>
+          {bottlesToShow.length} bottles for search '{props.filter}'
+        </p>
+      </Col>
+    </Row>
+    <Row>
+      <Col className='maindiv' >
+        <Table>
+          <thead>
+            <tr>
+              <th>Beer</th>
+              <th>Brewery</th>
+              <th>Abv</th>
+            </tr>
+          </thead>
+          <tbody >
+            {bottlesToShow.map(b =>
+              <tr key={b.id} >
+                <td>{b.beer.name}, {b.beer.abv} %</td>
+                <td>{b.beer.brewery.name}</td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  </>
+
+const showBeers = () => 
+  <>
+    <Row>
+      <Col >
+        <h3>Beers</h3>
+        <p>
+          {beersToShow.length} beers for search '{props.filter}'
+        </p>
+      </Col>
+    </Row>
+    <Row>
+      <Col  >
+        <Table>
+          <thead>
+            <tr>
+              <th>Beer</th>
+              <th>Brewery</th>
+              <th>Abv</th>
+            </tr>
+          </thead>
+          <tbody >
+            {beersToShow.map(b =>
+              <tr key={b.id} >
+                <td>{b.name}</td>
+                <td>{b.brewery.name}</td>
+                <td>{b.abv} %</td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  </>
+
+const showBreweries = () => 
+  <>
+    <Row>
+      <Col>
+        <h3>Breweries</h3>
+        <p>
+          {breweriesToShow.length} breweries for search '{props.filter}'
+        </p>
+      </Col>
+    </Row>
+    <Row>
+      <Col >
+        <Table>
+          <thead>
+            <tr>
+              <th>Brewery</th>
+              <th>Beers</th>
+            </tr>
+          </thead>
+          <tbody >
+            {breweriesToShow.map(b =>
+              <tr key={b.id} >
+                <td>{b.name}</td>
+                <td>{b.beers.length}</td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  </>
+
   return (
     <>
       <Row>
@@ -39,7 +135,7 @@ const SearchResults = (props) => {
         </Jumbotron>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center block'>
+        <Col className='d-flex justify-content-center'>
           <SearchForm
             handleSearch={handleSearch}
             id='search'
@@ -47,85 +143,20 @@ const SearchResults = (props) => {
         </Col>
       </Row>
       {props.filter &&
-      <>
-      <Row>
-        <Col className='text-center'>
-          <h5>Bottles</h5>
+        <Col className='maindiv'>
+          {bottlesToShow.length > 0
+            ? showBottles()
+            : <p>No bottles for search '{props.filter}'</p>
+          }
+          {beersToShow.length > 0
+            ? showBeers()
+            : <p>No beers for search '{props.filter}'</p>
+          }
+          {breweriesToShow.length > 0
+            ? showBreweries()
+            : <p>No breweries for search '{props.filter}'</p>
+          }
         </Col>
-      </Row>
-      <Row>
-        <Col className='text-center'>
-          <p>
-            {bottlesToShow.length < 1
-              ?  `No bottles for search '${props.filter}'`
-              :  `${bottlesToShow.length} bottles for search '${props.filter}'`
-            }
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ maxWidth: '35em', margin: 'auto' }} >
-          <Table>
-            <thead>
-              <tr>
-                <th>Beer</th>
-                <th>Brewery</th>
-                <th>Abv</th>
-              </tr>
-            </thead>
-            <tbody >
-              {bottlesToShow.map(b =>
-                <tr key={b.id} >
-                  <td>{b.beer.name}</td>
-                  <td>{b.beer.brewery.name}</td>
-                  <td>{b.beer.abv} %</td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-      <Row>
-        <h5>Beers</h5>
-      </Row>
-      <Row>
-        <Col className='text-center'>
-          <p>
-            {beersToShow.length < 1
-              ?  `We have no beers for search '${props.filter}'`
-              :  `${beersToShow.length} beers for search '${props.filter}'`
-            }
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ maxWidth: '35em', margin: 'auto' }} >
-          {beersToShow.map(b =>
-            <Beer key={b.id} beer={b} ratings={[]} ></Beer>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <h5>Breweries</h5>
-      </Row>
-      <Row>
-        <Col className='text-center'>
-          <p>
-            {beersToShow.length < 1
-              ?  `We have no breweries for search '${props.filter}'`
-              :  `${breweriesToShow.length} breweries for search '${props.filter}'`
-            }
-          </p>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ maxWidth: '35em', margin: 'auto' }} >
-          {breweriesToShow.map(b =>
-            <Brewery key={b.id} brewery={b} ></Brewery>
-          )}
-        </Col>
-      </Row>
-      </>
       }
     </>
   )

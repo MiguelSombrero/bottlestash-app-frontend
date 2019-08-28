@@ -9,8 +9,6 @@ import SearchForm from './SearchForm'
 
 const Navigation = (props) => {
 
-  console.log(props.user)
-
   const handleLogout = () => {
     props.logoutUser()
     props.setNotification('Logout was successfull')
@@ -63,7 +61,7 @@ const Navigation = (props) => {
           <>
           <NavLink to='/profile' >
             <Card.Img
-              src={`api/pictures/${props.user.picture}`}
+              src={`/api/pictures/${props.user.picture}`}
               href='/profile'
               style={{ width: '50px', height: '50px', borderRadius: '50%' }}
               className='avatar'

@@ -10,7 +10,7 @@ const SearchForm = (props) => {
 
   return (
     <Form onSubmit={props.handleSearch} inline>
-      <Form.Control list={props.id} name='filter' type ='text' className='p-2 m-2' placeholder='search for bottles ...'></Form.Control>
+      <Form.Control list={props.id} name='filter' type ='text' className='p-2 m-2' placeholder='search for bottles, beers and more ...'></Form.Control>
         <ListSuggestion
           suggestions={suggestions}
           id={props.id}

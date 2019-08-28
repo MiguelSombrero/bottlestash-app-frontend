@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Row, Col, Jumbotron, Nav, Button } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Row, Col, Jumbotron, Nav } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import Bottles from './Bottles'
 import StashDetails from './StashDetails'

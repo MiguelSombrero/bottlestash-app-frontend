@@ -12,10 +12,16 @@ const Rating = ({ rating }) => {
           brewed by <NavLink to={`/breweries/${rating.beer.brewery.id}/`} >{rating.beer.brewery.name}</NavLink>
         </small>
       </Card.Header>
+        {rating.picture &&
+          <Card.Img src={`/api/pictures/${rating.picture}`} className='img-thumbnail' alt='' />
+        }
       <Card.Body>
         <blockquote>
           {rating.description}
         </blockquote>
+        <footer className="blockquote-footer">
+          <cite>{rating.user.name}</cite>
+        </footer>
       </Card.Body>
       <Card.Footer>
         <small className='text-muted'>

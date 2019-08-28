@@ -8,7 +8,7 @@ const StashDetails = ({ stash }) => {
   const stashVolume = stash.reduce((sum, bottle) => sum + bottle.volume, 0)
 
   return (
-    <Col style={{ maxWidth: '50em', margin: 'auto', textAlign: 'center' }}>
+    <Col className='maindiv'>
       <Card>
         <Card.Header>
           <Card.Title>Details of your stash</Card.Title>

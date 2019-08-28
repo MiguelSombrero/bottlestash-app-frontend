@@ -8,7 +8,6 @@ import { getAllRatings } from './reducers/ratingsReducer'
 import { getAllBottles } from './reducers/bottlesReducer'
 import { setNotification } from './reducers/notificationReducer'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
 import Login from './components/Login'
 import Home from './components/Home'
 import Navigation from './components/Navigation'
@@ -22,6 +21,8 @@ import Profile from './components/Profile'
 import SearchResults from './components/SearchResults'
 import Brewery from './components/Brewery'
 import Beer from './components/Beer'
+import About from './components/About'
+import Ratings from './components/Ratings'
 
 import './App.css'
 
@@ -63,12 +64,15 @@ const App = (props) => {
   const beerById = (id) =>
     props.beers.find(b => b.id === id)
 
+  const ratingsByUserId = (id) =>
+    props.ratings.filter(r => r.user.id === id)
+
   const loggedUser = () =>
     !props.user ? null : props.users.find(user => user.username === props.user.username)
 
   return (
-    <Container fluid>
-      <BrowserRouter >
+    <>
+      <BrowserRouter>
         <Navigation
           user={loggedUser()}
           setNotification={props.setNotification}
@@ -92,6 +96,10 @@ const App = (props) => {
         <Route
           exact path='/register'
           render={() => <Register setNotification={props.setNotification} />}
+        />
+        <Route
+          exact path='/about'
+          render={() => <About />}
         />
         <Route
           exact path='/search'
@@ -130,6 +138,14 @@ const App = (props) => {
             }
           />
           <Route
+            exact path='/users/:id/ratings'
+            render={({ match }) =>
+              <Ratings 
+                ratings={ratingsByUserId(match.params.id)}
+              /> 
+            }
+          />
+          <Route
             exact path='/rate'
             render={(props) => <Rate {...props} /> }
           />
@@ -159,7 +175,7 @@ const App = (props) => {
         
         <Footer />
       </BrowserRouter>
-    </Container>
+    </>
   )
 }
 

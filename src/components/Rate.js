@@ -8,7 +8,9 @@ import { withRouter } from 'react-router-dom'
 import { addBeer } from '../reducers/beersReducer'
 import { addBrewery } from '../reducers/breweriesReducer'
 import { addRating } from '../reducers/ratingsReducer'
+import { addPicture } from '../reducers/picturesReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import moment from 'moment'
 
 const Rate = (props) => {
   const [validated, setValidated] = useState(false)
@@ -17,7 +19,7 @@ const Rate = (props) => {
   const [breweryName, breweryErrors, setBreweryName] = useTextField('text', 1, 50, true)
   const [description, descriptionErrors] = useTextField('text', 0, 1000, false)
   const [alcohol, alcoholErrors, setAlcohol] = useNumberField('number', 0, 100, 0.1, true)
-  const [ageofbeer, ageofbeerErrors, setAgeofbeer] = useNumberField('number', 0, 360, 1, false)
+  const [bottled, bottledErrors, setBottled] = useNumberField('date', '1990-01-01', '2050-01-01', 1, false)
   const [aroma] = useNumberField('range', 1, 10, 1, true)
   const [taste] = useNumberField('range', 1, 10, 1, true)
   const [appearance] = useNumberField('range', 1, 5, 1, true)
@@ -31,7 +33,7 @@ const Rate = (props) => {
       setBeerName(bottle.beer.name)
       setBreweryName(bottle.beer.brewery.name)
       setAlcohol(bottle.beer.abv)
-      //setAgeofbeer()
+      setBottled(moment(bottle.bottled).format('YYYY-MM-DD'))
     }
   }, [])
 
@@ -63,11 +65,11 @@ const Rate = (props) => {
       const newPicture = picture
         ? await props.addPicture(picture)
         : null
-      
+
       const newRating = {
         beerId: props.beer === undefined ? beer.id : props.beer.id,
         description: description.value,
-        ageofbeer: ageofbeer.value,
+        ageofbeer: bottled ? moment(new Date()).diff(moment(bottled.value), 'months') : null,
         aroma: aroma.value,
         taste: taste.value,
         appearance: appearance.value,
@@ -89,7 +91,7 @@ const Rate = (props) => {
     <>
       <Row>
         <Jumbotron as={Col} className='text-center mb-2'>
-            <h2>Give rating to this beer</h2>
+            <h2>Rate beer</h2>
         </Jumbotron>
       </Row>
       <Row className='mb-3'>
@@ -97,23 +99,23 @@ const Rate = (props) => {
           <Form noValidate validated={validated} onSubmit={handleRate} id='rateForm'>
             <Form.Group >
               <Form.Label>Brewery</Form.Label>
-              <Form.Control {...breweryName} />
+              <Form.Control {...breweryName} placeholder='name of brewery' />
               <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Beer</Form.Label>
-              <Form.Control {...beerName} />
+              <Form.Control {...beerName} placeholder='name of beer' />
               <Form.Control.Feedback type='invalid' >{beerErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Abv</Form.Label>
-              <Form.Control {...alcohol} />
+              <Form.Control {...alcohol} placeholder='alcohol volume' />
               <Form.Control.Feedback type='invalid' >{alcoholErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
-              <Form.Label>Beers age when drinked</Form.Label>
-              <Form.Control {...ageofbeer} />
-              <Form.Control.Feedback type='invalid' >{ageofbeerErrors}</Form.Control.Feedback>
+              <Form.Label>Bottled</Form.Label>
+              <Form.Control {...bottled} placeholder='(optional)' />
+              <Form.Control.Feedback type='invalid' >{bottledErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group >
               <Form.Label>Aroma</Form.Label>
@@ -142,7 +144,7 @@ const Rate = (props) => {
             </Form.Group>
             <Form.Group >
               <Form.Label>Description</Form.Label>
-              <Form.Control as='textarea' rows='4' {...description} />
+              <Form.Control as='textarea' rows='4' {...description} placeholder='describe your beer' />
               <Form.Control.Feedback type='invalid' >{descriptionErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className='custom-file mb-4 p-2'>
@@ -170,6 +172,7 @@ const mapDispatchToProps = {
   addBeer,
   addBrewery,
   addRating,
+  addPicture,
   setNotification
 }
 

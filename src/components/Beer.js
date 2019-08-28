@@ -13,6 +13,32 @@ const Beer = ({ beer, ratings }) => {
     return null
   }
 
+  const ratingsToShow = ratings
+    .filter(r => r.beer.id === beer.id)
+
+  const showBeer = () =>
+    <>
+    <Row>
+      <Col className='text-center'>
+        <h3>Ratings</h3>
+      </Col>
+    </Row>
+    <Row>
+      <Col className='maindiv'>
+        {ratingsToShow.map(r =>
+          <Rating key={r.id} rating={r} ></Rating>
+        )}
+      </Col>
+    </Row>
+    <Row>
+      <Col className='d-flex justify-content-center mb-5'>
+        {ratingsToShow.length > visibleRatings &&
+          <Button onClick={handleVisibleRatings}>Load more ...</Button>
+        }
+      </Col>
+    </Row>
+  </>
+
   return (
     <>
       <Row>
@@ -21,26 +47,11 @@ const Beer = ({ beer, ratings }) => {
           <h5>{beer.brewery.name}</h5>
         </Jumbotron>
       </Row>
-      <Row>
-        <Col className='text-center'>
-          <h3>Ratings</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ maxWidth: '35rem', margin: 'auto', textAlign: 'center' }}>
-          {ratings.filter(r => r.beer.id === beer.id).map(r =>
-            <Rating key={r.id} rating={r} ></Rating>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-5'>
-          {beer.ratings.length > visibleRatings &&
-            <Button onClick={handleVisibleRatings}>Load more ...</Button>
-          }
-    </Col>
-  </Row>
-  </>
+      {ratingsToShow.length > 0
+        ? showBeer()
+        : <h4 className='text-center'>No ratings for this beer</h4>
+      }
+    </>
   )
 }
 

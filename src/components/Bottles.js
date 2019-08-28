@@ -21,7 +21,7 @@ const Bottles = (props) => {
   }
 
   return (
-    <Col style={{ maxWidth: '50em', margin: 'auto' }}>
+    <Col className='maindiv'>
       <Table hover responsive>
         <thead>
           <tr>

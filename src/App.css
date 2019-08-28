@@ -4,6 +4,7 @@ html {
 }
 body {
     font-size: 100%;
+    background-color: white
 }
 body .home {
     background: url('/background_image_beer.jpg') no-repeat center fixed;
@@ -12,8 +13,11 @@ body .home {
 p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
-h1, h2, h3, h4, h5 {
+h1, h2, h3 {
     font-family: 'Courier New', Courier, monospace
+}
+h4, h5, h6 {
+    font-family: "Lucida Console", Monaco, monospace
 }
 .jumbotron {
     background-color: rgba(230, 138, 0, 0.9);
@@ -36,6 +40,17 @@ h1, h2, h3, h4, h5 {
 }
 .maindiv {
     max-width: 35rem;
-    margin: 0 auto 20px;
-    text-align: center
+    margin: 5px auto 20px;
+    text-align: center;
+    padding: 1rem;
+}
+.formstyle {
+    max-width: 25rem;
+    margin: auto;
+    padding: 1rem
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

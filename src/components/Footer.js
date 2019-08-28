@@ -4,16 +4,26 @@ import { Row, Col, Jumbotron, Nav } from 'react-bootstrap'
 
 const Footer = (props) => {
   return (
-    <Row>
-      <Jumbotron className='text-center d-flex justify-content-center mb-5' as={Col}>
-        <Nav>
-          <Nav.Item><NavLink to='/' >Home</NavLink></Nav.Item>
-          <Nav.Item><NavLink to='/about' >about</NavLink></Nav.Item>
-          <Nav.Item><NavLink to='/github' >Github</NavLink></Nav.Item>
-        </Nav>
-        <p>&copy; Miika Somero 2019</p>
-      </Jumbotron>
-    </Row>
+    <Jumbotron className='mt-5' style={{ backgroundColor: 'whitesmoke', color: 'black' }}>
+      <Row>
+        <Col>
+          <Nav className='justify-content-center'>
+            <Nav.Link as='span'>
+              <NavLink to='/' >Home</NavLink>
+            </Nav.Link>
+            <Nav.Link as='span'>
+              <NavLink to='/about' >About</NavLink>
+            </Nav.Link>
+            <Nav.Link href='https://github.com/MiguelSombrero/bottlestash-app-backend'>Github</Nav.Link>
+          </Nav>
+        </Col>
+      </Row>
+      <Row className='mt-4'>
+        <Col className='text-center'>
+          <p>&copy; Miika Somero 2019</p>
+        </Col>
+      </Row>
+    </Jumbotron>
   )
 }
 
