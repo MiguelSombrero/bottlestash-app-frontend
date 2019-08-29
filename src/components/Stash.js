@@ -23,7 +23,7 @@ const Stash = (props) => {
 
       {props.userToView.username === props.user.username && props.userToView.hidden &&
       <Row>
-        <Col className='p-2 text-center'>
+        <Col className='maindiv'>
           <p>
             Your stash is hidden and won't show to other users.
             If you wan't to make it visible to other users, please
@@ -35,7 +35,9 @@ const Stash = (props) => {
 
       {props.userToView.username !== props.user.username && props.userToView.hidden &&
       <Row>
-        This stash is private and cannot be peeked - sorry! 
+        <Col className='maindiv'>
+          <p>This stash is private and cannot be peeked - sorry!</p>
+        </Col>
       </Row>
       }
 

@@ -12,9 +12,10 @@ const Home = (props) => {
   }
 
   const byAdded = (a, b) => b.added > a.added ? 1 : -1
+  const byHidden = b => !b.user.hidden
 
   const bottlesToShow = props.bottles
-    .filter(b => !b.user.hidden)
+    .filter(byHidden)
     .sort(byAdded)
     .slice(0, visibleBottles)
 
@@ -26,7 +27,7 @@ const Home = (props) => {
         <Jumbotron as={Col} className='text-center'>
           <h1>Bottlestash</h1>
           <h5>Cooler than your wine cellar - wetter than Finnish summer</h5>
-          <h6>(or something as cornish)</h6>
+          <h6>(or something as lame)</h6>
         </Jumbotron>
       </Row>
 

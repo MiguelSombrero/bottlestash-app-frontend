@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
-import { Row, Col, Jumbotron, Button, ListGroup } from 'react-bootstrap'
+import React from 'react'
+import { Row, Col, Jumbotron, ListGroup } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
 const Brewery = ({ brewery }) => {
-  const [visibleBeers, setVisibleBeers] = useState(6)
-
-  const handleVisibleBeers = () => {
-    setVisibleBeers(visibleBeers + 6)
-  }
-
+  
   if (!brewery) {
     return null
   }
@@ -30,20 +25,13 @@ const Brewery = ({ brewery }) => {
           <ListGroup variant='flush'>
             {brewery.beers.map(b =>
               <ListGroup.Item key={b.id}>
-                  <NavLink to={`/beers/${b.id}`} >{b.name}, {b.abv} %</NavLink>
+                  <NavLink to={`/beers/${b.id}`} >{b.name} {b.abv} %</NavLink>
               </ListGroup.Item>
             )}
           </ListGroup>
         </Col>
       </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-5'>
-          {brewery.beers.length > visibleBeers &&
-            <Button onClick={handleVisibleBeers}>Load more ...</Button>
-          }
-    </Col>
-  </Row>
-  </>
+    </>
   )
 }
 

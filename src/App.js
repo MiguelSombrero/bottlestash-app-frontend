@@ -23,6 +23,7 @@ import Brewery from './components/Brewery'
 import Beer from './components/Beer'
 import About from './components/About'
 import Ratings from './components/Ratings'
+import ScrollToTop from './components/ScrollToTop'
 
 import './App.css'
 
@@ -73,6 +74,7 @@ const App = (props) => {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Navigation
           user={loggedUser()}
           setNotification={props.setNotification}

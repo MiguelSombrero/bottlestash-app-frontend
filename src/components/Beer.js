@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
-import { Row, Col, Jumbotron, Button } from 'react-bootstrap'
-import Rating from './Rating'
+import React from 'react'
+import { Row, Col, Jumbotron } from 'react-bootstrap'
+import Ratings from './Ratings'
 
 const Beer = ({ beer, ratings }) => {
-  const [visibleRatings, setVisibleRatings] = useState(6)
-
-  const handleVisibleRatings = () => {
-    setVisibleRatings(visibleRatings + 6)
-  }
-
+  
   if (!beer) {
     return null
   }
@@ -16,27 +11,14 @@ const Beer = ({ beer, ratings }) => {
   const ratingsToShow = ratings
     .filter(r => r.beer.id === beer.id)
 
-  const showBeer = () =>
+  const showRatings = () =>
     <>
     <Row>
       <Col className='text-center'>
         <h3>Ratings</h3>
       </Col>
     </Row>
-    <Row>
-      <Col className='maindiv'>
-        {ratingsToShow.map(r =>
-          <Rating key={r.id} rating={r} ></Rating>
-        )}
-      </Col>
-    </Row>
-    <Row>
-      <Col className='d-flex justify-content-center mb-5'>
-        {ratingsToShow.length > visibleRatings &&
-          <Button onClick={handleVisibleRatings}>Load more ...</Button>
-        }
-      </Col>
-    </Row>
+    <Ratings ratings={ratingsToShow} />
   </>
 
   return (
@@ -48,7 +30,7 @@ const Beer = ({ beer, ratings }) => {
         </Jumbotron>
       </Row>
       {ratingsToShow.length > 0
-        ? showBeer()
+        ? showRatings()
         : <h4 className='text-center'>No ratings for this beer</h4>
       }
     </>

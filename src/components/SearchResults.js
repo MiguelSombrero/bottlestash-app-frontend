@@ -1,14 +1,15 @@
 import React from 'react'
-import { Col, Row, Jumbotron, Table } from 'react-bootstrap'
+import { Col, Row, Jumbotron, ListGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setFilter } from '../reducers/filterReducer'
 import SearchForm from './SearchForm'
+import { NavLink } from 'react-router-dom'
 
 const SearchResults = (props) => {
 
   const byHidden = (b) => !b.user.hidden
-  const byBeerName = (b) => !props.filter ? false : props.filter.toLowerCase().includes(b.name.toLowerCase())
-  const byBreweryName = (b) => !props.filter ? false : props.filter.toLowerCase().includes(b.name.toLowerCase())
+  const byBeerName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
+  const byBreweryName = (b) => !props.filter ? false : b.name.toLowerCase().includes(props.filter.toLowerCase())
 
   const bottlesToShow = props.bottles
     ? props.bottles.filter(byHidden).filter(b => byBeerName(b.beer) || byBreweryName(b.beer.brewery))
@@ -31,7 +32,7 @@ const SearchResults = (props) => {
   const showBottles = () => 
     <>
     <Row>
-      <Col className='maindiv'>
+      <Col className='text-center'>
         <h3>Bottles</h3>
         <p>
           {bottlesToShow.length} bottles for search '{props.filter}'
@@ -39,24 +40,14 @@ const SearchResults = (props) => {
       </Col>
     </Row>
     <Row>
-      <Col className='maindiv' >
-        <Table>
-          <thead>
-            <tr>
-              <th>Beer</th>
-              <th>Brewery</th>
-              <th>Abv</th>
-            </tr>
-          </thead>
-          <tbody >
-            {bottlesToShow.map(b =>
-              <tr key={b.id} >
-                <td>{b.beer.name}, {b.beer.abv} %</td>
-                <td>{b.beer.brewery.name}</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+      <Col className='maindiv'>
+        <ListGroup variant='flush'>
+          {bottlesToShow.map(b =>
+            <ListGroup.Item key={b.id}>
+              {b.beer.name} {b.beer.abv} %, {b.beer.brewery.name} <NavLink to={`users/${b.user.id}/stash`} >in {b.user.name} stash</NavLink>
+            </ListGroup.Item>
+          )}
+        </ListGroup>
       </Col>
     </Row>
   </>
@@ -64,7 +55,7 @@ const SearchResults = (props) => {
 const showBeers = () => 
   <>
     <Row>
-      <Col >
+      <Col className='text-center'>
         <h3>Beers</h3>
         <p>
           {beersToShow.length} beers for search '{props.filter}'
@@ -72,25 +63,14 @@ const showBeers = () =>
       </Col>
     </Row>
     <Row>
-      <Col  >
-        <Table>
-          <thead>
-            <tr>
-              <th>Beer</th>
-              <th>Brewery</th>
-              <th>Abv</th>
-            </tr>
-          </thead>
-          <tbody >
-            {beersToShow.map(b =>
-              <tr key={b.id} >
-                <td>{b.name}</td>
-                <td>{b.brewery.name}</td>
-                <td>{b.abv} %</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+      <Col className='maindiv'>
+        <ListGroup variant='flush'>
+          {beersToShow.map(b =>
+            <ListGroup.Item key={b.id}>
+              <NavLink to={`/beers/${b.id}`} >{b.name} {b.abv} %</NavLink>, beer by {b.brewery.name}
+            </ListGroup.Item>
+          )}
+        </ListGroup>
       </Col>
     </Row>
   </>
@@ -98,7 +78,7 @@ const showBeers = () =>
 const showBreweries = () => 
   <>
     <Row>
-      <Col>
+      <Col className='text-center'>
         <h3>Breweries</h3>
         <p>
           {breweriesToShow.length} breweries for search '{props.filter}'
@@ -106,23 +86,14 @@ const showBreweries = () =>
       </Col>
     </Row>
     <Row>
-      <Col >
-        <Table>
-          <thead>
-            <tr>
-              <th>Brewery</th>
-              <th>Beers</th>
-            </tr>
-          </thead>
-          <tbody >
-            {breweriesToShow.map(b =>
-              <tr key={b.id} >
-                <td>{b.name}</td>
-                <td>{b.beers.length}</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+      <Col className='maindiv'>
+        <ListGroup variant='flush'>
+          {breweriesToShow.map(b =>
+            <ListGroup.Item key={b.id}>
+              <NavLink to={`/breweries/${b.id}`} >{b.name}</NavLink>
+            </ListGroup.Item>
+          )}
+        </ListGroup>
       </Col>
     </Row>
   </>
@@ -135,7 +106,7 @@ const showBreweries = () =>
         </Jumbotron>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center'>
+        <Col className='d-flex justify-content-center mb-5'>
           <SearchForm
             handleSearch={handleSearch}
             id='search'
@@ -143,20 +114,20 @@ const showBreweries = () =>
         </Col>
       </Row>
       {props.filter &&
-        <Col className='maindiv'>
+        <>
           {bottlesToShow.length > 0
             ? showBottles()
-            : <p>No bottles for search '{props.filter}'</p>
+            : <p className='text-center'>No bottles for search '{props.filter}'</p>
           }
           {beersToShow.length > 0
             ? showBeers()
-            : <p>No beers for search '{props.filter}'</p>
+            : <p className='text-center'>No beers for search '{props.filter}'</p>
           }
           {breweriesToShow.length > 0
             ? showBreweries()
-            : <p>No breweries for search '{props.filter}'</p>
+            : <p className='text-center'>No breweries for search '{props.filter}'</p>
           }
-        </Col>
+        </>
       }
     </>
   )

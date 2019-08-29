@@ -14,7 +14,7 @@ const Login = (props) => {
     event.preventDefault()
     
     try {
-      await props.loginUser(username.value, password.value)
+      await props.loginUser({ username: username.value, password: password.value })
       props.history.push('/')
     } catch (exception) {
       props.setNotification('Login failed', 'error')

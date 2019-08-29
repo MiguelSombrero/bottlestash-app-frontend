@@ -53,21 +53,29 @@ const Navigation = (props) => {
               <Nav.Link href='#' as='span'>
                 <Nav.Item onClick={handleLogout} >Logout</Nav.Item>
               </Nav.Link>
+
+              {!props.user.picture &&
+                <Nav.Link href='#' as='span'>
+                  <NavLink to='/profile' >Profile</NavLink>
+                </Nav.Link>
+              }
             </>
           }
         </Nav>
         
         {props.user &&
           <>
-          <NavLink to='/profile' >
-            <Card.Img
-              src={`/api/pictures/${props.user.picture}`}
-              href='/profile'
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-              className='avatar'
-              alt='Profile'
-            />
-          </NavLink>
+          {props.user.picture &&
+            <NavLink to='/profile' >
+              <Card.Img
+                src={`/api/pictures/${props.user.picture}`}
+                href='/profile'
+                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                className='avatar'
+                alt='Profile'
+              />
+            </NavLink>
+          }
           <SearchForm
             handleSearch={handleSearch}
             id='search'

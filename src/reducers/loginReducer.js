@@ -1,5 +1,6 @@
-import loginService from '../services/login'
-import { setToken } from '../hooks/'
+import { useResource, setToken } from '../hooks/'
+
+const loginService = useResource('/api/login')
 
 const initialState = null
 
@@ -14,11 +15,9 @@ const loginReducer = (state = initialState, action) => {
   }
 }
 
-export const loginUser = (username, password) => {
+export const loginUser = (credentials) => {
   return async dispatch => {
-    const user = await loginService.login({
-      username, password
-    })
+    const user = await loginService.login(credentials)
 
     window.localStorage.setItem('loggedBottlestashUser', JSON.stringify(user))
     setToken(user.token)

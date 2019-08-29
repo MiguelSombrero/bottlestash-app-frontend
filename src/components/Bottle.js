@@ -11,9 +11,9 @@ const Bottle = ({ bottle }) => {
   return (
     <Card className='p-2 m-2 text-center'>
       <Card.Header style={{ backgroundColor: 'white', color: 'rgb(52, 58, 64)' }}>
-        <Card.Title><NavLink to={`/beers/${bottle.beer.id}/`} >{bottle.beer.name}, {bottle.beer.abv} %</NavLink></Card.Title>
+        <Card.Title><NavLink to={`/beers/${bottle.beer.id}`} >{bottle.beer.name} {bottle.beer.abv} %</NavLink></Card.Title>
         <small className='text-left'>
-          brewery: <NavLink to={`/breweries/${bottle.beer.brewery.id}/`} >{bottle.beer.brewery.name}</NavLink>
+          brewery: <NavLink to={`/breweries/${bottle.beer.brewery.id}`} >{bottle.beer.brewery.name}</NavLink>
         </small>
       </Card.Header>
       <Card.Body>

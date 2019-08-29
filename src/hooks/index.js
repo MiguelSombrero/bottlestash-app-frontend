@@ -29,6 +29,11 @@ export const useResource = (baseUrl) => {
     return res.data
   }
 
+  const login = async (credentials) => {
+    const res = await axios.post(baseUrl, credentials)
+    return res.data
+  }
+
   const createImage = async (resource) => {
     const config = {
       headers: {
@@ -57,7 +62,7 @@ export const useResource = (baseUrl) => {
   }
 
   return  {
-    create, createImage, getAll, getOne, update, remove
+    create, createImage, getAll, getOne, update, remove, login
   }
 }
 

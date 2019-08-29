@@ -89,7 +89,7 @@ const Profile = (props) => {
             <Nav.Link as='span' className='p-2'>
               <NavLink to={`/users/${props.user.id}/ratings`} >Your ratings</NavLink>
             </Nav.Link>
-            <Nav.Link onClick={handleDelete} href='#' as='span' className='p-2'>
+            <Nav.Link onClick={handleDelete} as='span' className='p-2'>
               Delete profile
             </Nav.Link>
           </Nav>

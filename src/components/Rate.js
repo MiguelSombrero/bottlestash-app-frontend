@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
 import { useTextField, useNumberField } from '../hooks'
-import breweriesService from '../services/breweries'
-import beersService from '../services/beers'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { addBeer } from '../reducers/beersReducer'
-import { addBrewery } from '../reducers/breweriesReducer'
+import { addBeer, getOneBeer } from '../reducers/beersReducer'
+import { addBrewery, getOneBrewery } from '../reducers/breweriesReducer'
 import { addRating } from '../reducers/ratingsReducer'
 import { addPicture } from '../reducers/picturesReducer'
 import { setNotification } from '../reducers/notificationReducer'
@@ -49,13 +47,13 @@ const Rate = (props) => {
       let beer = null
 
       if (!props.beer) {
-        let brewery = await breweriesService.getOne(breweryName.value)
+        let brewery = await props.getOneBrewery(breweryName.value)
         
         if (!brewery) {
           brewery = await props.addBrewery({ name: breweryName.value })
         }
   
-        beer = await beersService.getOne({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
+        beer = await props.getOneBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
   
         if (!beer) {
           beer = await props.addBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
@@ -170,7 +168,9 @@ const Rate = (props) => {
 
 const mapDispatchToProps = {
   addBeer,
+  getOneBeer,
   addBrewery,
+  getOneBrewery,
   addRating,
   addPicture,
   setNotification
