@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Jumbotron, Row, Col, Button } from 'react-bootstrap'
+import { Jumbotron, Row, Col, Button, Container } from 'react-bootstrap'
 import Bottle from './Bottle'
 import { NavLink } from 'react-router-dom'
 import Ratings from './Ratings'
@@ -22,17 +22,17 @@ const Home = (props) => {
   const ratingsToShow = props.ratings.sort(byAdded)
   
   return (
-    <>
+    <Container fluid className='home'>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h1>Bottlestash</h1>
           <h5>Cooler than your wine cellar - wetter than Finnish summer</h5>
-          <h6>(or something as lame)</h6>
+          <h6>(or something similar)</h6>
         </Jumbotron>
       </Row>
 
       {!props.user &&
-      <div className='home' style={{ marginTop: '-2rem' }}>
+      <>
       <Row>
         <Col className='maindiv mt-4' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }}>
           <h2 className='mb-3'>Bottlestash, eh?</h2>
@@ -58,7 +58,6 @@ const Home = (props) => {
               so you can easily track what beers do you have, how many bottles and when to drink them!
             </p>
           </section>
-          
         </Col>
       </Row>
       <Row>
@@ -77,14 +76,14 @@ const Home = (props) => {
             <NavLink to='/register'>To registration</NavLink>
         </Col>
       </Row>
-      </div>
+      </>
       }
 
       {props.user &&
       <>
       <Row>
         <Col className='maindiv'>
-          <h3>Recently added bottles</h3>
+          <h2 style={{ color: 'white'}}>Recently added bottles</h2>
         </Col>
       </Row>
       <Row>
@@ -103,13 +102,13 @@ const Home = (props) => {
       </Row>
       <Row>
         <Col className='maindiv'>
-          <h3>Recently added ratings</h3>
+          <h2 style={{ color: 'white' }}>Recently added ratings</h2>
         </Col>
       </Row>
       <Ratings ratings={ratingsToShow} />
       </>
       }
-    </>
+    </Container>
     
   )
 }

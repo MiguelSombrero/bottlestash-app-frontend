@@ -1,9 +1,9 @@
 import React from 'react'
-import { Row, Col, Jumbotron } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Container } from 'react-bootstrap'
 
 const About = () => {
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
             <h2>About Bottlestash</h2>
@@ -21,7 +21,7 @@ const About = () => {
           </p>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

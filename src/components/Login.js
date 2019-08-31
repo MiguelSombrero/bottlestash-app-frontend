@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
+import { Form, Button, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
 import { Link } from 'react-router-dom'
 import { useTextField } from '../hooks'
@@ -22,7 +22,7 @@ const Login = (props) => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>Login to Bottlestash</h2>
@@ -51,7 +51,7 @@ const Login = (props) => {
           </Row>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

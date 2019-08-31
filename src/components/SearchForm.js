@@ -5,8 +5,10 @@ import ListSuggestion from './ListSuggestion'
 
 const SearchForm = (props) => {
 
-  const suggestions =
-    props.bottles ? props.bottles.map(b => b.beer.name) : null
+  const beersAsList = () => props.beers ? props.beers.map(b => b.name) : []
+  const breweriesAsList = () => props.breweries ? props.breweries.map(b => b.name) : []
+
+  const suggestions = beersAsList().concat(breweriesAsList())
 
   return (
     <Form onSubmit={props.handleSearch} inline>
@@ -22,7 +24,6 @@ const SearchForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    bottles: state.bottles,
     beers: state.beers,
     breweries: state.breweries
   }

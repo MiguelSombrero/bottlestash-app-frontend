@@ -6,7 +6,7 @@ import { addBottle } from '../reducers/bottlesReducer'
 import { addPicture } from '../reducers/picturesReducer'
 import { updateUserToState } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
-import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Form, Button, Container } from 'react-bootstrap'
 import { useTextField, useNumberField } from '../hooks'
 import ListSuggestion from './ListSuggestion'
 
@@ -19,7 +19,7 @@ const AddBottle = (props) => {
   const [abv, abvErrors] = useNumberField('number', 0, 100, 0.1, true)
   const [price, priceErrors] = useNumberField('number', 0, 1000, 0.01)
   const [count, countErrors] = useNumberField('number', 0, 50, 1, true)
-  const [volume, volumeErrors] = useNumberField('number', 0, 10, 0.01)
+  const [volume, volumeErrors] = useNumberField('number', 0, 10, 0.001)
   const [bottled, bottledErrors] = useNumberField('date', '1990-01-01', '2050-01-01', 1)
   const [expiration, expirationErrors] = useNumberField('date', '1990-01-01', '2050-01-01', 1)
   
@@ -86,7 +86,7 @@ const AddBottle = (props) => {
     : props.beers.filter(b => b.brewery.name === breweryName.value && b.name === name.value).map(b => b.abv)
 
     return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>Add new bottle to your stash</h2>
@@ -96,7 +96,7 @@ const AddBottle = (props) => {
         <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleAddBottle} id='addBottleForm' >
             <Form.Group >
-            <Form.Label>Brewery</Form.Label>
+              <Form.Label>Brewery</Form.Label>
               <Form.Control {...breweryName} list='breweriesAsList' placeholder='name of the brewery' />
               <ListSuggestion suggestions={breweriesAsList()} id='breweriesAsList' />
               <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
@@ -129,12 +129,12 @@ const AddBottle = (props) => {
               <Form.Control.Feedback type='invalid' >{priceErrors}</Form.Control.Feedback>
             </Form.Group>
             <Form.Row>
-              <Form.Group style={{ maxWidth: '50%' }} className=' p-2'>
+              <Form.Group as={Col} className='p-2'>
                 <Form.Label>Bottled</Form.Label>
                 <Form.Control {...bottled} placeholder='day beer was bottled' />
                 <Form.Control.Feedback type='invalid' >{bottledErrors}</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
+              <Form.Group as={Col} className='p-2'>
                 <Form.Label>Expiration</Form.Label>
                 <Form.Control {...expiration} placeholder='expiration day of bottles' />
                 <Form.Control.Feedback type='invalid' >{expirationErrors}</Form.Control.Feedback>
@@ -164,7 +164,7 @@ const AddBottle = (props) => {
           </Form>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

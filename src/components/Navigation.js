@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
-import { Navbar, Nav, Row, Card } from 'react-bootstrap'
+import { Navbar, Nav, Row, Card, Col, Container } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
 import { setFilter } from '../reducers/filterReducer'
 import SearchForm from './SearchForm'
@@ -23,67 +23,71 @@ const Navigation = (props) => {
   }
 
   return (
-    <Navbar as={Row} collapseOnSelect expand='lg' bg='dark' variant='dark'>
-      <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-      <Navbar.Collapse id='responsive-navbar-nav'>
-        <Nav className='mr-auto'>
-          <Nav.Link href='#' as='span'>
-            <NavLink to='/' >Home</NavLink>
-          </Nav.Link>
-
-          {!props.user &&
-            <>
+    <Container fluid>
+      <Row>
+        <Navbar as={Col} collapseOnSelect expand='lg' bg='dark' variant='dark'>
+          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+          <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav className='mr-auto'>
               <Nav.Link href='#' as='span'>
-                <NavLink to='/login' >Login</NavLink>
-              </Nav.Link>
-              <Nav.Link href='#' as='span'>
-                <NavLink to='/register' >Create account</NavLink>
-              </Nav.Link>
-            </>
-          }
-
-          {props.user &&
-            <>
-              <Nav.Link href='#' as='span'>
-                <NavLink to={`/users/${props.user.id}/stash`} >Manage stash</NavLink>
-              </Nav.Link>
-              <Nav.Link href='#' as='span'>
-                <NavLink to='/rate' >Rate beer</NavLink>
-              </Nav.Link>
-              <Nav.Link href='#' as='span'>
-                <Nav.Item onClick={handleLogout} >Logout</Nav.Item>
+                <NavLink to='/' >Home</NavLink>
               </Nav.Link>
 
-              {!props.user.picture &&
+              {!props.user &&
+              <>
                 <Nav.Link href='#' as='span'>
-                  <NavLink to='/profile' >Profile</NavLink>
+                  <NavLink to='/login' >Login</NavLink>
                 </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <NavLink to='/register' >Create account</NavLink>
+                </Nav.Link>
+              </>
               }
-            </>
-          }
-        </Nav>
+
+              {props.user &&
+              <>
+                <Nav.Link href='#' as='span'>
+                  <NavLink to={`/users/${props.user.id}/stash`} >Manage stash</NavLink>
+                </Nav.Link>
+                <Nav.Link href='#' as='span'>
+                  <NavLink to='/rate' >Rate beer</NavLink>
+                </Nav.Link>
+                <Nav.Link href='#'>
+                  <Nav.Item onClick={handleLogout} >Logout</Nav.Item>
+                </Nav.Link>
+
+                {!props.user.picture &&
+                  <Nav.Link href='#' as='span'>
+                    <NavLink to='/profile' >Profile</NavLink>
+                  </Nav.Link>
+                }
+              </>
+              }
+            </Nav>
         
-        {props.user &&
-          <>
-          {props.user.picture &&
-            <NavLink to='/profile' >
-              <Card.Img
-                src={`/api/pictures/${props.user.picture}`}
-                href='/profile'
-                style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                className='avatar'
-                alt='Profile'
+            {props.user &&
+            <>
+              {props.user.picture &&
+                <NavLink to='/profile' >
+                  <Card.Img
+                    src={`/api/pictures/${props.user.picture}`}
+                    href='/profile'
+                    style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+                    className='avatar'
+                    alt='Profile'
+                  />
+                </NavLink>
+              }
+              <SearchForm
+                handleSearch={handleSearch}
+                id='search'
               />
-            </NavLink>
-          }
-          <SearchForm
-            handleSearch={handleSearch}
-            id='search'
-          />
-          </>
-        }
-      </Navbar.Collapse>
-    </Navbar>
+            </>
+            }
+          </Navbar.Collapse>
+        </Navbar>
+      </Row>
+    </Container>
   )
 }
 

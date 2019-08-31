@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Jumbotron } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import Ratings from './Ratings'
 
 const Beer = ({ beer, ratings }) => {
@@ -22,7 +22,7 @@ const Beer = ({ beer, ratings }) => {
   </>
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>{beer.name} {beer.abv} %</h2>
@@ -33,7 +33,7 @@ const Beer = ({ beer, ratings }) => {
         ? showRatings()
         : <h4 className='text-center'>No ratings for this beer</h4>
       }
-    </>
+    </Container>
   )
 }
 

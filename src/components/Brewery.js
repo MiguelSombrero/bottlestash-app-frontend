@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Jumbotron, ListGroup } from 'react-bootstrap'
+import { Row, Col, Jumbotron, ListGroup, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
 const Brewery = ({ brewery }) => {
@@ -9,7 +9,7 @@ const Brewery = ({ brewery }) => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>{brewery.name}</h2>
@@ -31,7 +31,7 @@ const Brewery = ({ brewery }) => {
           </ListGroup>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

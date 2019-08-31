@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Jumbotron, ListGroup } from 'react-bootstrap'
+import { Col, Row, Jumbotron, ListGroup, Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { setFilter } from '../reducers/filterReducer'
 import SearchForm from './SearchForm'
@@ -99,14 +99,14 @@ const showBreweries = () =>
   </>
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>Search from Bottlestash</h2>
         </Jumbotron>
       </Row>
       <Row>
-        <Col className='d-flex justify-content-center mb-5'>
+        <Col className='maindiv d-flex justify-content-center mb-5'>
           <SearchForm
             handleSearch={handleSearch}
             id='search'
@@ -129,7 +129,7 @@ const showBreweries = () =>
           }
         </>
       }
-    </>
+    </Container>
   )
 }
 

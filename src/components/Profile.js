@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Form, Button, Jumbotron, Nav } from 'react-bootstrap'
+import { Row, Col, Form, Button, Jumbotron, Nav, Container } from 'react-bootstrap'
 import { NavLink, withRouter } from 'react-router-dom'
 import { useTextField } from '../hooks'
 import { connect } from 'react-redux'
@@ -74,7 +74,7 @@ const Profile = (props) => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center mb-2'>
           <h2>{props.user.username} profile</h2>
@@ -89,7 +89,7 @@ const Profile = (props) => {
             <Nav.Link as='span' className='p-2'>
               <NavLink to={`/users/${props.user.id}/ratings`} >Your ratings</NavLink>
             </Nav.Link>
-            <Nav.Link onClick={handleDelete} as='span' className='p-2'>
+            <Nav.Link onClick={handleDelete} className='p-2'>
               Delete profile
             </Nav.Link>
           </Nav>
@@ -144,7 +144,7 @@ const Profile = (props) => {
           </Form>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

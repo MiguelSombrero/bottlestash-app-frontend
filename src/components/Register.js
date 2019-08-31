@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Form, Button, Row, Col, Jumbotron } from 'react-bootstrap'
+import { Form, Button, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import { registerUser } from '../reducers/usersReducer'
 import { useTextField } from '../hooks'
 
@@ -12,7 +12,7 @@ const Register = (props) => {
   const [name, nameErrors] = useTextField('text', 1, 20, true)
   const [email, emailErrors] = useTextField('text', 1, 50, true)
   const [city, cityErrors] = useTextField('text', 1, 50, false)
-  const [country, countryErrors] = useTextField('text', 1, 20, false)
+  const [country, countryErrors] = useTextField('text', 1, 50, false)
   const [hidden, setHidden] = useState(false)
 
   const handleRegister = async (event) => {
@@ -43,14 +43,14 @@ const Register = (props) => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>Register to Bottlestash</h2>
         </Jumbotron>
       </Row>
       <Row className='mb-3'>
-        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+        <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleRegister} id='registerForm' >
             <Form.Group >
               <Form.Label >Username</Form.Label>
@@ -75,12 +75,12 @@ const Register = (props) => {
             <Form.Row>
               <Form.Group as={Col} className='p-2'>
                 <Form.Label>City</Form.Label>
-                <Form.Control {...city} placeholder='what city your stash at' />
+                <Form.Control {...city} placeholder='(optional)' />
                 <Form.Control.Feedback type='invalid' >{cityErrors}</Form.Control.Feedback>
               </Form.Group >
               <Form.Group as={Col} className='p-2'>
                 <Form.Label>Country</Form.Label>
-                <Form.Control {...country} placeholder='what country your stash at' />
+                <Form.Control {...country} placeholder='(optional)' />
                 <Form.Control.Feedback type='invalid' >{countryErrors}</Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
@@ -94,7 +94,7 @@ const Register = (props) => {
           </Form>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Jumbotron, Nav } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Nav, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import Bottles from './Bottles'
 import StashDetails from './StashDetails'
@@ -14,7 +14,7 @@ const Stash = (props) => {
   const stash = props.userToView.stash
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center'>
           <h2>{props.userToView.name} 's Stash</h2>
@@ -63,7 +63,7 @@ const Stash = (props) => {
         }
       </Row>
       }
-    </>
+    </Container>
   )
 }
 

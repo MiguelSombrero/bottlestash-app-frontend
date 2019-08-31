@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Jumbotron, Form, Button } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Form, Button, Container } from 'react-bootstrap'
 import { useTextField, useNumberField } from '../hooks'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -18,11 +18,11 @@ const Rate = (props) => {
   const [description, descriptionErrors] = useTextField('text', 0, 1000, false)
   const [alcohol, alcoholErrors, setAlcohol] = useNumberField('number', 0, 100, 0.1, true)
   const [bottled, bottledErrors, setBottled] = useNumberField('date', '1990-01-01', '2050-01-01', 1, false)
-  const [aroma] = useNumberField('range', 1, 10, 1, true)
-  const [taste] = useNumberField('range', 1, 10, 1, true)
-  const [appearance] = useNumberField('range', 1, 5, 1, true)
-  const [mouthfeel] = useNumberField('range', 1, 5, 1, true)
-  const [overall] = useNumberField('range', 1, 20, 1, true)
+  const [aroma, , setAroma] = useNumberField('range', 1, 10, 1, true)
+  const [taste, , setTaste] = useNumberField('range', 1, 10, 1, true)
+  const [appearance, , setAppearance] = useNumberField('range', 1, 5, 1, true)
+  const [mouthfeel, , setMouthfeel] = useNumberField('range', 1, 5, 1, true)
+  const [overall, , setOverall] = useNumberField('range', 1, 20, 1, true)
 
   useEffect(() => {
     if (props.location.state) {
@@ -31,8 +31,15 @@ const Rate = (props) => {
       setBeerName(bottle.beer.name)
       setBreweryName(bottle.beer.brewery.name)
       setAlcohol(bottle.beer.abv)
-      setBottled(moment(bottle.bottled).format('YYYY-MM-DD'))
+      if (bottle.bottled) {
+        setBottled(moment(bottle.bottled).format('YYYY-MM-DD'))
+      }
     }
+    setAroma(1)
+    setTaste(1)
+    setMouthfeel(1)
+    setAppearance(1)
+    setOverall(1)
   }, [])
 
   const handleRate = async (event) => {
@@ -53,7 +60,7 @@ const Rate = (props) => {
           brewery = await props.addBrewery({ name: breweryName.value })
         }
   
-        beer = await props.getOneBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
+        beer = await props.getOneBeer(brewery.id, beerName.value, alcohol.value)
   
         if (!beer) {
           beer = await props.addBeer({ breweryId: brewery.id, name: beerName.value, abv: alcohol.value })
@@ -86,7 +93,7 @@ const Rate = (props) => {
   }
 
   return (
-    <>
+    <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center mb-2'>
             <h2>Rate beer</h2>
@@ -117,27 +124,27 @@ const Rate = (props) => {
             </Form.Group>
             <Form.Group >
               <Form.Label>Aroma</Form.Label>
-              <Form.Text>{aroma.value || 0}</Form.Text>
+              <Form.Text>{aroma.value}</Form.Text>
               <Form.Control {...aroma} />
             </Form.Group>
             <Form.Group >
               <Form.Label>Taste</Form.Label>
-              <Form.Text>{taste.value || 0}</Form.Text>
+              <Form.Text>{taste.value}</Form.Text>
               <Form.Control {...taste} />
             </Form.Group>
             <Form.Group >
               <Form.Label>Appearance</Form.Label>
-              <Form.Text>{appearance.value || 0}</Form.Text>
+              <Form.Text>{appearance.value}</Form.Text>
               <Form.Control {...appearance} />
             </Form.Group>
             <Form.Group >
               <Form.Label>Mouthfeel</Form.Label>
-              <Form.Text>{mouthfeel.value || 0}</Form.Text>
+              <Form.Text>{mouthfeel.value}</Form.Text>
               <Form.Control {...mouthfeel} />
             </Form.Group>
             <Form.Group >
               <Form.Label>Overall</Form.Label>
-              <Form.Text>{overall.value || 0}</Form.Text>
+              <Form.Text>{overall.value}</Form.Text>
               <Form.Control {...overall} />
             </Form.Group>
             <Form.Group >
@@ -162,7 +169,7 @@ const Rate = (props) => {
           </Form>
         </Col>
       </Row>    
-    </>
+    </Container>
   )
 }
 
