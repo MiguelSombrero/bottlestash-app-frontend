@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Row, Col, Jumbotron, Nav, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import Bottles from './Bottles'
+import BottlesTable from './BottlesTable'
 import StashDetails from './StashDetails'
 
 const Stash = (props) => {
@@ -58,7 +58,7 @@ const Stash = (props) => {
       {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
       <Row className='mb-3'>
         {!stashVisible
-          ? <Bottles stash={stash} user={props.user} userToView={props.userToView}></Bottles>
+          ? <BottlesTable stash={stash} user={props.user} userToView={props.userToView}></BottlesTable>
           : <StashDetails stash={stash}></StashDetails>
         }
       </Row>

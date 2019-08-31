@@ -13,6 +13,12 @@ const localStorageMock = {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock })
 
+const loggedUser = {
+  id: '5d4bc0527958a42219ca2034',
+  name: 'Miika Somero',
+  username: 'Somero'
+}
+
 const user = {
   id: '5d4bc0527958a42219ca2034',
   name: 'Miika Somero',
@@ -51,6 +57,16 @@ const beer = {
     '5d4bc0527958a42219ca2037',
     '5d4bc0527958a42219ca2038',
     '5d4bc0527958a42219ca2039'
+  ]
+}
+
+const beer2 = {
+  id: '5d4bc0557958a42219ca2034',
+  name: 'Vattu',
+  brewery,
+  abv: 5.8,
+  ratings: [
+    '5d4bc0527958a42719ca2039'
   ]
 }
 
@@ -96,10 +112,24 @@ const ratings = [
     picture: '3d4bc0527958a42219ca2037',
     beer,
     user
+  },
+  {
+    id: '5d4bc0527958a42719ca2039',
+    aroma: 7,
+    taste: 7,
+    mouthfeel: 3,
+    appearance: 4,
+    overall: 14,
+    added: new Date().toISOString(),
+    ageofbeer: 11,
+    description: 'Very good sour ale',
+    beer2,
+    user
   }
 ]
 
 const bottle = {
+  id: '4d5bc0527958a42219ca2037',
   count: 4,
   volume: 0.33,
   price: 4.89,
@@ -111,4 +141,79 @@ const bottle = {
   user
 }
 
-export default { user, beer, ratings, bottle }
+const bottles = [
+  {
+    id: '4d5bc0527958a42219ca2037',
+    count: 4,
+    volume: 0.33,
+    price: 4.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  },
+  {
+    id: '4d5bc0527958a42219ca2036',
+    count: 4,
+    volume: 0.33,
+    price: 4.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  },
+  {
+    id: '4d5bc0527958a42219ca2035',
+    count: 4,
+    volume: 0.33,
+    price: 4.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  },
+  {
+    id: '4d5bc0527958a42219ca2034',
+    count: 6,
+    volume: 0.33,
+    price: 4.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  },
+  {
+    id: '4d5bc0527958a42219ca2033',
+    count: 3,
+    volume: 0.33,
+    price: 4.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  },
+  {
+    id: '4d5bc0527958a42219ca2032',
+    count: 2,
+    volume: 0.33,
+    price: 5.89,
+    bottled: new Date('2019-04-12'),
+    expiration: new Date('2021-03-01'),
+    added: new Date(),
+    picture: '4d4bc0527958a42219ca2037',
+    beer,
+    user
+  }
+]
+
+export default { loggedUser, user, beer, ratings, bottle, bottles }

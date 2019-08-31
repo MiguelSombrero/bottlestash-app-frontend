@@ -21,7 +21,7 @@ const Brewery = ({ brewery }) => {
         </Col>
       </Row>
       <Row>
-        <Col style={{ maxWidth: '35rem', margin: 'auto', textAlign: 'center' }}>
+        <Col className='maindiv'>
           <ListGroup variant='flush'>
             {brewery.beers.map(b =>
               <ListGroup.Item key={b.id}>

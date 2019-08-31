@@ -41,11 +41,11 @@ describe('<Beer />', () => {
     expect(component.container).toHaveTextContent('18/20')
   })
 
-  /**
-  test('pictures links render correctly', () => {
-    const rating = component.container.getByText('Sonnisaari Pils 5.6 %')
-    const image = rating.querySelector('img')
-    expect(image.src).toBe('http://localhost/api/pictures/1d4bc0527958a42219ca2037')
+  test('rating picture links render correctly', () => {
+    const image = component.container.querySelectorAll('img')
+    expect(image).toHaveTextContent('http://localhost/api/pictures/1d4bc0527958a42219ca2037')
+    expect(image).toHaveTextContent('http://localhost/api/pictures/5d4bc0527958a42219ca2038')
+    expect(image).toHaveTextContent('http://localhost/api/pictures/5d4bc0527958a42219ca2039')
   })
 
   test('users link render correctly', () => {
@@ -62,5 +62,4 @@ describe('<Beer />', () => {
     const beer = component.getAllByText('Sonnisaari Pils 5.6 %')
     expect(beer.href).toBe('http://localhost/beers/5d4bc0527958a42219ca2034')
   })
-  */
 })

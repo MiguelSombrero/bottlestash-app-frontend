@@ -1,10 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, waitForElement } from '@testing-library/react'
 import Brewery from './Brewery'
 import { BrowserRouter as Router } from 'react-router-dom'
 import helper from '../setupTests'
-
 
 describe('<Brewery />', () => {
   let component
@@ -25,11 +24,15 @@ describe('<Brewery />', () => {
     expect(component.container).toHaveTextContent('Mulkero 6.7 %')
   })
 
-  test('beers link render correctly', () => {
-    console.log(component.container)
+  test('renders all beers', async () => {
+    const beers = component.container.querySelectorAll('li')
+    expect(beers.length).toBe(3)
+  })
 
-    const beer = component.getByText('Sonnisaari Pils 5.6 %')
-    expect(beer.href).toBe('http://localhost/beers/5d4bc0527958a42219ca2034')
+  test('beers link render correctly', () => {
+    expect(component.container).toContain('http://localhost/beers/5d4bc0527958a42219ca2034')
+    expect(component.container).toContain('http://localhost/beers/1d4bc0527958a42219ca2034')
+    expect(component.container).toContain('http://localhost/beers/8d4bc0527958a42219ca2034')
   })
 
 })

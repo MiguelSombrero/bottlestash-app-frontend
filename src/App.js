@@ -22,8 +22,8 @@ import SearchResults from './components/SearchResults'
 import Brewery from './components/Brewery'
 import Beer from './components/Beer'
 import About from './components/About'
-import Ratings from './components/Ratings'
 import ScrollToTop from './components/ScrollToTop'
+import ResourceFeed from './components/ResourceFeed'
 
 import './App.css'
 
@@ -142,9 +142,10 @@ const App = (props) => {
           <Route
             exact path='/users/:id/ratings'
             render={({ match }) =>
-              <Ratings 
-                ratings={ratingsByUserId(match.params.id)}
-              /> 
+              <ResourceFeed
+                resources={ratingsByUserId(match.params.id)}
+                resource='rating'
+              />
             }
           />
           <Route

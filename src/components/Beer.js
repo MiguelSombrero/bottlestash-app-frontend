@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col, Jumbotron, Container } from 'react-bootstrap'
-import Ratings from './Ratings'
+import ResourceFeed from './ResourceFeed'
 
 const Beer = ({ beer, ratings }) => {
   
@@ -18,7 +18,7 @@ const Beer = ({ beer, ratings }) => {
         <h3>Ratings</h3>
       </Col>
     </Row>
-    <Ratings ratings={ratingsToShow} />
+    <ResourceFeed resources={ratingsToShow} resource='rating' />
   </>
 
   return (

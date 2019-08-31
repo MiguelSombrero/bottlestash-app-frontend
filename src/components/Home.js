@@ -1,24 +1,14 @@
-import React, { useState } from 'react'
-import { Jumbotron, Row, Col, Button, Container } from 'react-bootstrap'
-import Bottle from './Bottle'
+import React from 'react'
+import { Jumbotron, Row, Col, Container } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import Ratings from './Ratings'
+import ResourceFeed from './ResourceFeed'
 
 const Home = (props) => {
-  const [visibleBottles, setVisibleBottles] = useState(6)
-
-  const handleSetVisibleBottles = () => {
-    setVisibleBottles(visibleBottles + 6)
-  }
-
+  
   const byAdded = (a, b) => b.added > a.added ? 1 : -1
   const byHidden = b => !b.user.hidden
 
-  const bottlesToShow = props.bottles
-    .filter(byHidden)
-    .sort(byAdded)
-    .slice(0, visibleBottles)
-
+  const bottlesToShow = props.bottles.filter(byHidden).sort(byAdded)
   const ratingsToShow = props.ratings.sort(byAdded)
   
   return (
@@ -86,26 +76,13 @@ const Home = (props) => {
           <h2 style={{ color: 'white'}}>Recently added bottles</h2>
         </Col>
       </Row>
-      <Row>
-        <Col className='maindiv' >
-          {bottlesToShow.map(b =>
-            <Bottle key={b.id} bottle={b} ></Bottle>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col className='d-flex justify-content-center mb-3'>
-          {props.bottles.length > visibleBottles &&
-            <Button onClick={handleSetVisibleBottles}>Load more ...</Button>
-          }
-        </Col>
-      </Row>
+      <ResourceFeed resources={bottlesToShow} resource='bottle' />
       <Row>
         <Col className='maindiv'>
           <h2 style={{ color: 'white' }}>Recently added ratings</h2>
         </Col>
       </Row>
-      <Ratings ratings={ratingsToShow} />
+      <ResourceFeed resources={ratingsToShow} resource='rating' />
       </>
       }
     </Container>

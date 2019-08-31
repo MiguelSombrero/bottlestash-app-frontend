@@ -3,7 +3,7 @@ import { Col, Table } from 'react-bootstrap'
 import BottleDetails from './BottleDetails'
 import moment from 'moment'
 
-const Bottles = (props) => {
+const BottlesTable = (props) => {
   const [visible, setVisible] = useState(false)
   const [bottle, setBottle] = useState(null)
 
@@ -56,4 +56,4 @@ const Bottles = (props) => {
   )
 }
 
-export default Bottles
+export default BottlesTable
