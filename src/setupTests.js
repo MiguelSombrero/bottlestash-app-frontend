@@ -14,7 +14,7 @@ const localStorageMock = {
 Object.defineProperty(window, 'localStorage', { value: localStorageMock })
 
 const loggedUser = {
-  id: '5d4bc0527958a42219ca2034',
+  token: '5d4bc0527958a42219ca2034',
   name: 'Miika Somero',
   username: 'Somero'
 }
@@ -123,7 +123,7 @@ const ratings = [
     added: new Date().toISOString(),
     ageofbeer: 11,
     description: 'Very good sour ale',
-    beer2,
+    beer: beer2,
     user
   }
 ]

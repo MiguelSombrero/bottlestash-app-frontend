@@ -3,38 +3,28 @@ import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent } from '@testing-library/react'
 import Login from './Login'
 import { BrowserRouter } from 'react-router-dom'
-import { applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
+jest.mock('../reducers/loginReducer')
 
-/**
-const mockStore = configureStore(applyMiddleware([thunk]))
-const onSubmit = jest.fn()
+const mockStore = configureStore([])
 
 const Wrapper = (props) => {
   return (
-    <Provider>
+    <Provider store={mockStore({})} >
       <BrowserRouter>
-        <Login onSubmit={props.onSubmit} />
+        <Login />
       </BrowserRouter>
     </Provider>
   )
 }
 
-*/
-
 describe('<Login />', () => {
-  test('test', () => {
-    expect(true)
-  })
-
-  /**
   let component
     
   beforeEach(() => {
     component = render(
-      <Wrapper onSubmit={onSubmit} />
+      <Wrapper />
     )
   })
 
@@ -46,7 +36,7 @@ describe('<Login />', () => {
     expect(component.container).toHaveTextContent('Register')
   })
 
-  test('clicking something', async () => {
+  test('login will redirect to home page', async () => {
     const username = component.getByPlaceholderText('username')
     const password = component.getByPlaceholderText('password')
     const form = component.container.querySelector('form')
@@ -55,7 +45,6 @@ describe('<Login />', () => {
     fireEvent.change(password, { target: { value: 'salainen' }})
     fireEvent.submit(form)
 
-    expect(onSubmit.mock.calls.length).toBe(1)
+    // ???
   })
-  */
 })

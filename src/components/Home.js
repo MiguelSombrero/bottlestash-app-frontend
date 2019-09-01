@@ -11,17 +11,27 @@ const Home = (props) => {
   const bottlesToShow = props.bottles.filter(byHidden).sort(byAdded)
   const ratingsToShow = props.ratings.sort(byAdded)
   
-  return (
-    <Container fluid className='home'>
+  const showToLoggedUser = () => {
+    return (
+      <>
       <Row>
-        <Jumbotron as={Col} className='text-center'>
-          <h1>Bottlestash</h1>
-          <h5>Cooler than your wine cellar - wetter than Finnish summer</h5>
-          <h6>(or something similar)</h6>
-        </Jumbotron>
+        <Col className='maindiv'>
+          <h2 style={{ color: 'white'}}>Recently added bottles</h2>
+        </Col>
       </Row>
+      <ResourceFeed resources={bottlesToShow} resource='bottle' />
+      <Row>
+        <Col className='maindiv'>
+          <h2 style={{ color: 'white' }}>Recently added ratings</h2>
+        </Col>
+      </Row>
+      <ResourceFeed resources={ratingsToShow} resource='rating' />
+    </>
+    )
+  }
 
-      {!props.user &&
+  const showToVisitor = () => {
+    return (
       <>
       <Row>
         <Col className='maindiv mt-4' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }}>
@@ -67,24 +77,24 @@ const Home = (props) => {
         </Col>
       </Row>
       </>
+    )
+  }
+
+  return (
+    <Container fluid className='home'>
+      <Row>
+        <Jumbotron as={Col} className='text-center'>
+          <h1>Bottlestash</h1>
+          <h5>Cooler than your wine cellar - wetter than Finnish summer</h5>
+          <h6>(or something similar)</h6>
+        </Jumbotron>
+      </Row>
+
+      {props.user
+        ? showToLoggedUser()
+        : showToVisitor()
       }
 
-      {props.user &&
-      <>
-      <Row>
-        <Col className='maindiv'>
-          <h2 style={{ color: 'white'}}>Recently added bottles</h2>
-        </Col>
-      </Row>
-      <ResourceFeed resources={bottlesToShow} resource='bottle' />
-      <Row>
-        <Col className='maindiv'>
-          <h2 style={{ color: 'white' }}>Recently added ratings</h2>
-        </Col>
-      </Row>
-      <ResourceFeed resources={ratingsToShow} resource='rating' />
-      </>
-      }
     </Container>
     
   )

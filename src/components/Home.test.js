@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Home from './Home'
 import { BrowserRouter as Router } from 'react-router-dom'
 import helper from '../setupTests'
@@ -73,4 +73,10 @@ describe('<Home /> with login', () => {
     expect(cards.length).toBe(9)
   })
 
+  test('renders more ratings and bottles after Load more', () => {
+    const button = component.getByText('Load more ...')
+    fireEvent.click(button)
+    const cards = component.container.querySelectorAll('.card-header')
+    expect(cards.length).toBe(10)
+  })
 })
