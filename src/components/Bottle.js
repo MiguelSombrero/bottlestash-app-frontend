@@ -16,11 +16,11 @@ const Bottle = ({ bottle }) => {
           brewery: <NavLink to={`/breweries/${bottle.beer.brewery.id}`} >{bottle.beer.brewery.name}</NavLink>
         </small>
       </Card.Header>
-      <Card.Body>
-        {bottle.picture &&
+      {bottle.picture &&
+        <Card.Body>
           <Card.Img src={`/api/pictures/${bottle.picture}`} className='img-thumbnail' alt='' />
-        }
-      </Card.Body>
+        </Card.Body>
+      }
       <Card.Footer>
         <small className='text-muted'>
           added by <NavLink to={`/users/${bottle.user.id}/stash`} >{bottle.user.name}</NavLink>, {moment(bottle.added).fromNow()}

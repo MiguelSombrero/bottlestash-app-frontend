@@ -7,6 +7,8 @@ import { removeUser, updateUser } from '../reducers/usersReducer'
 import { addPicture } from '../reducers/picturesReducer'
 import { logoutUser } from '../reducers/loginReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import ImageInputGroup from './ImageInputGroup'
+import InputGroup from './InputGroup'
 
 const Profile = (props) => {
   const [validated, setValidated] = useState(false)
@@ -77,7 +79,7 @@ const Profile = (props) => {
     <Container fluid>
       <Row>
         <Jumbotron as={Col} className='text-center mb-2'>
-          <h2>{props.user.username} profile</h2>
+          <h2>{props.user.username} 's profile</h2>
         </Jumbotron>
       </Row>
       <Row>
@@ -96,29 +98,38 @@ const Profile = (props) => {
         </Col>
       </Row>
       <Row className='mb-3'>
-        <Col >
-          <Form noValidate validated={validated} style={{ maxWidth: '25rem', margin: 'auto' }} onSubmit={handleProfileUpdate} id='profileUpdateForm' >
-            <Form.Group >
-              <Form.Label>Name</Form.Label>
-              <Form.Control {...name} />
-              <Form.Control.Feedback type='invalid' >{nameErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group >
-              <Form.Label>Email</Form.Label>
-              <Form.Control {...email} />
-              <Form.Control.Feedback type='invalid' >{emailErrors}</Form.Control.Feedback>
-            </Form.Group>
+        <Col className='formstyle'>
+          <Form noValidate validated={validated} onSubmit={handleProfileUpdate} id='profileUpdateForm' >
+            <InputGroup
+              name='Name'
+              state={name}
+              errors={nameErrors}
+            />
+            <InputGroup
+              name='Email'
+              state={email}
+              errors={emailErrors}
+            />
+            <InputGroup
+              name='Name'
+              state={name}
+              errors={nameErrors}
+            />
             <Form.Row>
-              <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
-                <Form.Label>City</Form.Label>
-                <Form.Control {...city} />
-                <Form.Control.Feedback type='invalid' >{cityErrors}</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group style={{ maxWidth: '50%' }} className='p-2'>
-                <Form.Label>Country</Form.Label>
-                <Form.Control {...country} />
-                <Form.Control.Feedback type='invalid' >{countryErrors}</Form.Control.Feedback>
-              </Form.Group>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='City'
+                  state={city}
+                  errors={cityErrors}
+                />
+              </Col>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='Country'
+                  state={country}
+                  errors={countryErrors}
+                />
+              </Col>
             </Form.Row>
             <Form.Group>
               <Form.Check
@@ -127,19 +138,7 @@ const Profile = (props) => {
                 onChange={({ target }) => setHidden(target.checked)}
                 label='I want my stash to be private' />
             </Form.Group>
-            <Form.Group className='custom-file mb-4 p-2'>
-              <Form.Label className='custom-file-label'>Click to add profile picture</Form.Label>
-              <Form.Control
-                name='picture'
-                className='custom-file-input'
-                type='file'
-                accept='image/*'
-                onChange={({ target }) => setPicture(target.files[0])}
-              />
-              {picture &&
-              <Form.Text className='text-center'>{picture.name}</Form.Text>
-              }
-            </Form.Group>
+            <ImageInputGroup picture={picture} setPicture={setPicture} />
             <Button type='submit' variant='success' block>Save profile</Button>
           </Form>
         </Col>

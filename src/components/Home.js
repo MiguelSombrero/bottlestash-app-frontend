@@ -16,13 +16,13 @@ const Home = (props) => {
       <>
       <Row>
         <Col className='maindiv'>
-          <h2 style={{ color: 'white'}}>Recently added bottles</h2>
+          <h2 style={{ color: 'white', textShadow: '2px 2px 5px black' }}>Recently added bottles</h2>
         </Col>
       </Row>
       <ResourceFeed resources={bottlesToShow} resource='bottle' />
       <Row>
         <Col className='maindiv'>
-          <h2 style={{ color: 'white' }}>Recently added ratings</h2>
+          <h2 style={{ color: 'white', textShadow: '2px 2px 5px black' }}>Recently added ratings</h2>
         </Col>
       </Row>
       <ResourceFeed resources={ratingsToShow} resource='rating' />
@@ -34,13 +34,9 @@ const Home = (props) => {
     return (
       <>
       <Row>
-        <Col className='maindiv mt-4' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }}>
-          <h2 className='mb-3'>Bottlestash, eh?</h2>
-        </Col>
-      </Row>
-      <Row>
-        <Col className='maindiv' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }} >
+        <Col className='maindiv' style={{ backgroundColor: 'rgb(245, 245, 245)' }} >
           <section>
+            <h2 className='mb-3'>Bottlestash, eh?</h2>
             <h3 className='mb-3'>
               That's right mate!
             </h3>
@@ -61,7 +57,7 @@ const Home = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className='maindiv' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }}>
+        <Col className='maindiv' style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
           <h3 className='mb-2'>Main features:</h3>
             <p>Save bottles to your stash</p>
             <p>Keep track of your beers expiration and drink them before</p>
@@ -70,7 +66,7 @@ const Home = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className='maindiv' style={{ backgroundColor: 'rgba(245, 245, 245, 0.9)' }}>
+        <Col className='maindiv' style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
           <h3 className='mb-2'>So do we have a deal?</h3>
             <p>Perfect! Register for free and start collect some awesomeness in your stash!</p>
             <NavLink to='/register'>To registration</NavLink>

@@ -8,7 +8,8 @@ import { updateUserToState } from '../reducers/usersReducer'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Jumbotron, Form, Button, Container } from 'react-bootstrap'
 import { useTextField, useNumberField } from '../hooks'
-import ListSuggestion from './ListSuggestion'
+import ImageInputGroup from './ImageInputGroup'
+import InputGroup from './InputGroup'
 
 const AddBottle = (props) => {
   const [validated, setValidated] = useState(false)
@@ -60,8 +61,6 @@ const AddBottle = (props) => {
         pictureId: newPicture ? newPicture.id : null
       })
 
-      // tämän voisi muuttaa niin, että yllä oleva pullo lisätään käyttäjän
-      // stashiin ja käyttäjä viedään tilaan, ilman että haetaan tietokannasta
       const user = await props.updateUserToState(props.user.username)
 
       setIsLoading(false)
@@ -95,64 +94,62 @@ const AddBottle = (props) => {
       <Row className='mb-3'>
         <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleAddBottle} id='addBottleForm' >
-            <Form.Group >
-              <Form.Label>Brewery</Form.Label>
-              <Form.Control {...breweryName} list='breweriesAsList' placeholder='name of the brewery' />
-              <ListSuggestion suggestions={breweriesAsList()} id='breweriesAsList' />
-              <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control {...name} list='beersAsList' placeholder='name of your beer' />
-              <ListSuggestion suggestions={beersAsList()} id='beersAsList' />
-              <Form.Control.Feedback type='invalid' >{nameErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Abv</Form.Label>
-              <Form.Control {...abv} list='abvAsList' placeholder='alcohol %' />
-              <ListSuggestion suggestions={abvAsList()} id='abvAsList' />
-              <Form.Control.Feedback type='invalid' >{abvErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Count</Form.Label>
-              <Form.Control {...count} placeholder='number of bottles to save' />
-              <Form.Control.Feedback type='invalid' >{countErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Volume</Form.Label>
-              <Form.Control {...volume} placeholder='volume of the bottle in litres' />
-              <Form.Control.Feedback type='invalid' >{volumeErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Price</Form.Label>
-              <Form.Control {...price} placeholder='price of an one bottle' />
-              <Form.Control.Feedback type='invalid' >{priceErrors}</Form.Control.Feedback>
-            </Form.Group>
+            <InputGroup
+              name='Brewery'
+              suggestions={breweriesAsList()}
+              state={breweryName}
+              placeholder='brewery name'
+              errors={breweryErrors}
+            />
+            <InputGroup
+              name='Name'
+              suggestions={beersAsList()}
+              state={name}
+              placeholder='beers name'
+              errors={nameErrors}
+            />
+            <InputGroup
+              name='Abv'
+              suggestions={abvAsList()}
+              state={abv}
+              placeholder='alcohol by volume'
+              errors={abvErrors}
+            />
+            <InputGroup
+              name='Count'
+              state={count}
+              placeholder='number of bottles'
+              errors={countErrors}
+            />
+            <InputGroup
+              name='Volume'
+              state={volume}
+              placeholder='volume of one bottle in litres'
+              errors={volumeErrors}
+            />
+            <InputGroup
+              name='Price'
+              state={price}
+              placeholder='price of one bottle in euros'
+              errors={priceErrors}
+            />
             <Form.Row>
-              <Form.Group as={Col} className='p-2'>
-                <Form.Label>Bottled</Form.Label>
-                <Form.Control {...bottled} placeholder='day beer was bottled' />
-                <Form.Control.Feedback type='invalid' >{bottledErrors}</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} className='p-2'>
-                <Form.Label>Expiration</Form.Label>
-                <Form.Control {...expiration} placeholder='expiration day of bottles' />
-                <Form.Control.Feedback type='invalid' >{expirationErrors}</Form.Control.Feedback>
-              </Form.Group>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='Bottled'
+                  state={bottled}
+                  errors={bottledErrors}
+                />
+              </Col>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='Expiration'
+                  state={expiration}
+                  errors={expirationErrors}
+                />
+              </Col>
             </Form.Row>
-            <Form.Group className='custom-file mb-4 p-2'>
-              <Form.Label className='custom-file-label'>Click to add pic of your bottle</Form.Label>
-              <Form.Control
-                name='picture'
-                className='custom-file-input'
-                type='file'
-                accept='image/*'
-                onChange={({ target }) => setPicture(target.files[0])}
-              />
-              {picture &&
-              <Form.Text className='text-center'>{picture.name}</Form.Text>
-              }
-            </Form.Group>
+            <ImageInputGroup picture={picture} setPicture={setPicture} />
             <Button
               variant='success'
               type='submit'

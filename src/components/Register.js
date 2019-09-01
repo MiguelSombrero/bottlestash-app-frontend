@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Form, Button, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import { registerUser } from '../reducers/usersReducer'
 import { useTextField } from '../hooks'
+import InputGroup from './InputGroup'
 
 const Register = (props) => {
   const [validated, setValidated] = useState(false)
@@ -52,37 +53,48 @@ const Register = (props) => {
       <Row className='mb-3'>
         <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleRegister} id='registerForm' >
-            <Form.Group >
-              <Form.Label >Username</Form.Label>
-              <Form.Control {...username} placeholder='username' />
-              <Form.Control.Feedback type='invalid' >{usernameErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Password</Form.Label>
-              <Form.Control {...password} placeholder='password' />
-              <Form.Control.Feedback type='invalid' >{passwordErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control {...name} placeholder='name to show other users' />
-              <Form.Control.Feedback type='invalid' >{nameErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Email</Form.Label>
-              <Form.Control {...email} placeholder='email' />
-              <Form.Control.Feedback type='invalid' >{emailErrors}</Form.Control.Feedback>
-            </Form.Group>
+            <InputGroup
+              name='Username'
+              state={username}
+              placeholder='username (not showing others)'
+              errors={usernameErrors}
+            />
+            <InputGroup
+              name='Password'
+              state={password}
+              placeholder='password'
+              errors={passwordErrors}
+            />
+            <InputGroup
+              name='Name'
+              state={name}
+              placeholder='name (to show other users)'
+              errors={nameErrors}
+            />
+            <InputGroup
+              name='Email'
+              state={email}
+              placeholder='email'
+              errors={emailErrors}
+            />
+
             <Form.Row>
-              <Form.Group as={Col} className='p-2'>
-                <Form.Label>City</Form.Label>
-                <Form.Control {...city} placeholder='(optional)' />
-                <Form.Control.Feedback type='invalid' >{cityErrors}</Form.Control.Feedback>
-              </Form.Group >
-              <Form.Group as={Col} className='p-2'>
-                <Form.Label>Country</Form.Label>
-                <Form.Control {...country} placeholder='(optional)' />
-                <Form.Control.Feedback type='invalid' >{countryErrors}</Form.Control.Feedback>
-              </Form.Group>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='City'
+                  state={city}
+                  placeholder='(optional)'
+                  errors={cityErrors}
+                />
+              </Col>
+              <Col style={{ maxWidth: '50%' }} className='p-2'>
+                <InputGroup
+                  name='Country'
+                  state={country}
+                  placeholder='(optional)'
+                  errors={countryErrors}
+                />
+              </Col>
             </Form.Row>
             <Form.Group>
               <Form.Check

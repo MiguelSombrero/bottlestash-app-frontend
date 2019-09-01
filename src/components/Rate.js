@@ -8,6 +8,8 @@ import { addBrewery, getOneBrewery } from '../reducers/breweriesReducer'
 import { addRating } from '../reducers/ratingsReducer'
 import { addPicture } from '../reducers/picturesReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import ImageInputGroup from './ImageInputGroup'
+import InputGroup from './InputGroup'
 import moment from 'moment'
 
 const Rate = (props) => {
@@ -100,28 +102,31 @@ const Rate = (props) => {
         </Jumbotron>
       </Row>
       <Row className='mb-3'>
-        <Col style={{ maxWidth: '25rem', margin: 'auto' }}>
+        <Col className='formstyle'>
           <Form noValidate validated={validated} onSubmit={handleRate} id='rateForm'>
-            <Form.Group >
-              <Form.Label>Brewery</Form.Label>
-              <Form.Control {...breweryName} placeholder='name of brewery' />
-              <Form.Control.Feedback type='invalid' >{breweryErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group >
-              <Form.Label>Beer</Form.Label>
-              <Form.Control {...beerName} placeholder='name of beer' />
-              <Form.Control.Feedback type='invalid' >{beerErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group >
-              <Form.Label>Abv</Form.Label>
-              <Form.Control {...alcohol} placeholder='alcohol volume' />
-              <Form.Control.Feedback type='invalid' >{alcoholErrors}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group >
-              <Form.Label>Bottled</Form.Label>
-              <Form.Control {...bottled} placeholder='(optional)' />
-              <Form.Control.Feedback type='invalid' >{bottledErrors}</Form.Control.Feedback>
-            </Form.Group>
+            <InputGroup
+              name='Brewery'
+              state={breweryName}
+              placeholder='brewery name'
+              errors={breweryErrors}
+            />
+            <InputGroup
+              name='Beer'
+              state={beerName}
+              placeholder='beers name'
+              errors={beerErrors}
+            />
+            <InputGroup
+              name='Abv'
+              state={alcohol}
+              placeholder='alcohol by volume'
+              errors={alcoholErrors}
+            />
+            <InputGroup
+              name='Bottled'
+              state={bottled}
+              errors={bottledErrors}
+            />
             <Form.Group >
               <Form.Label>Aroma</Form.Label>
               <Form.Text>{aroma.value}</Form.Text>
@@ -152,19 +157,7 @@ const Rate = (props) => {
               <Form.Control as='textarea' rows='4' {...description} placeholder='describe your beer' />
               <Form.Control.Feedback type='invalid' >{descriptionErrors}</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className='custom-file mb-4 p-2'>
-              <Form.Label className='custom-file-label'>Click to add pic of your beer</Form.Label>
-              <Form.Control
-                name='picture'
-                className='custom-file-input'
-                type='file'
-                accept='image/*'
-                onChange={({ target }) => setPicture(target.files[0])}
-              />
-              {picture &&
-              <Form.Text className='text-center'>{picture.name}</Form.Text>
-              }
-            </Form.Group>
+            <ImageInputGroup picture={picture} setPicture={setPicture} />
             <Button type='submit' variant='success' block>Add rating</Button>
           </Form>
         </Col>
