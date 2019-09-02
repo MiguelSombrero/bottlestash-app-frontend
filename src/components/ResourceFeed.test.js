@@ -46,6 +46,6 @@ describe('<ResourceFeed />', () => {
     const button = component.getByText('Load more ...')
     fireEvent.click(button)
     const cards = component.container.querySelectorAll('.card-header')
-    expect(cards.length).toBe(6)
+    expect(cards.length).toBe(7)
   })
 })

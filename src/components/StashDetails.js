@@ -15,8 +15,8 @@ const StashDetails = ({ stash }) => {
         </Card.Header>
         <ListGroup variant='flush'>
           <ListGroup.Item>{stash.length} different beers and {bottlesCount} different bottles</ListGroup.Item>
-          <ListGroup.Item>Your stash costs {stashCost} &euro;</ListGroup.Item>
-          <ListGroup.Item>Your stash has {stashVolume} litres of beer</ListGroup.Item>
+          <ListGroup.Item>Your stash costs {stashCost.toFixed(2)} &euro;</ListGroup.Item>
+          <ListGroup.Item>Your stash has {stashVolume.toFixed(2)} litres of beer</ListGroup.Item>
         </ListGroup>
       </Card>
     </Col>

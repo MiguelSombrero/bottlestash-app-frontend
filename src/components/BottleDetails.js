@@ -44,11 +44,11 @@ const BottleDetails = (props) => {
       <Modal.Body>
         <p>Alcohol: {bottle.beer.abv} %</p>
         <p>Brewery: {bottle.beer.brewery.name}</p>
-        <p>Price: {bottle.price} &euro;</p>
+        <p>Price: {bottle.price ? bottle.price : '-'} &euro;</p>
         <p>Volume: {bottle.volume} litres</p>
-        <p>Bottled: {moment(bottle.bottled).format('DD.MM.YYYY')}</p>
-        <p>Expires: {moment(bottle.expiration).format('DD.MM.YYYY')}</p>
-        <p>Beers age: {moment(new Date()).diff(moment(bottle.bottled), 'months')} months</p>
+        <p>Bottled: {bottle.bottled ? moment(bottle.bottled).format('DD.MM.YYYY') : '-'}</p>
+        <p>Expires: {bottle.expiration ? moment(bottle.expiration).format('DD.MM.YYYY') : '-'}</p>
+        <p>Beers age: {bottle.bottled ? moment(new Date()).diff(moment(bottle.bottled), 'months') : '-'} months</p>
         <p>Bottles: {bottle.count}</p>
       </Modal.Body>
 

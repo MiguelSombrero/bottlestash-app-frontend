@@ -93,7 +93,7 @@ const App = (props) => {
         />
         <Route
           exact path='/login'
-          render={() => <Login setNotification={props.setNotification} />}
+          render={() => <Login />}
         />
         <Route
           exact path='/register'

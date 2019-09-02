@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form, Button, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import { loginUser } from '../reducers/loginReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { Link } from 'react-router-dom'
 import { useTextField } from '../hooks'
 import InputGroup from './InputGroup'
@@ -45,7 +46,7 @@ const Login = (props) => {
               errors={usernameErrors}
             />
             <InputGroup
-              name='password'
+              name='Password'
               state={password}
               placeholder='password'
               errors={passwordErrors}
@@ -67,7 +68,7 @@ const Login = (props) => {
 }
 
 const mapDispatchToProps = {
-  loginUser
+  loginUser, setNotification
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Login))

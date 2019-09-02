@@ -39,7 +39,7 @@ const BottlesTable = (props) => {
             >
               <td>{b.count}</td>
               <td>{b.beer.brewery.name}</td>
-              <td>{b.beer.name}, {b.beer.abv} %</td>
+              <td>{b.beer.name} {b.beer.abv} %</td>
               <td style={{ color: moment(b.expiration).isBefore(new Date()) ? 'red' : 'black'}}>{b.expiration ? moment(b.expiration).fromNow() : '-'}</td>
             </tr>
           )}

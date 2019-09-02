@@ -5,18 +5,18 @@ import moment from 'moment'
 
 const Rating = ({ rating }) => {
 
-  const points = () => rating.overall + rating.aroma + rating.taste + rating.mouthfeel + rating.appearance
+  const score = () => rating.overall + rating.aroma + rating.taste + rating.mouthfeel + rating.appearance
 
   return (
     <Card className='text-center p-2 m-2'>
       <Card.Header style={{ backgroundColor: 'white', color: 'rgb(52, 58, 64)' }}>
         <Card.Title>
-          <NavLink to={`/beers/${rating.beer.id}/`} >{rating.beer.name} {rating.beer.abv} %</NavLink>
+          <NavLink to={`/beers/${rating.beer.id}`} >{rating.beer.name} {rating.beer.abv} %</NavLink>
         </Card.Title>
         <Row>
           <Col>
             <small>
-              brewery: <NavLink to={`/breweries/${rating.beer.brewery.id}/`} >{rating.beer.brewery.name}</NavLink>
+              brewery: <NavLink to={`/breweries/${rating.beer.brewery.id}`} >{rating.beer.brewery.name}</NavLink>
             </small>
           </Col>
         </Row>
@@ -36,7 +36,7 @@ const Rating = ({ rating }) => {
               <th><small className='text-muted'>mouthfeel</small></th>
               <th><small className='text-muted'>appearance</small></th>
               <th><small className='text-muted'>overall</small></th>
-              <th><small>points</small></th>
+              <th><small>score</small></th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +46,7 @@ const Rating = ({ rating }) => {
               <td><small className='text-muted'>{rating.mouthfeel}/5</small></td>
               <td><small className='text-muted'>{rating.appearance}/5</small></td>
               <td><small className='text-muted'>{rating.overall}/20</small></td>
-              <td><Badge variant='secondary' >{points()}/50</Badge></td>
+              <td><Badge variant='secondary' >{score()}/50</Badge></td>
             </tr>
           </tbody>
         </Table>

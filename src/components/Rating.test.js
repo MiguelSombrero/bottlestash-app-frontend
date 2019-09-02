@@ -1,12 +1,12 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render } from '@testing-library/react'
-import Beer from './Beer'
+import Rating from './Rating'
 import { BrowserRouter as Router } from 'react-router-dom'
 import helper from '../setupTests'
 
 /**
- * doesn't test rendering of pictures, only does the src form correctly
+ * doesn't test rendering of pictures, only does the src formed correctly
  */
 
 describe('<Beer />', () => {
@@ -15,40 +15,33 @@ describe('<Beer />', () => {
   beforeEach(() => {
     component = render(
       <Router>
-        <Beer beer={helper.beer} ratings={helper.ratings} />
+        <Rating rating={helper.rating} />
       </Router>
     )
   })
 
   test('renders content', () => {
     expect(component.container).toHaveTextContent('Sonnisaari Pils 5.6 %')
-    expect(component.container).toHaveTextContent('Ratings')
     expect(component.container).toHaveTextContent('brewery: Sonnisaari')
     expect(component.container).toHaveTextContent('wery delicate taste, with hints of chocolate. Liked!')
-    expect(component.container).toHaveTextContent('A bit alcoholy aftertaste. Light yellow body. Not too good.')
-    expect(component.container).toHaveTextContent('Best Imperial Stout I have ever tasted!')
     expect(component.container).toHaveTextContent('by Miika Somero, a few seconds ago')
     expect(component.container).toHaveTextContent('aroma')
     expect(component.container).toHaveTextContent('taste')
     expect(component.container).toHaveTextContent('mouthfeel')
     expect(component.container).toHaveTextContent('appearance')
     expect(component.container).toHaveTextContent('overall')
+    expect(component.container).toHaveTextContent('score')
+    expect(component.container).toHaveTextContent('6/10')
     expect(component.container).toHaveTextContent('8/10')
-    expect(component.container).toHaveTextContent('7/10')
-    expect(component.container).toHaveTextContent('5/5')
     expect(component.container).toHaveTextContent('4/5')
-    expect(component.container).toHaveTextContent('18/20')
+    expect(component.container).toHaveTextContent('17/20')
+    expect(component.container).toHaveTextContent('35/50')
   })
 
   test('rating picture links render correctly', () => {
     const images = component.container.querySelectorAll('img')
-    const image1 = component.container.querySelectorAll("img[src='http://localhost/api/pictures/1d4bc0527958a42219ca2037']")
-    const image2 = component.container.querySelectorAll("img[scr='http://localhost/api/pictures/5d4bc0527958a42219ca2038']")
-    const image3 = component.container.querySelectorAll("img[scr='http://localhost/api/pictures/5d4bc0527958a42219ca2039']")
-    expect(images.length).toBe(3)
-    expect(image1).toBeDefined()
-    expect(image2).toBeDefined()
-    expect(image3).toBeDefined()
+    expect(images[0].src).toContain('http://localhost/api/pictures/1d4bc0527958a42219ca2037')
+    expect(images.length).toBe(1)
   })
 
   test('users, brewerys and beers link render correctly', () => {

@@ -67,4 +67,4 @@ const Stash = (props) => {
   )
 }
 
-export default (Stash)
+export default Stash

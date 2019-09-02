@@ -37,11 +37,11 @@ const Rate = (props) => {
         setBottled(moment(bottle.bottled).format('YYYY-MM-DD'))
       }
     }
-    setAroma(1)
-    setTaste(1)
-    setMouthfeel(1)
-    setAppearance(1)
-    setOverall(1)
+    setAroma(5)
+    setTaste(5)
+    setMouthfeel(3)
+    setAppearance(3)
+    setOverall(10)
   }, [])
 
   const handleRate = async (event) => {

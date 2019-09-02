@@ -10,9 +10,13 @@ import SearchForm from './SearchForm'
 const Navigation = (props) => {
 
   const handleLogout = () => {
-    props.logoutUser()
-    props.setNotification('Logout was successfull')
-    props.history.push('/')
+    try {
+      props.logoutUser()
+      props.setNotification('Logout was successfull')
+      props.history.push('/')
+    } catch (exception) {
+      props.setNotification('Logout failed!', 'error')
+    }
   }
 
   const handleSearch = (e) => {

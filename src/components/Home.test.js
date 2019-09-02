@@ -70,13 +70,14 @@ describe('<Home /> with login', () => {
 
   test('renders ratings and bottles', () => {
     const cards = component.container.querySelectorAll('.card-header')
-    expect(cards.length).toBe(9)
+    expect(cards.length).toBe(10)
   })
 
   test('renders more ratings and bottles after Load more', () => {
     const button = component.getByText('Load more ...')
     fireEvent.click(button)
     const cards = component.container.querySelectorAll('.card-header')
-    expect(cards.length).toBe(10)
+    // there is 7 bottles and 5 ratings and Home renders only 6 bottles, cause it's private
+    expect(cards.length).toBe(11)
   })
 })
