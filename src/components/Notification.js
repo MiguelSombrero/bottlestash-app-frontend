@@ -8,7 +8,7 @@ const Notification = (props) => {
   }
 
   return (
-    <Row className='notification'>
+    <Row>
       <Alert as={Col} className='text-center col-12' variant={props.notification.type === 'success' ? 'success' : 'danger'}>
         <h3>{props.notification.message}</h3>
       </Alert>

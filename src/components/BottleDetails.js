@@ -8,13 +8,14 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 const BottleDetails = (props) => {
+
   if (!props.bottle) {
     return null
   }
-  
+
   const bottle = props.bottle
 
-  const handleDrink = async () => {
+  const handleDrink = async (needClosing) => {
     try {
       const updateableBottle = { ...bottle,
         beer: bottle.beer.id,
@@ -30,6 +31,10 @@ const BottleDetails = (props) => {
       }
     
       props.updateUserToState(props.user.username)
+
+      if (needClosing) {
+        props.toggleVisibility()
+      }
           
     } catch (exception) {
       props.setNotification('Bottle update failed!', 'error')
@@ -54,8 +59,8 @@ const BottleDetails = (props) => {
 
       {props.user.username === props.userToView.username &&
         <Modal.Footer>
-          <NavLink className='btn' onClick={handleDrink} to={{ pathname: '/rate', state: { bottle }}} >Drink and rate</NavLink>
-          <Button onClick={handleDrink} variant='light'>Just drink</Button>
+          <NavLink className='btn' onClick={() => handleDrink(false)} to={{ pathname: '/rate', state: { bottle }}} >Drink and rate</NavLink>
+          <Button onClick={() => handleDrink(true)} variant='light'>Just drink</Button>
         </Modal.Footer>
       }
     </Modal>

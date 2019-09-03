@@ -26,9 +26,9 @@ const AddBottle = (props) => {
   
   const handleAddBottle = async (event) => {
     event.preventDefault()
-    setValidated(true)
-
+    
     if (!event.target.checkValidity()) {
+      setValidated(true)
       return
     }
 

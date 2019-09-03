@@ -102,23 +102,6 @@ describe('<Stash /> user in someone elses stash not private', () => {
       expect(component.container).not.toHaveTextContent('Your stash costs 10.78 €')
       expect(component.container).not.toHaveTextContent('Your stash has 0.83 litres of beer')
     })
-
-    /** siirrä tämä testi bottle detailsiin
-    test('clicking beer will show its details', () => {
-        
-        const beer = component.getByText('Sonnisaari Pils 5.6 %')
-        fireEvent.click(beer)
-
-        expect(component.container).toHaveTextContent('Alcohol: 5.6 %')
-        expect(component.container).toHaveTextContent('Brewery: Sonnisaari')
-        expect(component.container).toHaveTextContent('Price: 5.89 €')
-        expect(component.container).toHaveTextContent('Volume: 0.33 litres')
-        expect(component.container).toHaveTextContent('Bottled: -')
-        expect(component.container).toHaveTextContent('Expires: -')
-        expect(component.container).toHaveTextContent('Beers age: - months')
-        expect(component.container).toHaveTextContent('Bottles: 6')
-      })
-       */
   })
 
   describe('<Stash /> user in someone elses private stash', () => {

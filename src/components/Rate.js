@@ -42,13 +42,13 @@ const Rate = (props) => {
     setMouthfeel(3)
     setAppearance(3)
     setOverall(10)
-  }, [])
+  }, [props.location.state, setAlcohol, setAppearance, setAroma, setBeerName, setBottled, setBreweryName, setMouthfeel, setOverall, setTaste])
 
   const handleRate = async (event) => {
     event.preventDefault()
-    setValidated(true)
-
+    
     if (!event.target.checkValidity()) {
+      setValidated(true)
       return
     }
     

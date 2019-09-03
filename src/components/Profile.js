@@ -25,7 +25,7 @@ const Profile = (props) => {
     setCity(props.user.city || '')
     setCountry(props.user.country || '')
     setHidden(props.user.hidden)
-  }, [])
+  }, [props.user.city, props.user.country, props.user.email, props.user.hidden, props.user.name, setCity, setCountry, setEmail, setName])
 
   if (!props.user) {
     return null
@@ -33,9 +33,9 @@ const Profile = (props) => {
   
   const handleProfileUpdate = async (event) => {
     event.preventDefault()
-    setValidated(true)
-
+   
     if (!event.target.checkValidity()) {
+      setValidated(true)
       return
     }
 

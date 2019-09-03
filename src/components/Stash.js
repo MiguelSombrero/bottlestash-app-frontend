@@ -5,13 +5,11 @@ import BottlesTable from './BottlesTable'
 import StashDetails from './StashDetails'
 
 const Stash = (props) => {
-  const [stashVisible, setStashVisible] = useState(false)
+  const [detailsVisible, setDetailsVisible] = useState(false)
 
   if (!props.userToView) {
     return null
   }
-
-  const stash = props.userToView.stash
 
   return (
     <Container fluid>
@@ -45,8 +43,8 @@ const Stash = (props) => {
       <Row>
         <Col className='d-flex justify-content-center mb-4'>
           <Nav>
-            <Nav.Link onClick={() => setStashVisible(!stashVisible)} className='p-2'>
-              {stashVisible ? 'Back to stash' : 'Stash details'}
+            <Nav.Link onClick={() => setDetailsVisible(!detailsVisible)} className='p-2'>
+              {detailsVisible ? 'Back to stash' : 'Stash details'}
             </Nav.Link>
             <Nav.Link as='span' className='p-2'>
               <NavLink to='/bottles'>Add new bottle</NavLink>
@@ -57,9 +55,9 @@ const Stash = (props) => {
       }
       {(props.userToView.username === props.user.username || !props.userToView.hidden) &&
       <Row className='mb-3'>
-        {!stashVisible
-          ? <BottlesTable stash={stash} user={props.user} userToView={props.userToView}></BottlesTable>
-          : <StashDetails stash={stash}></StashDetails>
+        {!detailsVisible
+          ? <BottlesTable stash={props.userToView.stash} user={props.user} userToView={props.userToView}></BottlesTable>
+          : <StashDetails stash={props.userToView.stash}></StashDetails>
         }
       </Row>
       }

@@ -34,27 +34,27 @@ const App = (props) => {
     if (loggedUser) {
       props.setUserToState(JSON.parse(loggedUser))
     }
-  }, [])
+  }, [props])
 
   useEffect(() => {
     props.getAllUsers()
-  }, [])
+  }, [props])
 
   useEffect(() => {
     props.getAllBreweries()
-  }, [])
+  }, [props])
 
   useEffect(() => {
     props.getAllBeers()
-  }, [])
+  }, [props])
 
   useEffect(() => {
     props.getAllRatings()
-  }, [])
+  }, [props])
 
   useEffect(() => {
     props.getAllBottles()
-  }, [])
+  }, [props])
 
   const userById = (id) => 
     props.users.find(u => u.id === id)
