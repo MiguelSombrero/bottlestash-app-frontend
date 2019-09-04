@@ -11,7 +11,7 @@ const SearchForm = (props) => {
   const suggestions = beersAsList().concat(breweriesAsList())
 
   return (
-    <Form onSubmit={props.handleSearch} inline>
+    <Form onSubmit={props.handleSearch} inline className='pl-2'>
       <Form.Control list={props.id} name='filter' type ='text' className='p-2 m-2' placeholder='search for bottles, beers and more ...'></Form.Control>
         <ListSuggestion
           suggestions={suggestions}

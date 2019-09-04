@@ -20,12 +20,14 @@ const Profile = (props) => {
   const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
-    setName(props.user.name || '')
-    setEmail(props.user.email || '')
-    setCity(props.user.city || '')
-    setCountry(props.user.country || '')
-    setHidden(props.user.hidden)
-  }, [props.user.city, props.user.country, props.user.email, props.user.hidden, props.user.name, setCity, setCountry, setEmail, setName])
+    if (props.user) {
+      setName(props.user.name)
+      setEmail(props.user.email)
+      setCity(props.user.city || '')
+      setCountry(props.user.country || '')
+      setHidden(props.user.hidden)
+    }
+  }, [props.user])
 
   if (!props.user) {
     return null
@@ -49,7 +51,7 @@ const Profile = (props) => {
         email: email.value,
         city: city.value,
         country: country.value,
-        pictureId: newPicture ? newPicture.id : null,
+        pictureId: newPicture ? newPicture.id : props.user.picture,
         hidden
       }
   

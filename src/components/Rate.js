@@ -14,6 +14,7 @@ import moment from 'moment'
 
 const Rate = (props) => {
   const [validated, setValidated] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [picture, setPicture] = useState(null)
   const [beerName, beerErrors, setBeerName] = useTextField('text', 1, 50, true)
   const [breweryName, breweryErrors, setBreweryName] = useTextField('text', 1, 50, true)
@@ -42,7 +43,7 @@ const Rate = (props) => {
     setMouthfeel(3)
     setAppearance(3)
     setOverall(10)
-  }, [props.location.state, setAlcohol, setAppearance, setAroma, setBeerName, setBottled, setBreweryName, setMouthfeel, setOverall, setTaste])
+  }, [])
 
   const handleRate = async (event) => {
     event.preventDefault()
@@ -52,6 +53,8 @@ const Rate = (props) => {
       return
     }
     
+    setIsLoading(true)
+
     try {
       let beer = null
 
@@ -86,6 +89,7 @@ const Rate = (props) => {
       }
   
       props.addRating(newRating)
+      setIsLoading(false)
       props.setNotification('New rating added!')
       props.history.push('/')
 
@@ -93,6 +97,18 @@ const Rate = (props) => {
       props.setNotification('Adding a new rating failed!', 'error')
     }
   }
+
+  const breweriesAsList = () => !props.breweries
+    ? null
+    : props.breweries.map(b => b.name)
+
+  const beersAsList = () => !props.beers
+    ? null
+    : props.beers.filter(b => b.brewery.name === breweryName.value).map(b => b.name)
+
+  const abvAsList = () => !props.beers
+    ? null
+    : props.beers.filter(b => b.brewery.name === breweryName.value && b.name === beerName.value).map(b => b.abv)
 
   return (
     <Container fluid>
@@ -106,18 +122,21 @@ const Rate = (props) => {
           <Form noValidate validated={validated} onSubmit={handleRate} id='rateForm'>
             <InputGroup
               name='Brewery'
+              suggestions={breweriesAsList()}
               state={breweryName}
               placeholder='brewery name'
               errors={breweryErrors}
             />
             <InputGroup
               name='Beer'
+              suggestions={beersAsList()}
               state={beerName}
               placeholder='beers name'
               errors={beerErrors}
             />
             <InputGroup
               name='Abv'
+              suggestions={abvAsList()}
               state={alcohol}
               placeholder='alcohol by volume'
               errors={alcoholErrors}
@@ -158,12 +177,26 @@ const Rate = (props) => {
               <Form.Control.Feedback type='invalid' >{descriptionErrors}</Form.Control.Feedback>
             </Form.Group>
             <ImageInputGroup picture={picture} setPicture={setPicture} />
-            <Button type='submit' variant='success' block>Add rating</Button>
+            <Button
+              type='submit'
+              variant='success'
+              block
+              disabled={isLoading}
+
+              > {isLoading ? 'Loading ...' : 'Add Rating'}
+              </Button>
           </Form>
         </Col>
       </Row>    
     </Container>
   )
+}
+
+const mapStateToProps = (state) => {
+  return {
+    beers: state.beers,
+    breweries: state.breweries
+  }
 }
 
 const mapDispatchToProps = {
@@ -176,4 +209,4 @@ const mapDispatchToProps = {
   setNotification
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(Rate))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Rate))

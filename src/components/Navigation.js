@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, Row, Card, Col, Container } from 'react-bootstrap'
 import { logoutUser } from '../reducers/loginReducer'
 import { setFilter } from '../reducers/filterReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import SearchForm from './SearchForm'
 
 const Navigation = (props) => {
@@ -59,25 +60,23 @@ const Navigation = (props) => {
                 <Nav.Link href='#'>
                   <Nav.Item onClick={handleLogout} >Logout</Nav.Item>
                 </Nav.Link>
-
-                {!props.user.picture &&
-                  <Nav.Link href='#' as='span'>
-                    <NavLink to='/profile' >Profile</NavLink>
-                  </Nav.Link>
-                }
               </>
               }
             </Nav>
         
             {props.user &&
             <>
+              {!props.user.picture &&
+                <Nav.Link href='#' as='span' >
+                  <NavLink to='/profile' >Profile</NavLink>
+                </Nav.Link>
+              }
               {props.user.picture &&
                 <NavLink to='/profile' >
                   <Card.Img
                     src={`/api/pictures/${props.user.picture}`}
                     href='/profile'
                     style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-                    className='avatar'
                     alt='Profile'
                   />
                 </NavLink>
@@ -96,7 +95,9 @@ const Navigation = (props) => {
 }
 
 const mapDispatchToProps = {
-  logoutUser, setFilter
+  logoutUser,
+  setFilter,
+  setNotification
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Navigation))

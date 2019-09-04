@@ -46,7 +46,7 @@ const Rating = ({ rating }) => {
               <td><small className='text-muted'>{rating.mouthfeel}/5</small></td>
               <td><small className='text-muted'>{rating.appearance}/5</small></td>
               <td><small className='text-muted'>{rating.overall}/20</small></td>
-              <td><Badge variant='secondary' >{score()}/50</Badge></td>
+              <td><Badge variant='warning' >{score()}/50</Badge></td>
             </tr>
           </tbody>
         </Table>

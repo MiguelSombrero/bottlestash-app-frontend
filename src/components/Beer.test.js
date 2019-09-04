@@ -24,6 +24,7 @@ describe('<Beer />', () => {
     expect(component.container).toHaveTextContent('Sonnisaari Pils 5.6 %')
     expect(component.container).toHaveTextContent('Ratings')
     expect(component.container).toHaveTextContent('brewery: Sonnisaari')
+    expect(component.container).toHaveTextContent('5 ratings with average score 34.4/50')
     expect(component.container).toHaveTextContent('wery delicate taste, with hints of chocolate. Liked!')
     expect(component.container).toHaveTextContent('A bit alcoholy aftertaste. Light yellow body. Not too good.')
     expect(component.container).toHaveTextContent('Best Imperial Stout I have ever tasted!')

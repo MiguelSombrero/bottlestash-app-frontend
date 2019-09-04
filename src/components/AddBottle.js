@@ -5,6 +5,7 @@ import { addBrewery, getOneBrewery } from '../reducers/breweriesReducer'
 import { addBottle } from '../reducers/bottlesReducer'
 import { addPicture } from '../reducers/picturesReducer'
 import { updateUserToState } from '../reducers/usersReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { withRouter } from 'react-router-dom'
 import { Row, Col, Jumbotron, Form, Button, Container } from 'react-bootstrap'
 import { useTextField, useNumberField } from '../hooks'
@@ -68,7 +69,7 @@ const AddBottle = (props) => {
       props.history.push(`/users/${user.id}/stash`)
       
     } catch (exception) {
-      props.setNotification('Adding bottle failed - sorry!', 'error')
+      props.setNotification('Adding bottle failed!', 'error')
     }
   }
 
@@ -172,7 +173,8 @@ const mapDispatchToProps = {
   addPicture,
   getOneBeer,
   getOneBrewery,
-  updateUserToState
+  updateUserToState,
+  setNotification
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(AddBottle))

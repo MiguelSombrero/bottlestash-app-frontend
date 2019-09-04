@@ -6,7 +6,6 @@ import { getAllBreweries } from './reducers/breweriesReducer'
 import { getAllBeers } from './reducers/beersReducer'
 import { getAllRatings } from './reducers/ratingsReducer'
 import { getAllBottles } from './reducers/bottlesReducer'
-import { setNotification } from './reducers/notificationReducer'
 import { BrowserRouter, Route } from 'react-router-dom'
 import Login from './components/Login'
 import Home from './components/Home'
@@ -34,27 +33,27 @@ const App = (props) => {
     if (loggedUser) {
       props.setUserToState(JSON.parse(loggedUser))
     }
-  }, [props])
+  }, [])
 
   useEffect(() => {
     props.getAllUsers()
-  }, [props])
+  }, [])
 
   useEffect(() => {
     props.getAllBreweries()
-  }, [props])
+  }, [])
 
   useEffect(() => {
     props.getAllBeers()
-  }, [props])
+  }, [])
 
   useEffect(() => {
     props.getAllRatings()
-  }, [props])
+  }, [])
 
   useEffect(() => {
     props.getAllBottles()
-  }, [props])
+  }, [])
 
   const userById = (id) => 
     props.users.find(u => u.id === id)
@@ -68,6 +67,9 @@ const App = (props) => {
   const ratingsByUserId = (id) =>
     props.ratings.filter(r => r.user.id === id)
 
+  const ratingsByBeerId = (id) =>
+    props.ratings.filter(r => r.beer.id === id)
+
   const loggedUser = () =>
     !props.user ? null : props.users.find(user => user.username === props.user.username)
 
@@ -75,10 +77,7 @@ const App = (props) => {
     <>
       <BrowserRouter>
         <ScrollToTop />
-        <Navigation
-          user={loggedUser()}
-          setNotification={props.setNotification}
-        />
+        <Navigation user={loggedUser()} />
         <Notification />
 
         <Route
@@ -86,6 +85,7 @@ const App = (props) => {
           render={() => 
             <Home
               user={props.user}
+              users={props.users}
               bottles={props.bottles}
               ratings={props.ratings}
             />
@@ -97,7 +97,7 @@ const App = (props) => {
         />
         <Route
           exact path='/register'
-          render={() => <Register setNotification={props.setNotification} />}
+          render={() => <Register />}
         />
         <Route
           exact path='/about'
@@ -105,8 +105,7 @@ const App = (props) => {
         />
         <Route
           exact path='/search'
-          render={() =>
-            <SearchResults user={props.user} /> }
+          render={() => <SearchResults /> }
         />
         <Route
             exact path='/breweries/:id/'
@@ -121,7 +120,7 @@ const App = (props) => {
           render={({ match }) => 
             <Beer
               beer={beerById(match.params.id)}
-              ratings={props.ratings}
+              ratings={ratingsByBeerId(match.params.id)}
             />
           }
         />
@@ -135,7 +134,6 @@ const App = (props) => {
                 breweries={props.breweries}
                 beers={props.beers}
                 user={props.user}
-                setNotification={props.setNotification}
               />
             }
           />
@@ -152,18 +150,10 @@ const App = (props) => {
             exact path='/rate'
             render={(props) => <Rate {...props} /> }
           />
-
-          {loggedUser() &&
           <Route
             exact path='/profile'
-            render={() =>
-              <Profile
-                setNotification={props.setNotification}
-                user={loggedUser()}
-              />
-            }
+            render={() => <Profile user={loggedUser()} /> }
           />
-          }
           <Route
             exact path='/users/:id/stash'
             render={({ match }) => 
@@ -199,8 +189,7 @@ const mapDispatchToProps = {
   getAllBreweries,
   getAllBeers,
   getAllRatings,
-  getAllBottles,
-  setNotification
+  getAllBottles
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

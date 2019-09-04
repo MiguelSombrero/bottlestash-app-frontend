@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Form, Button, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 import { registerUser } from '../reducers/usersReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { useTextField } from '../hooks'
 import InputGroup from './InputGroup'
 
@@ -35,11 +36,11 @@ const Register = (props) => {
         hidden
       })
   
-      props.setNotification('User registration was succesfull')
+      props.setNotification('Registration was succesfull')
       props.history.push('/login')
     
     } catch (exception) {
-      props.setNotification('User registration failed', 'error')
+      props.setNotification('Registration failed', 'error')
     }  
   }
 
@@ -111,7 +112,7 @@ const Register = (props) => {
 }
 
 const mapDispatchToProps = {
-  registerUser
+  registerUser, setNotification
 }
 
 export default connect(null, mapDispatchToProps)(withRouter(Register))

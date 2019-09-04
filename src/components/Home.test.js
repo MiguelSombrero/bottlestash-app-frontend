@@ -18,11 +18,10 @@ describe('<Home /> without login', () => {
 
   test('renders content', () => {
     expect(component.container).toHaveTextContent('Bottlestash, eh?')
-    expect(component.container).toHaveTextContent('That\'s right mate!')
-    expect(component.container).toHaveTextContent('Bottlestash is an app which let you keep track of your beer cellar. Because lets face it; you like beer. So do I - it\'s allright!')
+    expect(component.container).toHaveTextContent('That\'s right mate! Bottlestash is an app which lets you keep track of your beer cellar. Because lets face it; you like beer. So do I - it\'s allright!')
     expect(component.container).toHaveTextContent('Main features:')
     expect(component.container).toHaveTextContent('Save bottles to your stash')
-    expect(component.container).toHaveTextContent('Perfect! Register for free and start collect some awesomeness in your stash!')
+    expect(component.container).toHaveTextContent('Register now - it\'s free!')
   })
 
   test('doesn\'t render content only for logged users', () => {
@@ -61,11 +60,10 @@ describe('<Home /> with login', () => {
 
   test('doesn\'t render content only for logged users', () => {
     expect(component.container).not.toHaveTextContent('Bottlestash, eh?')
-    expect(component.container).not.toHaveTextContent('That\'s right mate!')
-    expect(component.container).not.toHaveTextContent('Bottlestash is an app which let you keep track of your beer cellar. Because lets face it; you like beer. So do I - it\'s allright!')
+    expect(component.container).not.toHaveTextContent('That\'s right mate! Bottlestash is an app which lets you keep track of your beer cellar. Because lets face it; you like beer. So do I - it\'s allright!')
     expect(component.container).not.toHaveTextContent('Main features:')
     expect(component.container).not.toHaveTextContent('Save bottles to your stash')
-    expect(component.container).not.toHaveTextContent('Perfect! Register for free and start collect some awesomeness in your stash!')
+    expect(component.container).not.toHaveTextContent('Register now - it\'s free!')
   })
 
   test('renders ratings and bottles', () => {

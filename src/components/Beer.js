@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Jumbotron, Container } from 'react-bootstrap'
+import { Row, Col, Jumbotron, Container, Badge } from 'react-bootstrap'
 import ResourceFeed from './ResourceFeed'
 
 const Beer = ({ beer, ratings }) => {
@@ -8,17 +8,22 @@ const Beer = ({ beer, ratings }) => {
     return null
   }
 
-  const ratingsToShow = ratings
-    .filter(r => r.beer.id === beer.id)
+  const score = (r) => r.overall + r.aroma + r.taste + r.mouthfeel + r.appearance
+  const average = () => ratings.reduce((sum, r) => sum + score(r), 0) / ratings.length
 
   const showRatings = () =>
     <>
+    <Row className='mb-4'>
+      <Col className='text-center'>
+        <h6>{ratings.length} ratings with average score <Badge variant='secondary'>{average().toFixed(1)}/50</Badge></h6>
+      </Col>
+    </Row>
     <Row>
       <Col className='text-center'>
         <h3>Ratings</h3>
       </Col>
     </Row>
-    <ResourceFeed resources={ratingsToShow} resource='rating' />
+    <ResourceFeed resources={ratings} resource='rating' />
   </>
 
   return (
@@ -29,9 +34,9 @@ const Beer = ({ beer, ratings }) => {
           <h5>{beer.brewery.name}</h5>
         </Jumbotron>
       </Row>
-      {ratingsToShow.length > 0
+      {ratings.length > 0
         ? showRatings()
-        : <h4 className='text-center'>No ratings for this beer</h4>
+        : <h6 className='text-center'>No ratings for this beer</h6>
       }
     </Container>
   )
