@@ -8,13 +8,7 @@ const picturesService = useResource('/api/pictures')
  * Although for the unity, fetching a pictures is also implemented
  * in reducer, as fetching the other resources
  */
-  
-export const getOnePicture = id => {
-  return async dispatch => {
-    const picture = await picturesService.getOne(id)
-  }
-}
-  
+
 export const addPicture = newPicture => {
   return async dispatch => {
     const data = new FormData()

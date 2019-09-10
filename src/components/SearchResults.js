@@ -34,9 +34,10 @@ const SearchResults = (props) => {
     <Row>
       <Col className='text-center'>
         <h3>Bottles</h3>
-        <p>
-          {bottlesToShow.length} bottles for search '{props.filter}'
-        </p>
+        {bottlesToShow.length > 0
+          ? <p>{bottlesToShow.length} bottles for search '{props.filter}' </p>
+          : <p className='text-center'>No bottles for search '{props.filter}'</p>
+        }
       </Col>
     </Row>
     <Row>
@@ -57,9 +58,10 @@ const showBeers = () =>
     <Row>
       <Col className='text-center'>
         <h3>Beers</h3>
-        <p>
-          {beersToShow.length} beers for search '{props.filter}'
-        </p>
+        {beersToShow.length > 0
+          ? <p>{beersToShow.length} beers for search '{props.filter}'</p>
+          : <p className='text-center'>No beers for search '{props.filter}'</p>
+        }
       </Col>
     </Row>
     <Row>
@@ -80,9 +82,10 @@ const showBreweries = () =>
     <Row>
       <Col className='text-center'>
         <h3>Breweries</h3>
-        <p>
-          {breweriesToShow.length} breweries for search '{props.filter}'
-        </p>
+        {breweriesToShow.length > 0
+          ? <p>{breweriesToShow.length} breweries for search '{props.filter}'</p>
+          : <p className='text-center'>No breweries for search '{props.filter}'</p>
+        }
       </Col>
     </Row>
     <Row>
@@ -115,18 +118,9 @@ const showBreweries = () =>
       </Row>
       {props.filter &&
         <>
-          {bottlesToShow.length > 0
-            ? showBottles()
-            : <p className='text-center'>No bottles for search '{props.filter}'</p>
-          }
-          {beersToShow.length > 0
-            ? showBeers()
-            : <p className='text-center'>No beers for search '{props.filter}'</p>
-          }
-          {breweriesToShow.length > 0
-            ? showBreweries()
-            : <p className='text-center'>No breweries for search '{props.filter}'</p>
-          }
+          {showBottles()}
+          {showBeers()}
+          {showBreweries()}
         </>
       }
     </Container>
